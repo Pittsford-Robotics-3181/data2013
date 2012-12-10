@@ -22,8 +22,9 @@ public class Data extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    public static DSOutput dsOutput = new DSOutput();
     public void robotInit() {
-
+        dsOutput.say(1, "Line One Printed!");
     }
 
     /**

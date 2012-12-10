@@ -59,6 +59,15 @@ public class DSOutput {
             case (6):
                 output.println(DriverStationLCD.Line.kUser6, 1, msg);
                 break;
+            default:
+                String error = "Please Enter a Value Between 1 and 6 Inclusive for the Line Number.";
+                output.println(DriverStationLCD.Line.kMain6, 1, error);
+                output.println(DriverStationLCD.Line.kUser2, 1, error);
+                output.println(DriverStationLCD.Line.kUser3, 1, error);
+                output.println(DriverStationLCD.Line.kUser4, 1, error);
+                output.println(DriverStationLCD.Line.kUser5, 1, error);
+                output.println(DriverStationLCD.Line.kUser6, 1, error);
+                break;
         }
         // Show the message
         output.updateLCD();
