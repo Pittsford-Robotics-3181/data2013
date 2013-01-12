@@ -5,11 +5,14 @@
 package edu.wpi.first.smartdashboard.gui;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.*;
 import javax.swing.JPanel;
+import org.jnativehook.*;
+import org.jnativehook.keyboard.*;
 
 /**
  * Contains the DashboardPanels of the SmartDashboard and
@@ -27,8 +30,38 @@ public final class MainPanel extends JPanel {
 	private double xPixelsPerSecond;
 	private double yPixelsPerSecond;
 	private long oldMillis = System.currentTimeMillis();
-	Robot r;
+	private Robot r;
+	BufferedImage invisibleCursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+
+	Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(invisibleCursorImg, new Point(0, 0), "blank cursor");
+
+	private NativeKeyListener nkl = new NativeKeyListener(){
+
+		@Override
+		public void nativeKeyPressed(NativeKeyEvent nke) {
+		}
+
+		@Override
+		public void nativeKeyReleased(NativeKeyEvent nke) {
+			if(nke.getKeyCode()==NativeKeyEvent.VK_ESCAPE){
+				running = !running;
+			}
+		}
+
+		@Override
+		public void nativeKeyTyped(NativeKeyEvent nke) {
+		}
+		
+	};
 	
+	{	try {
+			GlobalScreen.registerNativeHook();
+		}
+		catch(NativeHookException ex) {
+			Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+		}
+}
+	GlobalScreen globalScreen = GlobalScreen.getInstance();
 	private Thread m_mouseVelocityThread = new Thread(){
 		@Override
 		public void run(){
@@ -52,10 +85,12 @@ public final class MainPanel extends JPanel {
 					Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
 				}
 				if(running){
+					currentPanel.setCursor(blankCursor);
 				xPixelsPerSecond=(MouseInfo.getPointerInfo().getLocation().getX()-originX)/(System.currentTimeMillis()-oldMillis);
 				yPixelsPerSecond=(MouseInfo.getPointerInfo().getLocation().getY()-originY)/(System.currentTimeMillis()-oldMillis);
 				System.out.println("(" + xPixelsPerSecond + "," + yPixelsPerSecond + ")");
 			} else {
+					currentPanel.setCursor(Cursor.getDefaultCursor());
 					xPixelsPerSecond = 0;
 					yPixelsPerSecond = 0;
 				}
@@ -68,7 +103,7 @@ public final class MainPanel extends JPanel {
         for(DashboardPanel panel : panels)
             MainPanel.panels.put(panel.getName(), panel);
         currentPanel = defaultPanel;
-		
+		globalScreen.addNativeKeyListener(nkl);
 		try {
 				r = new Robot();
 			} catch(AWTException ex) {
