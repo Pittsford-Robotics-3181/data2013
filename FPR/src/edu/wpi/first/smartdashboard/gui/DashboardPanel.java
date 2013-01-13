@@ -264,11 +264,13 @@ public class DashboardPanel extends JPanel {
      * @param point the location to put it (or null, if one needs to be found)
      */
     public void addElement(DisplayElement element, Point point) {
+		//stuff for crosshairs
+		if(element instanceof CrossHairsWidget){
+			point = new Point(-16+getWidth()/2,-16+getHeight()/2);
+			((CrossHairsWidget)element).centerReference=this;
+		}
         // Initialize the element
         element.init();
-		if(element instanceof CrossHairsWidget){
-			element.setLocation((int)(getLocationOnScreen().getX()+getWidth()/2-element.getWidth()/2),(int)(getLocationOnScreen().getY()+getWidth()/2-element.getWidth()/2));
-		}
         // Set the elements location
         if (point == null) {
             Dimension saved = element.getSavedSize();
@@ -282,6 +284,7 @@ public class DashboardPanel extends JPanel {
             element.setSize(preferred);
             point = findSpace(element);
             element.setBounds(new Rectangle(point, preferred));
+
         }
         element.setSavedLocation(point);
 

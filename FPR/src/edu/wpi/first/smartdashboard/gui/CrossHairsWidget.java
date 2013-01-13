@@ -8,4 +8,6 @@ package edu.wpi.first.smartdashboard.gui;
  *
  * @author Benjamin Pylko <spectare at sourceforge.net>
  */
-public abstract class CrossHairsWidget extends Widget{}
+public abstract class CrossHairsWidget extends StaticWidget{
+	public DashboardPanel centerReference;
+}

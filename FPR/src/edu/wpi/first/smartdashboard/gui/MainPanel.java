@@ -24,8 +24,8 @@ public final class MainPanel extends JPanel {
     public static final HashMap<String, DashboardPanel> panels = new HashMap();
     private static DashboardPanel currentPanel;
 	
-	private double originX;
-	private double originY;
+	private static double originX;
+	private static double originY;
 	private boolean running = true;
 	private double xPixelsPerSecond;
 	private double yPixelsPerSecond;
@@ -75,8 +75,8 @@ public final class MainPanel extends JPanel {
 				r.mouseMove((int)originX, (int)originY);
 				oldMillis = System.currentTimeMillis();
 				try{
-		originX = getLocationOnScreen().getX()+(double)getWidth ()/2;
-		originY = getLocationOnScreen().getY()+(double)getHeight()/2;
+		originX = getLocationOnScreen().getX()+getWidth ()/2;
+		originY = getLocationOnScreen().getY()+getHeight()/2;
 				} catch(Exception e){}
 			}
 				try {
