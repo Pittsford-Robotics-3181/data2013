@@ -26,7 +26,7 @@ public final class MainPanel extends JPanel {
 	
 	private static double originX;
 	private static double originY;
-	private boolean running = true;
+	private boolean running = false;
 	private double xPixelsPerSecond;
 	private double yPixelsPerSecond;
 	private long oldMillis = System.currentTimeMillis();
@@ -88,7 +88,6 @@ public final class MainPanel extends JPanel {
 					currentPanel.setCursor(blankCursor);
 				xPixelsPerSecond=(MouseInfo.getPointerInfo().getLocation().getX()-originX)/(System.currentTimeMillis()-oldMillis);
 				yPixelsPerSecond=(MouseInfo.getPointerInfo().getLocation().getY()-originY)/(System.currentTimeMillis()-oldMillis);
-				System.out.println("(" + xPixelsPerSecond + "," + yPixelsPerSecond + ")");
 			} else {
 					currentPanel.setCursor(Cursor.getDefaultCursor());
 					xPixelsPerSecond = 0;
