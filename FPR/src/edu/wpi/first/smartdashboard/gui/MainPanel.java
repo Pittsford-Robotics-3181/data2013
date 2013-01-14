@@ -26,9 +26,9 @@ public final class MainPanel extends JPanel {
 	
 	private static double originX;
 	private static double originY;
-	private boolean running = false;
-	private double xPixelsPerSecond;
-	private double yPixelsPerSecond;
+	private static boolean running = false;
+	private static double xPixelsPerSecond;
+	private static double yPixelsPerSecond;
 	private long oldMillis = System.currentTimeMillis();
 	private Robot r;
 	BufferedImage invisibleCursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
@@ -111,6 +111,18 @@ public final class MainPanel extends JPanel {
 		r.setAutoDelay(0);
 		m_mouseVelocityThread.start();
     }
+	
+	public static double getXPixelsPerSecond(){
+		return xPixelsPerSecond;
+	}
+	
+	public static double getYPixelsPerSecond(){
+		return yPixelsPerSecond;
+	}
+	
+	public static boolean isFirstPerson(){
+		return running;
+	}
     
     public static DashboardPanel getCurrentPanel() {
         return currentPanel;
