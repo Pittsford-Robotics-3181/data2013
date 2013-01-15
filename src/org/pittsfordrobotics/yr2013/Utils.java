@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.SpeedController;
  * Has a bunch of methods available or use throughout the robot.
  * @author robbiemarkwick
  */
-public class utils{
+public class Utils{
     /**
      * Ramps up the drive system by a certain amount 20 times per second until desired speed has been reached
      * @param targetSpeed
