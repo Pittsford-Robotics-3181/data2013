@@ -13,6 +13,7 @@ import java.awt.*;
  * @author Benjamin Pylko <spectare at sourceforge.net>
  */
 public class CrossHairs extends CrossHairsWidget{
+    public static final String NAME = "Cross Hairs";
 
 	@Override
 	public void init() {
