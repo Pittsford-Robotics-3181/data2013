@@ -57,12 +57,17 @@ class RampThread extends Thread{
          *  Something else has set the speed of the speed controller
          */
         try {
-            while((isUp && Math.abs(currentSpeed) < Math.abs(targetSpeed)) || (!isUp && Math.abs(currentSpeed) > Math.abs(targetSpeed))){
-                speed.set(Math.abs(currentSpeed)/currentSpeed == Math.abs(targetSpeed)/targetSpeed ? targetSpeed : currentSpeed + stepSize*Math.abs(targetSpeed)/targetSpeed);//Tell the speed controller to change speed
+            while((isUp && currentSpeed < targetSpeed) || (!isUp && currentSpeed > targetSpeed)){
+                if(Math.abs(targetSpeed)<Math.abs(currentSpeed))currentSpeed=targetSpeed;//We don't need to Ramp towards zero
+                else{
+                    currentSpeed+=isUp?stepSize:-stepSize;
+                    if((isUp && currentSpeed < targetSpeed) || (!isUp && currentSpeed > targetSpeed))currentSpeed=targetSpeed;
+                }
+                speed.set(currentSpeed);
                 Thread.sleep(1000/ticksPerSecond);//Delay for some time
            }
         }
-        catch (InterruptedException ex) {
+        catch (Exception ex) {
             //Do somehting
         }
     }
