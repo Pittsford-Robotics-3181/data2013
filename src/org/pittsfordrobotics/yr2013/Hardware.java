@@ -6,6 +6,7 @@
 
 package org.pittsfordrobotics.yr2013;
 import edu.wpi.first.wpilibj.Jaguar;
+import org.pittsfordrobotics.yr2013.Shooter;
 
 /**
  *
@@ -18,4 +19,9 @@ public class Hardware {
     public static Jaguar driveMotor2;
     public static Jaguar driveMotor3;
     public static Jaguar driveMotor4;
+    
+    public static Shooter shooter;
+    public static Jaguar ShootingMotor;
+    public static Jaguar ShotAngleMotor;
+    
 }

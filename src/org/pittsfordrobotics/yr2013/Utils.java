@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.SpeedController;
  * @author robbiemarkwick
  */
 public class Utils{
+    public static final double kDefaultRampStepSize=0.02;
+    public static final int kDefaultTicksPerSecond=20;
     /**
      * Ramps up the drive system by a certain amount 20 times per second until desired speed has been reached
      * @param targetSpeed
@@ -18,6 +20,9 @@ public class Utils{
     public static void ramp(double targetSpeed,SpeedController controller, int ticksPerSecond, double stepSize){
         RampThread thread=new RampThread(controller,targetSpeed, ticksPerSecond, stepSize);//create the thread
         thread.start();//Run the Thread
+    }
+    public static double checkClearance(double inputValue,double clearance){
+        return Math.abs(inputValue)>clearance?inputValue:0;
     }
     
 }
