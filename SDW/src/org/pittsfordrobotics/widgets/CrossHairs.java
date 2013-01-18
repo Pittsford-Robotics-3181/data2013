@@ -28,9 +28,10 @@ public class CrossHairs extends CrossHairsWidget{
 	@Override
 	public void paintComponent(Graphics g){
 		Graphics2D g2 = (Graphics2D)g;
+		g2.setColor(Color.RED);
+		g2.fillRect(15, 16, 1, 1);
 		g2.setColor(Color.GREEN);
 		g2.fillRect(0,16,14,1);
-		g2.fillRect(15, 16, 1, 1);
 		g2.fillRect(17,16,15,1);
 		g2.fillRect(15,0,1,15);
 		g2.fillRect(15,18,1,15);
