@@ -38,7 +38,6 @@ public class Utils{
         if(Math.abs(inputAngle-360)<clearance)return 0;
         return inputAngle;
     }
-    
 }
 /**
  * Thread used by ramp method in utils to do the ramping

@@ -20,5 +20,7 @@ public class Shooter {
     public void shoot(){
         Utils.ramp (ControlScheme.shotAngle()*.5, angleMotor, Utils.kDefaultTicksPerSecond , Utils.kDefaultRampStepSize);//Adjust Angle
         if(ControlScheme.getTrigger()) Utils.ramp(1, fireMotor, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//Shoot if needed
+        else Utils.ramp(0, fireMotor, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//Shoot if needed
+
     }
 }
