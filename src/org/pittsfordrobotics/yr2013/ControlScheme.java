@@ -14,13 +14,15 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class ControlScheme {
     private static final int shootingIndex = 0;
-    private static final int driveLeftSideIndex = 1;
-    private static final int driveRightSideIndex = 2;
-    private static final int aimUpIndex = 3;
-    private static final int aimDownIndex = 4;
+    private static final int spinningIndex = 1;
 
-    private static int[] joystickMap={1,0,0,1,1}; 
-    private static int[] buttonMap={0,6,7,4,5};
+    private static final int driveLeftSideIndex = 2;
+    private static final int driveRightSideIndex = 3;
+    private static final int aimUpIndex = 4;
+    private static final int aimDownIndex = 5;
+
+    private static int[] joystickMap={1,1,0,0,1,1}; 
+    private static int[] buttonMap={0,7,6,7,4,5};
     static Joystick joy1;//driving stick
     static Joystick joy2;//Shooting/Climbing Stick
     private static Joystick[] sticks={joy1,joy2};
@@ -29,7 +31,10 @@ public class ControlScheme {
     public static boolean getTrigger(){
         if(buttonMap[shootingIndex]==0)return (sticks[joystickMap[shootingIndex]]).getTrigger();
         return (sticks[joystickMap[shootingIndex]]).getRawButton(buttonMap[shootingIndex]);
-
+    }
+    public static boolean shouldSpin(){
+        if(buttonMap[spinningIndex]==0)return (sticks[joystickMap[spinningIndex]]).getTrigger();
+        return (sticks[joystickMap[spinningIndex]]).getRawButton(buttonMap[spinningIndex]);
     }
     public static double shotAngle(){
        if((buttonMap[aimUpIndex]==0)?((sticks[joystickMap[aimUpIndex]]).getTrigger()):((sticks[joystickMap[aimUpIndex]]).getRawButton(buttonMap[aimUpIndex])))return -.5;

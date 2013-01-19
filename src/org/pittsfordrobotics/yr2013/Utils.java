@@ -49,6 +49,9 @@ class RampThread extends Thread{
     private double targetSpeed;//The Desired Speed
 	private int ticksPerSecond = 20;
     private boolean isUp;//Is the motor ramping up or down?
+    private static final int numThreads=6;
+    static RampThread threads[]=new RampThread[numThreads];
+    boolean shouldStop=false;
     /**
      * Creates A new Ramping Thread
      * @param control SpeedController in focus
@@ -66,7 +69,17 @@ class RampThread extends Thread{
      * Actually does the ramping
      */
     public void run(){
-		double currentSpeed = speed.get();
+        for(int i=0;i<6;i++){//Stop the thread already using this SpeedController if applicable
+            if(threads[i].speed==(speed)){
+                threads[i].shouldStop=true;
+            }
+        }
+        for(int i=0;i<6;i++){//Add this to the list of threads
+            if(threads[i]==null){
+                threads[i]=this;
+            }
+        }
+	double currentSpeed = speed.get();
         isUp=targetSpeed>speed.get();//determine whether increasing or decreasing
         /*
          * Ramps up the drive system by a certain amount 20 times per second
@@ -75,7 +88,7 @@ class RampThread extends Thread{
          *  Something else has set the speed of the speed controller
          */
         try {
-            while((isUp && currentSpeed < targetSpeed) || (!isUp && currentSpeed > targetSpeed)){
+            while(((isUp && currentSpeed < targetSpeed) || (!isUp && currentSpeed > targetSpeed))&&!shouldStop){
                 if(Math.abs(targetSpeed)<Math.abs(currentSpeed))currentSpeed=targetSpeed;//We don't need to Ramp towards zero
                 else{
                     currentSpeed+=isUp?stepSize:-stepSize;
