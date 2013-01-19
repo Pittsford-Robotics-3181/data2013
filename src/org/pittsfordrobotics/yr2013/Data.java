@@ -41,5 +41,13 @@ public class Data extends IterativeRobot {
         Hardware.driving.drive();
         Hardware.shooter.shoot();
     }
-    
+    public void autonomousInit(){
+        
+    }
+    public void teleopInit(){
+        
+    }
+    public void disabledInit(){
+         
+    }
 }

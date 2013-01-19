@@ -20,8 +20,8 @@ public class Hardware {
     public static DriveSystem driving=new DriveSystem(driveMotor1,driveMotor2,driveMotor3,driveMotor4);
     
     public static Jaguar ShootingMotor=new Jaguar(5);
-    public static Jaguar ShotAngleMotor=new Jaguar(6);
-    public static Shooter shooter=new Shooter(ShootingMotor,ShotAngleMotor);
+   // public static Jaguar ShotAngleMotor=new Jaguar(6);
+    public static Shooter shooter=new Shooter(ShootingMotor);
 
     
 }
