@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class Utils{
     public static final double kDefaultRampStepSize=0.02;
     public static final int kDefaultTicksPerSecond=20;
+    public static final double kDefaultDegreeClearnace=10;
+
     /**
      * Ramps up the drive system by a certain amount 20 times per second until desired speed has been reached
      * @param targetSpeed
@@ -23,6 +25,18 @@ public class Utils{
     }
     public static double checkClearance(double inputValue,double clearance){
         return Math.abs(inputValue)>clearance?inputValue:0;
+    }
+    public static double checkAngle(double inputAngle,double clearance,boolean include45){
+        if(Math.abs(inputAngle)<clearance)return 0;
+        if(Math.abs(inputAngle-45)<clearance&&include45)return 45;
+        if(Math.abs(inputAngle-90)<clearance)return 90;
+        if(Math.abs(inputAngle-135)<clearance&&include45)return 135;
+        if(Math.abs(inputAngle-180)<clearance)return 180;
+        if(Math.abs(inputAngle-225)<clearance&&include45)return 225;
+        if(Math.abs(inputAngle-270)<clearance)return 270;
+        if(Math.abs(inputAngle-315)<clearance&&include45)return 315;
+        if(Math.abs(inputAngle-360)<clearance)return 0;
+        return inputAngle;
     }
     
 }

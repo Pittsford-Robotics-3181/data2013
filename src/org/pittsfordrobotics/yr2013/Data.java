@@ -9,7 +9,6 @@
 
 package org.pittsfordrobotics.yr2013;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import org.pittsfordrobotics.yr2013.Shooter;
 // @author Liam Middlebrook
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,6 +38,7 @@ public class Data extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        Hardware.driving.drive();
         Hardware.shooter.shoot();
     }
     
