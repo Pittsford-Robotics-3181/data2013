@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="windows-1252"?>
+
+<!--
+    Document   : sampleLog.xml
+    Created on : January 19, 2013, 5:01 PM
+    Author     : robbiemarkwick
+    Description:
+        Purpose of the document follows.
+-->
+
+<log mode="teleop">
+    <threadCycle thread="main">
+        <controlScheme>
+            <shooting>
+               <joystick num="1" /> 
+               <button num="0" /> 
+            </shooting>
+            <spinning>
+               <joystick num="1" /> 
+               <button num="7" /> 
+            </spinning>
+            <leftRot>
+               <joystick num="0" /> 
+               <button num="6" /> 
+           </leftRot>
+           <rightRot>
+               <joystick num="0" /> 
+               <button num="7" /> 
+           </rightRot>
+           <aimUp>
+               <joystick num="1" /> 
+               <button num="4" /> 
+           </aimUp>
+           <aimDown>
+               <joystick num="1" /> 
+               <button num="5" /> 
+           </aimDown>
+           <driveValues>
+               <Magnitude value=".7" /> 
+               <Direction value="true" /> 
+               <Rotation value="false" /> 
+           </driveValues>
+           <shotValues>
+               <adjustAngle value="1" /> 
+               <shouldSpin value="true" /> 
+               <shouldFire value="false" /> 
+           </shotValues>
+        </controlScheme>
+        <shooter>
+            <angleMotor value="0.1"/>
+            <FireMotor1>
+                <Target value="1.0"/>
+                <Current value="0.5"/>
+            </FireMotor1>
+            <FireMotor2>
+                <Target value="1.0"/>
+                <Current value="0.5"/>
+            </FireMotor2>
+            <Servo position="0"/>
+        </shooter>
+        <shooter>
+            <angleMotor value="0.1"/>
+            <FireMotor1>
+                <Target value="1.0"/>
+                <Current value="0.5"/>
+            </FireMotor1>
+            <FireMotor2>
+                <Target value="1.0"/>
+                <Current value="0.5"/>
+            </FireMotor2>
+            <Servo position="0"/>
+        </shooter>
+        <driveSystem>
+            <frontLeft value="0.6"/>
+            <frontRight value="-0.8"/>
+            <backLeft value="-0.4"/>
+            <backRight value="0.9"/>
+        </driveSystem>
+    </threadCycle>
+    <threadCycle thread="ramp">
+       <FireMotor2 name="ShootingMotor1">
+         <Target value="1.0"/>
+         <Current value="0.6"/>
+       </FireMotor2> 
+       <StepSize value=".01"/>
+       <TPS value="20"/>
+    </threadCycle>
+</log>
+ 

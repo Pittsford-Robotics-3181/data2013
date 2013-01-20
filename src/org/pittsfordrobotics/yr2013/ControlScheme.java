@@ -15,14 +15,16 @@ import edu.wpi.first.wpilibj.Joystick;
 public class ControlScheme {
     private static final int shootingIndex = 0;
     private static final int spinningIndex = 1;
-
     private static final int driveLeftSideIndex = 2;
     private static final int driveRightSideIndex = 3;
     private static final int aimUpIndex = 4;
     private static final int aimDownIndex = 5;
+    private static final int beginClimbIndex = 6;
+    private static final int climbIndex = 7;
 
-    private static int[] joystickMap={1,1,0,0,1,1}; 
-    private static int[] buttonMap={0,7,6,7,4,5};
+
+    private static int[] joystickMap={1,1,0,0,1,1,1,1}; 
+    private static int[] buttonMap={0,7,6,7,4,5,1,2};
     static Joystick joy1;//driving stick
     static Joystick joy2;//Shooting/Climbing Stick
     private static Joystick[] sticks={joy1,joy2};
@@ -40,6 +42,14 @@ public class ControlScheme {
        if((buttonMap[aimUpIndex]==0)?((sticks[joystickMap[aimUpIndex]]).getTrigger()):((sticks[joystickMap[aimUpIndex]]).getRawButton(buttonMap[aimUpIndex])))return -.5;
         else if((buttonMap[aimDownIndex]==0)?((sticks[joystickMap[aimDownIndex]]).getTrigger()):((sticks[joystickMap[aimDownIndex]]).getRawButton(buttonMap[aimDownIndex])))return .5;
         return 0;
+    }
+     public static boolean getClimbStart(){
+        if(buttonMap[beginClimbIndex]==0)return (sticks[joystickMap[beginClimbIndex]]).getTrigger();
+        return (sticks[joystickMap[beginClimbIndex]]).getRawButton(buttonMap[beginClimbIndex]);
+    }
+    public static boolean shouldClimb(){
+        if(buttonMap[beginClimbIndex]==0)return (sticks[joystickMap[beginClimbIndex]]).getTrigger();
+        return (sticks[joystickMap[beginClimbIndex ]]).getRawButton(buttonMap[beginClimbIndex]);
     }
     public static double driveMagnitude(){
         return Utils.checkClearance(joy1.getMagnitude(), .1);

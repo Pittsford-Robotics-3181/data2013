@@ -40,6 +40,7 @@ public class Data extends IterativeRobot {
     public void teleopPeriodic() {
         Hardware.driving.drive();
         Hardware.shooter.shoot();
+        Hardware.climber.climb();
     }
     public void autonomousInit(){
         

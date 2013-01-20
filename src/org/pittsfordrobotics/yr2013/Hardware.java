@@ -30,5 +30,6 @@ public class Hardware {
     
     public static Jaguar ClimbMotor1=new Jaguar(9);//Climbing
     public static Jaguar ClimbMotor2=new Jaguar(10);//Setup for climbing 
+    public static Climber climber=new Climber(ClimbMotor1,ClimbMotor2);
         
 }
