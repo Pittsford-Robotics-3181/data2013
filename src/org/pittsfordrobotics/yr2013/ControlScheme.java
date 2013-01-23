@@ -25,9 +25,10 @@ public class ControlScheme {
 
     private static int[] joystickMap={1,1,0,0,1,1,1,1}; 
     private static int[] buttonMap={0,7,6,7,4,5,1,2};
-    static Joystick joy1;//driving stick
+    static Joystick joy0;//left driving stick in tank only
+    static Joystick joy1;//driving stick (right in tank)
     static Joystick joy2;//Shooting/Climbing Stick
-    private static Joystick[] sticks={joy1,joy2};
+    private static Joystick[] sticks={joy1,joy2};//does not include the left if tank-Driving (lefty drivers can physically swap them)
     
 
     public static boolean getTrigger(){
@@ -61,6 +62,12 @@ public class ControlScheme {
         if((buttonMap[driveLeftSideIndex]==0)?((sticks[joystickMap[driveLeftSideIndex]]).getTrigger()):((sticks[joystickMap[driveLeftSideIndex]]).getRawButton(buttonMap[driveLeftSideIndex])))return -1;
         else if((buttonMap[driveRightSideIndex]==0)?((sticks[joystickMap[driveRightSideIndex]]).getTrigger()):((sticks[joystickMap[driveRightSideIndex]]).getRawButton(buttonMap[driveRightSideIndex])))return 1;
         return 0;
+    }
+    public static double tankLeft(){
+        return Utils.checkClearance(joy0.getY(), .1);
+    }
+    public static double tankRight(){
+        return Utils.checkClearance(joy1.getY(),.1);
     }
     /**
      * Remap Joystick

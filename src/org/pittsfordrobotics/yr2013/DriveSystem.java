@@ -16,9 +16,14 @@ public class DriveSystem {
     DriveSystem(SpeedController frontRight,SpeedController frontLeft, SpeedController backLeft, SpeedController backRight){
         drive=new RobotDrive(frontLeft,backLeft,frontRight,backRight);
     }
+    DriveSystem(SpeedController left,SpeedController right){
+        drive=new RobotDrive(left,right);
+    }
     public void drive(){
         drive.mecanumDrive_Polar(ControlScheme.driveMagnitude(), ControlScheme.driveDirection(), ControlScheme.driveRotation());
-        
+    }
+    public void tankDrive(){
+        drive.tankDrive(ControlScheme.tankLeft(), ControlScheme.tankRight());
     }
 }
  

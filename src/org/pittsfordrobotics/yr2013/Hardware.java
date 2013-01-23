@@ -20,7 +20,7 @@ public class Hardware {
     public static Jaguar driveMotor3=new Jaguar(3);//Backward Left
     public static Jaguar driveMotor4=new Jaguar(4);//Backward Right
     public static DriveSystem driving=new DriveSystem(driveMotor1,driveMotor2,driveMotor3,driveMotor4);
-    
+    //public  static DriveSystem driving=new DriveSystem(driveMotor2,DriveMotor1); //uncomment this for tank drive
     public static Jaguar ShootingMotor=new Jaguar(5);
     public static Jaguar ShootingMotor2=new Jaguar(6);
 
