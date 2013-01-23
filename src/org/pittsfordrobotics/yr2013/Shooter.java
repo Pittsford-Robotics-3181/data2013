@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Servo;
  *
  * @author robbiemarkwick
  */
-public class Shooter {
+public class Shooter implements Loggable{
     public Jaguar angleMotor;
     public Jaguar fireMotor1;
     public Jaguar fireMotor2;
@@ -53,5 +53,9 @@ public class Shooter {
         bump.set(ControlScheme.getTrigger()?1:0);//Launch Disks if and only if the driver says so
         
 
+    }
+
+    public String logString() {
+        return"";
     }
 }

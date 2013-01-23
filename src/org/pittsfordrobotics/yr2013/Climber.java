@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Jaguar;
  *
  * @author robbiemarkwick
  */
-public class Climber {
+public class Climber implements Loggable{
     public Jaguar climber;
     public Jaguar angler;
     Climber (Jaguar climb,Jaguar angle){
@@ -30,6 +30,9 @@ public class Climber {
        else {
             Utils.ramp(0, climber, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
         }//climb if needed
+    }
+    public String logString() {
+        return"";
     }
 
 }

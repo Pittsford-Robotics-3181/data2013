@@ -82,4 +82,5 @@ public class ControlScheme {
         joystickMap[function]=stick;
         buttonMap[function]=button;
     }
+    
 }

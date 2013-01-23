@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  * @author robbiemarkwick
  */
-public class DriveSystem {
+public class DriveSystem implements Loggable{
     private RobotDrive drive;
     DriveSystem(SpeedController frontRight,SpeedController frontLeft, SpeedController backLeft, SpeedController backRight){
         drive=new RobotDrive(frontLeft,backLeft,frontRight,backRight);
@@ -24,6 +24,9 @@ public class DriveSystem {
     }
     public void tankDrive(){
         drive.tankDrive(ControlScheme.tankLeft(), ControlScheme.tankRight());
+    }
+    public String logString() {
+        return"";
     }
 }
  
