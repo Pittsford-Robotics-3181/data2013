@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!--Define how each function should look-->
+    <xs:complexType name="function">
+	<xs:all>
+	   <xs:element name="joystick" type="xs:integer" minOccurs="1" />
+	   <xs:element name="button" type="xs:integer" minOccurs="1" />
+	</xs:all>
+    </xs:complexType>
+    <!--Define what functions should be listed-->
+    <xs:element name="controlMap">
+	<xs:complexType>
+	    <xs:all>
+		<xs:element name="shooting" type="function" minOccurs="1"/>
+		<xs:element name="spinning" type="function" minOccurs="1"/>
+		<xs:element name="leftRot" type="function" minOccurs="1"/>
+		<xs:element name="rightRot" type="function" minOccurs="1"/>
+		<xs:element name="aimUp" type="function" minOccurs="1"/>
+		<xs:element name="aimDown" type="function" minOccurs="1"/>
+		<xs:element name="beginClimb" type="function" minOccurs="1"/>
+		<xs:element name="climb" type="function" minOccurs="1"/>
+	    </xs:all>
+	</xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -6,8 +6,18 @@ package org.pittsfordrobotics.widgets;
 
 import edu.wpi.first.smartdashboard.gui.StaticWidget;
 import edu.wpi.first.smartdashboard.properties.Property;
-import edu.wpi.first.smartdashboard.robot.Robot;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import java.io.File;
+import org.w3c.dom.Document;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -22,7 +32,7 @@ public class ControlSchemeManager  extends StaticWidget{
     public static final int aimDownIndex = 5;
     public static final int beginClimbIndex = 6;
     public static final int climbIndex = 7;
-    
+    static final String directory="/";
     public static boolean NetworkIsIdiot;//The Network is being an idiot
     
     public  int[] joystickMap={1,1,0,0,1,1,1,1}; 
@@ -67,24 +77,108 @@ public class ControlSchemeManager  extends StaticWidget{
      * saves the control map for current driver
      */
     public void saveDriveFiles(){
-        String xmlString="<?xml version=\"1.0\" encoding=\"windows-1252\"?>";
-        //Log Map Values
-        xmlString=xmlString.concat("<controlMap>\n<shooting>\n<joystick num=\""+joystickMap[shootingIndex]+"\" />\n <button num=\""+buttonMap[shootingIndex]+"\" />\n</shooting>");
-        xmlString=xmlString.concat("<spinning>\n<joystick num=\""+joystickMap[spinningIndex]+"\" />\n <button num=\""+buttonMap[spinningIndex]+"\" />\n</spinning>");
-        xmlString=xmlString.concat("<leftRot>\n<joystick num=\""+joystickMap[driveLeftSideIndex]+"\" />\n <button num=\""+buttonMap[driveLeftSideIndex]+"\" />\n</leftRot>");
-        xmlString=xmlString.concat("<rightRot>\n<joystick num=\""+joystickMap[driveRightSideIndex]+"\" />\n <button num=\""+buttonMap[driveRightSideIndex]+"\" />\n</rightRot>");
-        xmlString=xmlString.concat("<aimUp>\n<joystick num=\""+joystickMap[aimUpIndex]+"\" />\n <button num=\""+buttonMap[aimUpIndex]+"\" />\n</aimUp>");
-        xmlString=xmlString.concat("<aimDown>\n<joystick num=\""+joystickMap[aimDownIndex]+"\" />\n <button num=\""+buttonMap[aimDownIndex]+"\" />\n</aimDown>");
-        xmlString=xmlString.concat("<beginClimb>\n<joystick num=\""+joystickMap[beginClimbIndex]+"\" />\n <button num=\""+buttonMap[beginClimbIndex]+"\" />\n</beginClimb>");
-        xmlString=xmlString.concat("<climbing>\n<joystick num=\""+joystickMap[climbIndex]+"\" />\n <button num=\""+buttonMap[climbIndex]+"\" />\n</climbing>\n</controlSchme");
+	try {
+	    /*set up the XML document*/
+		    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		    DocumentBuilder builder = factory.newDocumentBuilder();
+		    Document doc= builder.newDocument();
+		    Element root=doc.createElement("controlMap");
+		    doc.appendChild(root);//make the Root Element
+		    /*Create the elements defining the control scheme*/
+		    for (int i = 0; i < buttonMap.length; i++) {//loop for each function
+			Element item=doc.createElement(elementNameForFunction(i));//create the element for the function
+			//set the joystick value
+			Element joy=doc.createElement("joystick");
+			joy.setTextContent(""+joystickMap[i]);
+			//set the button value
+			Element butt=doc.createElement("button");
+			butt.setTextContent(""+buttonMap[i]);
+			//add elements to the root element
+			item.appendChild(joy);
+			item.appendChild(butt);
+			root.appendChild(item);
+		    }
+		    /*Write the document to the file*/
+		    String pathToFile=directory+driverName+".xml";
+		    File driverFile=new File(pathToFile);
+		    //the rest of this is form the internet
+		    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		    Transformer transformer = transformerFactory.newTransformer();
+		    DOMSource source = new DOMSource(doc);
+		    StreamResult result = new StreamResult(driverFile);
+		    // To Output to console for testing, uncomment next line and comment previous line
+		    // StreamResult result = new StreamResult(System.out);
+		    transformer.transform(source, result);
+ 
+	} catch (Exception ex) {
+	    //Do something
+	}
     }
     /**
      * Loads control map for the driver
      */
     private void loadDriveFiles(){
-       //TODO: Implement this
+	/*set the map to -1 to avoid conflicts*/
+	for (int i = 0; i < buttonMap.length; i++) {
+	    joystickMap[i]=-1;
+	    buttonMap[i]=-1;
+	}
+	/*Locate the file*/
+	String pathToFile=directory+driverName+".xml";
+	File driverFile=new File(pathToFile);
+	    try {
+		/*Don't parse a file that doesn't exist*/
+		if(!driverFile.exists()){
+		    Exception ex=new Exception();
+		    throw ex;
+		}
+		/*Load and process the XML*/
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document doc= builder.parse(driverFile);
+		Element root=doc.getDocumentElement();//get the Root Element
+		/*Look at the elements defining the control scheme*/
+		for (int i = 0; i < buttonMap.length; i++) {//loop for each function
+		    Element item = (Element) root.getElementsByTagName(elementNameForFunction(i)).item(0);//element for the function
+		    Element joystick = (Element) item.getElementsByTagName("joystick").item(0);
+		    int joy=Integer.parseInt(joystick.getTextContent());//read the joystick number
+		    Element button = (Element) item.getElementsByTagName("button").item(0);
+		    int butt=Integer.parseInt(button.getTextContent());//read the button number
+		    setJoystickAndButtonForFunction(joy,butt,i,false);
+		}
+		
+	    } catch (Exception ex) {
+		loadDefaultConfig();//if there is a problem loading the config, load the default
+	    }
+	    /*TODO: tell Ben to redraw based on the new map values*/
     }
-    
+    private String elementNameForFunction(int index){
+	switch (index){
+	    case shootingIndex:return"shooting";
+	    case spinningIndex:return"spinning";
+	    case driveLeftSideIndex:return"leftRot";
+	    case driveRightSideIndex:return"rightRot";
+	    case aimUpIndex:return"aimUp";
+	    case aimDownIndex:return"aimDown";
+	    case beginClimbIndex:return"beginClimb";
+	    case climbIndex:return"climb";
+	    default :return "";
+	}
+    }
+    /**
+     * loads the default configuration if there was a problem (or this is the driver's first time)
+     */
+    private void loadDefaultConfig(){
+	setJoystickAndButtonForFunction(1,0,shootingIndex,false);  
+	setJoystickAndButtonForFunction(1,7,spinningIndex,false);  
+	setJoystickAndButtonForFunction(0,6,driveLeftSideIndex,false);  
+	setJoystickAndButtonForFunction(0,7,driveRightSideIndex,false);  
+	setJoystickAndButtonForFunction(1,4,aimUpIndex,false);  
+	setJoystickAndButtonForFunction(1,5,aimDownIndex,false);  
+	setJoystickAndButtonForFunction(1,1,beginClimbIndex,false);  
+	setJoystickAndButtonForFunction(1,2,climbIndex,false);  
+	saveDriveFiles();
+    }
     
     /**
      * Tells the Robot to remap its control Scheme
