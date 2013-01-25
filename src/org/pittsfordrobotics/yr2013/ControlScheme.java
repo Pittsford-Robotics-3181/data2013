@@ -22,7 +22,6 @@ public class ControlScheme {
     private static final int beginClimbIndex = 6;
     private static final int climbIndex = 7;
 
-
     private static int[] joystickMap={1,1,0,0,1,1,1,1}; 
     private static int[] buttonMap={0,7,6,7,4,5,1,2};
     static Joystick joy0;//left driving stick in tank only
@@ -49,8 +48,8 @@ public class ControlScheme {
         return (sticks[joystickMap[beginClimbIndex]]).getRawButton(buttonMap[beginClimbIndex]);
     }
     public static boolean shouldClimb(){
-        if(buttonMap[beginClimbIndex]==0)return (sticks[joystickMap[beginClimbIndex]]).getTrigger();
-        return (sticks[joystickMap[beginClimbIndex ]]).getRawButton(buttonMap[beginClimbIndex]);
+        if(buttonMap[climbIndex]==0)return (sticks[joystickMap[climbIndex]]).getTrigger();
+        return (sticks[joystickMap[climbIndex ]]).getRawButton(buttonMap[climbIndex]);
     }
     public static double driveMagnitude(){
         return Utils.checkClearance(joy1.getMagnitude(), .1);
@@ -75,12 +74,48 @@ public class ControlScheme {
      * @param button 0 for trigger, otherwise button 1-12
      * @param function index matching the function you want to remap (see the constants)
      */
-    public static void setJoystickAndButtonForFunction(int stick, int button, int function){
+    public static void setJoystickAndButtonForFunction(int stick, int button, int function,String driverName,boolean shouldLog){
         for(int i=0; i<=4;i++){
             if(stick==joystickMap[i]&&button==buttonMap[i])return;//don't remap if that button is already in use
         }
         joystickMap[function]=stick;
         buttonMap[function]=button;
+        if(shouldLog)ControlScheme.saveDriveFiles(driverName);
     }
-    
+    public static String logString(){
+        String xmlString="<controlScheme>\n";
+        xmlString=xmlString.concat("<driveValues>\n"+
+                "<Magnitude value=\""+ControlScheme.driveMagnitude()+"\" />\n"+
+                "<Direction value=\""+ControlScheme.driveDirection()+"\" />\n"+
+                "<Rotation value=\""+ControlScheme.driveRotation()+"\" />\n"+
+                "</driveValues>\n");
+        xmlString=xmlString.concat("<shot>\n"+
+                "<adjustAngle value=\""+ControlScheme.shotAngle()+"\" />\n"+
+                "<shouldSpin value=\""+(ControlScheme.shouldSpin()?"true":"false")+"\" />\n"+
+                "<shouldFire value=\""+(ControlScheme.getTrigger()?"true":"false")+"\" />\n"+
+                "</driveValues>\n");
+        xmlString=xmlString.concat("<climbValues>\n"+
+                "<shouldBegin value=\""+(ControlScheme.getClimbStart()?"true":"false")+"\" />\n"+
+                "<shouldClimb value=\""+(ControlScheme.shouldClimb()?"true":"false")+"\" />\n"+
+                "</climbValues>\n");
+        xmlString=xmlString.concat("</controlSchme>");
+        return xmlString;
+    }
+    public static void saveDriveFiles(String driverName){
+        String xmlString="<?xml version=\"1.0\" encoding=\"windows-1252\"?>";
+        //Log Map Values
+        xmlString=xmlString.concat("<controlMap>\n<shooting>\n<joystick num=\""+joystickMap[shootingIndex]+"\" />\n <button num=\""+buttonMap[shootingIndex]+"\" />\n</shooting>");
+        xmlString=xmlString.concat("<spinning>\n<joystick num=\""+joystickMap[spinningIndex]+"\" />\n <button num=\""+buttonMap[spinningIndex]+"\" />\n</spinning>");
+        xmlString=xmlString.concat("<leftRot>\n<joystick num=\""+joystickMap[driveLeftSideIndex]+"\" />\n <button num=\""+buttonMap[driveLeftSideIndex]+"\" />\n</leftRot>");
+        xmlString=xmlString.concat("<rightRot>\n<joystick num=\""+joystickMap[driveRightSideIndex]+"\" />\n <button num=\""+buttonMap[driveRightSideIndex]+"\" />\n</rightRot>");
+        xmlString=xmlString.concat("<aimUp>\n<joystick num=\""+joystickMap[aimUpIndex]+"\" />\n <button num=\""+buttonMap[aimUpIndex]+"\" />\n</aimUp>");
+        xmlString=xmlString.concat("<aimDown>\n<joystick num=\""+joystickMap[aimDownIndex]+"\" />\n <button num=\""+buttonMap[aimDownIndex]+"\" />\n</aimDown>");
+        xmlString=xmlString.concat("<beginClimb>\n<joystick num=\""+joystickMap[beginClimbIndex]+"\" />\n <button num=\""+buttonMap[beginClimbIndex]+"\" />\n</beginClimb>");
+        xmlString=xmlString.concat("<climbing>\n<joystick num=\""+joystickMap[climbIndex]+"\" />\n <button num=\""+buttonMap[climbIndex]+"\" />\n</climbing>\n</controlSchme");
+        //TODO: KYLE, Please save this text to a file named "driverName.xml"
+    }
+    public static void loadDriveFiles(String driverName){
+        //TODO: KYLE, Please load file named "driverName.xml" and save the files text to a string named xmlString
+        
+    }
 }
