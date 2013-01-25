@@ -7,20 +7,21 @@
 package org.pittsfordrobotics.yr2013;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  * @author Robbie Markwick
  * @author Liam Middlebrook
  */
 public class ControlScheme {
-    private static final int shootingIndex = 0;
-    private static final int spinningIndex = 1;
-    private static final int driveLeftSideIndex = 2;
-    private static final int driveRightSideIndex = 3;
-    private static final int aimUpIndex = 4;
-    private static final int aimDownIndex = 5;
-    private static final int beginClimbIndex = 6;
-    private static final int climbIndex = 7;
+    public static final int shootingIndex = 0;
+    public static final int spinningIndex = 1;
+    public static final int driveLeftSideIndex = 2;
+    public static final int driveRightSideIndex = 3;
+    public static final int aimUpIndex = 4;
+    public static final int aimDownIndex = 5;
+    public static final int beginClimbIndex = 6;
+    public static final int climbIndex = 7;
 
     private static int[] joystickMap={1,1,0,0,1,1,1,1}; 
     private static int[] buttonMap={0,7,6,7,4,5,1,2};
@@ -73,14 +74,60 @@ public class ControlScheme {
      * @param stick 0 for first stick, 1 for second stick
      * @param button 0 for trigger, otherwise button 1-12
      * @param function index matching the function you want to remap (see the constants)
+     * @return was remap successful
      */
-    public static void setJoystickAndButtonForFunction(int stick, int button, int function,String driverName,boolean shouldLog){
-        for(int i=0; i<=4;i++){
-            if(stick==joystickMap[i]&&button==buttonMap[i])return;//don't remap if that button is already in use
+    public static void setJoystickAndButtonForFunction(int stick, int button, int function){
+        for(int i=0; i<buttonMap.length;i++){
+            if(stick==joystickMap[i]&&button==buttonMap[i]){
+		switch (function) {
+		    case shootingIndex: {
+			NetworkTable.getTable("Controls").putNumber("ShootingStick", joystickMap[function]);
+			NetworkTable.getTable("Controls").putNumber("ShootingButt", buttonMap[function]);
+		    }
+		    break;
+		    case spinningIndex: {
+			NetworkTable.getTable("Controls").putNumber("SpinningStick", joystickMap[function]);
+			NetworkTable.getTable("Controls").putNumber("SpinningButt", buttonMap[function]);
+		    }
+		    break;
+		    case driveLeftSideIndex: {
+			NetworkTable.getTable("Controls").putNumber("DriveLeftStick", joystickMap[function]);
+			NetworkTable.getTable("Controls").putNumber("DriveLeftButt", buttonMap[function]);
+		    }
+		    break;
+		    case driveRightSideIndex: {
+			NetworkTable.getTable("Controls").putNumber("DriveRightStick", joystickMap[function]);
+			NetworkTable.getTable("Controls").putNumber("DriveRightButt", buttonMap[function]);
+		    }
+		    break;
+		    case aimUpIndex: {
+			NetworkTable.getTable("Controls").putNumber("AimUpStick", joystickMap[function]);
+			NetworkTable.getTable("Controls").putNumber("AimUpButt", buttonMap[function]);
+		    }
+		    break;
+		    case aimDownIndex: {
+			NetworkTable.getTable("Controls").putNumber("AimDownStick", joystickMap[function]);
+			NetworkTable.getTable("Controls").putNumber("AimDownButt", buttonMap[function]);
+		    }
+		    break;
+		    case beginClimbIndex: {
+			NetworkTable.getTable("Controls").putNumber("BeginClimbStick", joystickMap[function]);
+			NetworkTable.getTable("Controls").putNumber("BeginClimbButt", buttonMap[function]);
+		    }
+		    break;
+		    case climbIndex: {
+			NetworkTable.getTable("Controls").putNumber("ClimbStick", joystickMap[function]);
+			NetworkTable.getTable("Controls").putNumber("ClimbButt", buttonMap[function]);
+		    }
+		    break;
+		}
+		NetworkTable.getTable("Controls").putBoolean("RemapFailure", true);//alert the driveStation that the remap failed
+		return;
+	    }//don't remap if that button is already in use		
+
         }
         joystickMap[function]=stick;
         buttonMap[function]=button;
-        if(shouldLog)ControlScheme.saveDriveFiles(driverName);
     }
     public static String logString(){
         String xmlString="<controlScheme>\n";
@@ -101,21 +148,5 @@ public class ControlScheme {
         xmlString=xmlString.concat("</controlSchme>");
         return xmlString;
     }
-    public static void saveDriveFiles(String driverName){
-        String xmlString="<?xml version=\"1.0\" encoding=\"windows-1252\"?>";
-        //Log Map Values
-        xmlString=xmlString.concat("<controlMap>\n<shooting>\n<joystick num=\""+joystickMap[shootingIndex]+"\" />\n <button num=\""+buttonMap[shootingIndex]+"\" />\n</shooting>");
-        xmlString=xmlString.concat("<spinning>\n<joystick num=\""+joystickMap[spinningIndex]+"\" />\n <button num=\""+buttonMap[spinningIndex]+"\" />\n</spinning>");
-        xmlString=xmlString.concat("<leftRot>\n<joystick num=\""+joystickMap[driveLeftSideIndex]+"\" />\n <button num=\""+buttonMap[driveLeftSideIndex]+"\" />\n</leftRot>");
-        xmlString=xmlString.concat("<rightRot>\n<joystick num=\""+joystickMap[driveRightSideIndex]+"\" />\n <button num=\""+buttonMap[driveRightSideIndex]+"\" />\n</rightRot>");
-        xmlString=xmlString.concat("<aimUp>\n<joystick num=\""+joystickMap[aimUpIndex]+"\" />\n <button num=\""+buttonMap[aimUpIndex]+"\" />\n</aimUp>");
-        xmlString=xmlString.concat("<aimDown>\n<joystick num=\""+joystickMap[aimDownIndex]+"\" />\n <button num=\""+buttonMap[aimDownIndex]+"\" />\n</aimDown>");
-        xmlString=xmlString.concat("<beginClimb>\n<joystick num=\""+joystickMap[beginClimbIndex]+"\" />\n <button num=\""+buttonMap[beginClimbIndex]+"\" />\n</beginClimb>");
-        xmlString=xmlString.concat("<climbing>\n<joystick num=\""+joystickMap[climbIndex]+"\" />\n <button num=\""+buttonMap[climbIndex]+"\" />\n</climbing>\n</controlSchme");
-        //TODO: KYLE, Please save this text to a file named "driverName.xml"
-    }
-    public static void loadDriveFiles(String driverName){
-        //TODO: KYLE, Please load file named "driverName.xml" and save the files text to a string named xmlString
-        
-    }
+    
 }

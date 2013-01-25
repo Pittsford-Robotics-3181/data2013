@@ -9,6 +9,7 @@
 
 package org.pittsfordrobotics.yr2013;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 // @author Liam Middlebrook
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,7 +32,8 @@ public class Data extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    
+    	if(NetworkTable.getTable("Controls").getBoolean("NetworkIdiot"))NetworkTable.getTable("Controls").putBoolean("NetworkIdiot",false);//make sure the network is not being an idiot
+
     }
 
     /**
@@ -41,14 +43,38 @@ public class Data extends IterativeRobot {
         Hardware.driving.drive();
         Hardware.shooter.shoot();
         Hardware.climber.climb();
+	if(NetworkTable.getTable("Controls").getBoolean("NetworkIdiot"))NetworkTable.getTable("Controls").putBoolean("NetworkIdiot",false);//make sure the network is not being an idiot
     }
     public void autonomousInit(){
-        
     }
     public void teleopInit(){
         
     }
     public void disabledInit(){
          
+    }
+    public void disabledPeriodic(){
+	/*check and see if controls need remaping*/
+	if (NetworkTable.getTable("Controls").getBoolean("NeedsToRemap")) {
+	    /*Remap the controls*/
+	    ControlScheme.setJoystickAndButtonForFunction((int) NetworkTable.getTable("Controls").getNumber("ShootingStick"),
+		    (int) NetworkTable.getTable("Controls").getNumber("ShootingButt"), ControlScheme.shootingIndex);
+	    ControlScheme.setJoystickAndButtonForFunction((int) NetworkTable.getTable("Controls").getNumber("SpinningStick"),
+		    (int) NetworkTable.getTable("Controls").getNumber("SpinningButt"), ControlScheme.spinningIndex);
+	    ControlScheme.setJoystickAndButtonForFunction((int) NetworkTable.getTable("Controls").getNumber("DriveLeftStick"),
+		    (int) NetworkTable.getTable("Controls").getNumber("DriveLeftButt"), ControlScheme.driveLeftSideIndex);
+	    ControlScheme.setJoystickAndButtonForFunction((int) NetworkTable.getTable("Controls").getNumber("DriveRightStick"),
+		    (int) NetworkTable.getTable("Controls").getNumber("DriveRightButt"), ControlScheme.driveRightSideIndex);
+	    ControlScheme.setJoystickAndButtonForFunction((int) NetworkTable.getTable("Controls").getNumber("AimUpStick"),
+		    (int) NetworkTable.getTable("Controls").getNumber("AimUpButt"), ControlScheme.aimUpIndex);
+	    ControlScheme.setJoystickAndButtonForFunction((int) NetworkTable.getTable("Controls").getNumber("AimDownStick"),
+		    (int) NetworkTable.getTable("Controls").getNumber("AimDownButt"), ControlScheme.aimDownIndex);
+	    ControlScheme.setJoystickAndButtonForFunction((int) NetworkTable.getTable("Controls").getNumber("BeginClimbStick"),
+		    (int) NetworkTable.getTable("Controls").getNumber("BeginClimbButt"), ControlScheme.beginClimbIndex);
+	    ControlScheme.setJoystickAndButtonForFunction((int) NetworkTable.getTable("Controls").getNumber("ClimbStick"),
+		    (int) NetworkTable.getTable("Controls").getNumber("ClimbButt"), ControlScheme.climbIndex);
+	    NetworkTable.getTable("Controls").putBoolean("NeedsToRemap", false);//don't remap stuff until necessary
+	}
+    	if(NetworkTable.getTable("Controls").getBoolean("NetworkIdiot"))NetworkTable.getTable("Controls").putBoolean("NetworkIdiot",false);//make sure the network is not being an idiot
     }
 }
