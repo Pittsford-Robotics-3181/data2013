@@ -6,6 +6,7 @@ package org.pittsfordrobotics.widgets;
 
 import edu.wpi.first.smartdashboard.gui.StaticWidget;
 import edu.wpi.first.smartdashboard.properties.*;
+import edu.wpi.first.smartdashboard.robot.Robot;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import java.awt.Graphics;
 import java.io.File;
@@ -89,21 +90,21 @@ public class ControlSchemeManager extends StaticWidget {
 	@Override
 	public void propertyChanged(Property property) {
 		if(property == shootButton){
-			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,0,true);
+			setJoystickAndButtonForFunction((Integer)(property.getValue())/0x10,(Integer)(property.getValue())%0x10,0,true);
 		} else if(property == spinUpButton){
-			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,1,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,1,true);
 		} else if(property == turnLeft){
-			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,2,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,2,true);
 		} else if(property == turnRight){
-			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,3,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,3,true);
 		} else if(property == aimUp){
-			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,4,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,4,true);
 		} else if(property == aimDown){
-			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,5,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,5,true);
 		} else if(property == beginClimb){
-			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,6,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,6,true);
 		} else if(property == climb){
-			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,7,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,7,true);
 		}
 	}
 
@@ -280,48 +281,47 @@ public class ControlSchemeManager extends StaticWidget {
 		 */
 		switch(function) {
 			case shootingIndex: {
-				NetworkTable.getTable("Controls").putNumber("ShootingStick", stick);
-				NetworkTable.getTable("Controls").putNumber("ShootingButt", button);
+				Robot.getPreferences().putNumber("ShootingStick", stick);
+				Robot.getPreferences().putNumber("ShootingButt", button);
 			}
 			break;
 			case spinningIndex: {
-				NetworkTable.getTable("Controls").putNumber("SpinningStick", stick);
-				NetworkTable.getTable("Controls").putNumber("SpinningButt", button);
+				Robot.getPreferences().putNumber("SpinningStick", stick);
+				Robot.getPreferences().putNumber("SpinningButt", button);
 			}
 			break;
 			case driveLeftSideIndex: {
-				NetworkTable.getTable("Controls").putNumber("DriveLeftStick", stick);
-				NetworkTable.getTable("Controls").putNumber("DriveLeftButt", button);
+				Robot.getPreferences().putNumber("DriveLeftStick", stick);
+				Robot.getPreferences().putNumber("DriveLeftButt", button);
 			}
 			break;
 			case driveRightSideIndex: {
-				NetworkTable.getTable("Controls").putNumber("DriveRightStick", stick);
-				NetworkTable.getTable("Controls").putNumber("DriveRightButt", button);
+				Robot.getPreferences().putNumber("DriveRightStick", stick);
+				Robot.getPreferences().putNumber("DriveRightButt", button);
 			}
 			break;
 			case aimUpIndex: {
-				NetworkTable.getTable("Controls").putNumber("AimUpStick", stick);
-				NetworkTable.getTable("Controls").putNumber("AimUpButt", button);
+				Robot.getPreferences().putNumber("AimUpStick", stick);
+				Robot.getPreferences().putNumber("AimUpButt", button);
 			}
 			break;
 			case aimDownIndex: {
-				NetworkTable.getTable("Controls").putNumber("AimDownStick", stick);
-				NetworkTable.getTable("Controls").putNumber("AimDownButt", button);
+				Robot.getPreferences().putNumber("AimDownStick", stick);
+				Robot.getPreferences().putNumber("AimDownButt", button);
 			}
 			break;
 			case beginClimbIndex: {
-				NetworkTable.getTable("Controls").putNumber("BeginClimbStick", stick);
-				NetworkTable.getTable("Controls").putNumber("BeginClimbButt", button);
+				Robot.getPreferences().putNumber("BeginClimbStick", stick);
+				Robot.getPreferences().putNumber("BeginClimbButt", button);
 			}
 			break;
 			case climbIndex: {
-				NetworkTable.getTable("Controls").putNumber("ClimbStick", stick);
-				NetworkTable.getTable("Controls").putNumber("ClimbButt", button);
+				Robot.getPreferences().putNumber("ClimbStick", stick);
+				Robot.getPreferences().putNumber("ClimbButt", button);
 			}
 			break;
 		}
-		NetworkTable.getTable("Controls").putBoolean("NeedsToRemap", true);//alert the robot that it needs to remap
-	  /*
+		/*
 		 * Save the file unless it is being loaded
 		 */
 		if(shouldSave) {
