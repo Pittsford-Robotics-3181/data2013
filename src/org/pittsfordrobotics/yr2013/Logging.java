@@ -11,9 +11,9 @@ import javax.microedition.io.Connector;
  * @author robbiemarkwick
  */
 public class Logging {
-    static String logString="<?xml version=\"1.0\"?>";
+    static String logString="<?xml version=\"1.0\"?>\n<log>\n";
     public static void init(){
-	logString.concat("<log>");
+	logString="<?xml version=\"1.0\"?>\n<log>\n";
     }
     /**
      * Adds stuff to log files

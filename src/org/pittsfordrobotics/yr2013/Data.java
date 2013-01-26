@@ -30,15 +30,22 @@ public class Data extends IterativeRobot {
 		
 		Hardware.dsOutput.say(1, "Done.");
     }
-
+    public void autonomousInit(){
+	ControlScheme.isAutonomous=true;
+	Logging.init();
+    }
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+	Hardware.aiDriver.drive();
 	Loggable items[]={Hardware.driving,Hardware.shooter};
 	Logging.logItems(items, true, true);
     }
-
+    public void teleopInit(){
+        ControlScheme.isAutonomous=false;
+	Logging.init();//comment entire if you want to log autonomus
+    }
     /**
      * This function is called periodically during operator control
      */
@@ -50,13 +57,10 @@ public class Data extends IterativeRobot {
 	Logging.logItems(items, true, false);
     // ^ again... DAFUQ IS THIS?
 	}
-    public void autonomousInit(){
-    }
-    public void teleopInit(){
-        
-    }
+    
+    
     public void disabledInit(){
-         
+         Logging.export();
     }
     public void disabledPeriodic(){
 	/*check and see if controls need remaping*/

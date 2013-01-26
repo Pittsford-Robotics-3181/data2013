@@ -22,7 +22,7 @@ public class ControlScheme {
     public static final int aimDownIndex = 5;
     public static final int beginClimbIndex = 6;
     public static final int climbIndex = 7;
-
+    public static boolean isAutonomous;
     private static int[] joystickMap={1,1,0,0,1,1,1,1}; 
     private static int[] buttonMap={0,7,6,7,4,5,1,2};
     static Joystick joy0;//left driving stick in tank only
@@ -31,37 +31,45 @@ public class ControlScheme {
     private static Joystick[] sticks={joy1,joy2};//does not include the left if tank-Driving (lefty drivers can physically swap them)
     
 
-    public static boolean getTrigger(){
-        if(buttonMap[shootingIndex]==0)return (sticks[joystickMap[shootingIndex]]).getTrigger();
-        return (sticks[joystickMap[shootingIndex]]).getRawButton(buttonMap[shootingIndex]);
+    public static boolean shouldShoot(){
+	if(isAutonomous)return Hardware.aiDriver.functionValues[shootingIndex];
+        return valueForButtonOnJoystick(joystickMap[shootingIndex],buttonMap[shootingIndex]);
     }
     public static boolean shouldSpin(){
-        if(buttonMap[spinningIndex]==0)return (sticks[joystickMap[spinningIndex]]).getTrigger();
-        return (sticks[joystickMap[spinningIndex]]).getRawButton(buttonMap[spinningIndex]);
+	if(isAutonomous)return Hardware.aiDriver.functionValues[spinningIndex];
+        return valueForButtonOnJoystick(joystickMap[spinningIndex],buttonMap[spinningIndex]);
     }
     public static double shotAngle(){
-       if((buttonMap[aimUpIndex]==0)?((sticks[joystickMap[aimUpIndex]]).getTrigger()):((sticks[joystickMap[aimUpIndex]]).getRawButton(buttonMap[aimUpIndex])))return -.5;
-        else if((buttonMap[aimDownIndex]==0)?((sticks[joystickMap[aimDownIndex]]).getTrigger()):((sticks[joystickMap[aimDownIndex]]).getRawButton(buttonMap[aimDownIndex])))return .5;
-        return 0;
+	double num=0;
+	if(isAutonomous) num+=Hardware.aiDriver.functionValues[aimDownIndex]?-.5:0;
+        else num+=valueForButtonOnJoystick(joystickMap[aimDownIndex],buttonMap[aimDownIndex])?-.5:0;
+	if(isAutonomous) num+=Hardware.aiDriver.functionValues[aimUpIndex]?.5:0;
+        else num+=valueForButtonOnJoystick(joystickMap[aimUpIndex],buttonMap[aimUpIndex])?.5:0;
+	return num;
     }
-     public static boolean getClimbStart(){
-        if(buttonMap[beginClimbIndex]==0)return (sticks[joystickMap[beginClimbIndex]]).getTrigger();
-        return (sticks[joystickMap[beginClimbIndex]]).getRawButton(buttonMap[beginClimbIndex]);
+     public static boolean shouldStartClimb(){
+        if(isAutonomous)return Hardware.aiDriver.functionValues[beginClimbIndex];
+        return valueForButtonOnJoystick(joystickMap[beginClimbIndex],buttonMap[beginClimbIndex]);
     }
     public static boolean shouldClimb(){
-        if(buttonMap[climbIndex]==0)return (sticks[joystickMap[climbIndex]]).getTrigger();
-        return (sticks[joystickMap[climbIndex ]]).getRawButton(buttonMap[climbIndex]);
+         if(isAutonomous)return Hardware.aiDriver.functionValues[climbIndex];
+        return valueForButtonOnJoystick(joystickMap[climbIndex],buttonMap[climbIndex]);
     }
     public static double driveMagnitude(){
+	if(isAutonomous)return Hardware.aiDriver.driveMag;
         return Utils.checkClearance(joy1.getMagnitude(), .1);
     }
     public static double driveDirection(){
+	if(isAutonomous)return Hardware.aiDriver.driveDir;
         return Utils.checkAngle(joy1.getDirectionDegrees(),Utils.kDefaultDegreeClearnace,true);
     }
     public static double driveRotation(){
-        if((buttonMap[driveLeftSideIndex]==0)?((sticks[joystickMap[driveLeftSideIndex]]).getTrigger()):((sticks[joystickMap[driveLeftSideIndex]]).getRawButton(buttonMap[driveLeftSideIndex])))return -1;
-        else if((buttonMap[driveRightSideIndex]==0)?((sticks[joystickMap[driveRightSideIndex]]).getTrigger()):((sticks[joystickMap[driveRightSideIndex]]).getRawButton(buttonMap[driveRightSideIndex])))return 1;
-        return 0;
+        double num=0;
+	if(isAutonomous) num+=Hardware.aiDriver.functionValues[driveLeftSideIndex]?-1:0;
+        else num+=valueForButtonOnJoystick(joystickMap[driveLeftSideIndex],buttonMap[driveLeftSideIndex])?-1:0;
+	if(isAutonomous) num+=Hardware.aiDriver.functionValues[driveRightSideIndex]?1:0;
+        else num+=valueForButtonOnJoystick(joystickMap[driveRightSideIndex],buttonMap[driveRightSideIndex])?1:0;
+	return num;
     }
     public static double tankLeft(){
         return Utils.checkClearance(joy0.getY(), .1);
@@ -77,57 +85,25 @@ public class ControlScheme {
      * @return was remap successful
      */
     public static void setJoystickAndButtonForFunction(int stick, int button, int function){
-        for(int i=0; i<buttonMap.length;i++){
-            if(stick==joystickMap[i]&&button==buttonMap[i]){
-		switch (function) {
-		    case shootingIndex: {
-			NetworkTable.getTable("Controls").putNumber("ShootingStick", joystickMap[function]);
-			NetworkTable.getTable("Controls").putNumber("ShootingButt", buttonMap[function]);
-		    }
-		    break;
-		    case spinningIndex: {
-			NetworkTable.getTable("Controls").putNumber("SpinningStick", joystickMap[function]);
-			NetworkTable.getTable("Controls").putNumber("SpinningButt", buttonMap[function]);
-		    }
-		    break;
-		    case driveLeftSideIndex: {
-			NetworkTable.getTable("Controls").putNumber("DriveLeftStick", joystickMap[function]);
-			NetworkTable.getTable("Controls").putNumber("DriveLeftButt", buttonMap[function]);
-		    }
-		    break;
-		    case driveRightSideIndex: {
-			NetworkTable.getTable("Controls").putNumber("DriveRightStick", joystickMap[function]);
-			NetworkTable.getTable("Controls").putNumber("DriveRightButt", buttonMap[function]);
-		    }
-		    break;
-		    case aimUpIndex: {
-			NetworkTable.getTable("Controls").putNumber("AimUpStick", joystickMap[function]);
-			NetworkTable.getTable("Controls").putNumber("AimUpButt", buttonMap[function]);
-		    }
-		    break;
-		    case aimDownIndex: {
-			NetworkTable.getTable("Controls").putNumber("AimDownStick", joystickMap[function]);
-			NetworkTable.getTable("Controls").putNumber("AimDownButt", buttonMap[function]);
-		    }
-		    break;
-		    case beginClimbIndex: {
-			NetworkTable.getTable("Controls").putNumber("BeginClimbStick", joystickMap[function]);
-			NetworkTable.getTable("Controls").putNumber("BeginClimbButt", buttonMap[function]);
-		    }
-		    break;
-		    case climbIndex: {
-			NetworkTable.getTable("Controls").putNumber("ClimbStick", joystickMap[function]);
-			NetworkTable.getTable("Controls").putNumber("ClimbButt", buttonMap[function]);
-		    }
-		    break;
-		}
-		NetworkTable.getTable("Controls").putBoolean("RemapFailure", true);//alert the driveStation that the remap failed
-		return;
-	    }//don't remap if that button is already in use		
-
-        }
         joystickMap[function]=stick;
         buttonMap[function]=button;
+    }
+    /**
+     * reads the button for a given joystick and 
+     * @param joy which joystick
+     * @param butt 0 if trigger, 1-12 if any other button
+     * @return is the button pressed
+     */
+    private static boolean valueForButtonOnJoystick(int joy, int butt){
+	return butt==0?(sticks[joy]).getTrigger():(sticks[joy]).getRawButton(butt);
+    }
+    /**
+     * simulates joysticks in Autonomous
+     * @param function the index of the function
+     * @return is the function active
+     */
+    private static boolean simulatedValueForFunction(int function){
+	return Hardware.aiDriver.functionValues[function];
     }
     public static String logString(boolean Autonomous){
         String xmlString=Autonomous?"<controlScheme mode=\"autonomous\">\n":"<controlScheme mode=\"teleop\">\n";
@@ -139,10 +115,10 @@ public class ControlScheme {
         xmlString=xmlString.concat("<shotValues>\n"+
                 "<adjustAngle>"+ControlScheme.shotAngle()+"</adjustAngle>\n"+
                 "<shouldSpin>"+(ControlScheme.shouldSpin()?"true":"false")+"</shouldSpin>\n"+
-                "<shouldFire>"+(ControlScheme.getTrigger()?"true":"false")+"</shouldFire>\n"+
+                "<shouldFire>"+(ControlScheme.shouldShoot()?"true":"false")+"</shouldFire>\n"+
                 "</shotValues>\n");
         xmlString=xmlString.concat("<climbValues>\n"+
-                "<shouldBegin>"+(ControlScheme.getClimbStart()?"true":"false")+"</shouldBegin>\n"+
+                "<shouldBegin>"+(ControlScheme.shouldStartClimb()?"true":"false")+"</shouldBegin>\n"+
                 "<shouldClimb>"+(ControlScheme.shouldClimb()?"true":"false")+"</shouldClimb>\n"+
                 "</climbValues>\n");
         xmlString=xmlString.concat("</controlSchme>");

@@ -7,6 +7,7 @@
 package org.pittsfordrobotics.yr2013;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Victor;
 
 /**
  * @author Robbie Markwick
@@ -21,14 +22,17 @@ public class Hardware {
     public static final Jaguar backLeftJaguar = new Jaguar(4);
     public static DriveSystem driving=new DriveSystem(frontRightJaguar,frontLeftJaguar,backLeftJaguar,backRightJaguar);
     //public  static DriveSystem driving=new DriveSystem(driveMotor2,DriveMotor1); //uncomment this for tank drive
-    public static final Jaguar ShootingMotor=new Jaguar(5);
-    public static final Jaguar ShootingMotor2=new Jaguar(6);
-
-   // public static Jaguar ShotAngleMotor=new Jaguar(7);
-    public static Servo ShootLaunch=new Servo(8);
-    public static Shooter shooter=new Shooter(ShootingMotor,ShootingMotor2,ShootLaunch);
     
-    public static final Jaguar ClimbMotor1=new Jaguar(9);//Climbing
-    public static final Jaguar ClimbMotor2=new Jaguar(10);//Setup for climbing 
+    public static final Victor ShootingMotor=new Victor(5);
+    public static final Victor ShootingMotor2=new Victor(6);
+
+    public static Victor ShotAngleMotor=new Victor(7);
+    public static Servo ShootLaunch=new Servo(8);
+    public static Shooter shooter=new Shooter(ShootingMotor,ShootingMotor2,ShotAngleMotor,ShootLaunch);
+    
+    public static final Victor ClimbMotor1=new Victor(9);//Climbing
+    public static final Victor ClimbMotor2=new Victor(10);//Setup for climbing 
     public static Climber climber=new Climber(ClimbMotor1,ClimbMotor2);
+    
+    public static AIDriver aiDriver=new AIDriver();
 }

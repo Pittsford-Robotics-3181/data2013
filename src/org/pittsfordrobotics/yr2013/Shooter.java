@@ -3,8 +3,8 @@
  * and open the template in the editor.
  */
 package org.pittsfordrobotics.yr2013;
-import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.SpeedController;
 
 
 /**
@@ -12,22 +12,22 @@ import edu.wpi.first.wpilibj.Servo;
  * @author robbiemarkwick
  */
 public class Shooter implements Loggable{
-    public Jaguar angleMotor;
-    public Jaguar fireMotor1;
-    public Jaguar fireMotor2;
+    public SpeedController angleMotor;
+    public SpeedController fireMotor1;
+    public SpeedController fireMotor2;
     public Servo bump;
     private boolean isAngled;
     private double fireSpeed1=.6;
     private double fireSpeed2=.6;
     private static final double kAdjust=.05;
-    Shooter (Jaguar Fire,Jaguar Fire2,Jaguar angle,Servo launch){
+    Shooter (SpeedController Fire,SpeedController Fire2,SpeedController angle,Servo launch){
         fireMotor1=Fire;
         fireMotor2=Fire2;
         angleMotor=angle;
         bump=launch;
         isAngled=true;
     }
-    Shooter (Jaguar Fire,Jaguar Fire2,Servo launch){
+    Shooter (SpeedController Fire,SpeedController Fire2,Servo launch){
         fireMotor1=Fire;
         fireMotor2=Fire2;
         bump=launch;
@@ -50,7 +50,7 @@ public class Shooter implements Loggable{
             Utils.ramp(0, fireMotor1, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
             Utils.ramp(0, fireMotor2, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
         }//Stop Shooting if needed
-        bump.set(ControlScheme.getTrigger()?1:0);//Launch Disks if and only if the driver says so
+        bump.set(ControlScheme.shouldShoot()?1:0);//Launch Disks if and only if the driver says so
         
 
     }
