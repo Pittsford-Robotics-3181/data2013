@@ -25,7 +25,9 @@ public class Data extends IterativeRobot {
      */
     
     public void robotInit() {
-        Hardware.dsOutput.say(1, "Line One Printed!");
+        Hardware.dsOutput.say(1, "Initializing...");
+		
+		Hardware.dsOutput.say(1, "Done.");
     }
 
     /**
@@ -33,7 +35,7 @@ public class Data extends IterativeRobot {
      */
     public void autonomousPeriodic() {
     	if(NetworkTable.getTable("Controls").getBoolean("NetworkIdiot"))NetworkTable.getTable("Controls").putBoolean("NetworkIdiot",false);//make sure the network is not being an idiot
-
+		// ^Dafuq?
     }
 
     /**
@@ -44,7 +46,8 @@ public class Data extends IterativeRobot {
         Hardware.shooter.shoot();
         Hardware.climber.climb();
 	if(NetworkTable.getTable("Controls").getBoolean("NetworkIdiot"))NetworkTable.getTable("Controls").putBoolean("NetworkIdiot",false);//make sure the network is not being an idiot
-    }
+    // ^ again... DAFUQ IS THIS?
+	}
     public void autonomousInit(){
     }
     public void teleopInit(){
@@ -57,6 +60,7 @@ public class Data extends IterativeRobot {
 	/*check and see if controls need remaping*/
 	if (NetworkTable.getTable("Controls").getBoolean("NeedsToRemap")) {
 	    /*Remap the controls*/
+		//OK Robbie we need to go over networking... You're doing it wrong!
 	    ControlScheme.setJoystickAndButtonForFunction((int) NetworkTable.getTable("Controls").getNumber("ShootingStick"),
 		    (int) NetworkTable.getTable("Controls").getNumber("ShootingButt"), ControlScheme.shootingIndex);
 	    ControlScheme.setJoystickAndButtonForFunction((int) NetworkTable.getTable("Controls").getNumber("SpinningStick"),

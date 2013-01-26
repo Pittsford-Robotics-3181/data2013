@@ -15,21 +15,20 @@ import edu.wpi.first.wpilibj.Servo;
 public class Hardware {
     
     public static DSOutput dsOutput = new DSOutput();
-    public static Jaguar driveMotor1=new Jaguar(1);//Forward Right
-    public static Jaguar driveMotor2=new Jaguar(2);//Forward Left
-    public static Jaguar driveMotor3=new Jaguar(3);//Backward Left
-    public static Jaguar driveMotor4=new Jaguar(4);//Backward Right
-    public static DriveSystem driving=new DriveSystem(driveMotor1,driveMotor2,driveMotor3,driveMotor4);
+    public static final Jaguar frontRightJaguar = new Jaguar(1);
+    public static final Jaguar frontLeftJaguar = new Jaguar(2);
+    public static final Jaguar backRightJaguar = new Jaguar(3);
+    public static final Jaguar backLeftJaguar = new Jaguar(4);
+    public static DriveSystem driving=new DriveSystem(frontRightJaguar,frontLeftJaguar,backLeftJaguar,backRightJaguar);
     //public  static DriveSystem driving=new DriveSystem(driveMotor2,DriveMotor1); //uncomment this for tank drive
-    public static Jaguar ShootingMotor=new Jaguar(5);
-    public static Jaguar ShootingMotor2=new Jaguar(6);
+    public static final Jaguar ShootingMotor=new Jaguar(5);
+    public static final Jaguar ShootingMotor2=new Jaguar(6);
 
    // public static Jaguar ShotAngleMotor=new Jaguar(7);
     public static Servo ShootLaunch=new Servo(8);
     public static Shooter shooter=new Shooter(ShootingMotor,ShootingMotor2,ShootLaunch);
     
-    public static Jaguar ClimbMotor1=new Jaguar(9);//Climbing
-    public static Jaguar ClimbMotor2=new Jaguar(10);//Setup for climbing 
+    public static final Jaguar ClimbMotor1=new Jaguar(9);//Climbing
+    public static final Jaguar ClimbMotor2=new Jaguar(10);//Setup for climbing 
     public static Climber climber=new Climber(ClimbMotor1,ClimbMotor2);
-        
 }
