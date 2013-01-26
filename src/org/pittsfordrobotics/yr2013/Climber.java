@@ -24,7 +24,7 @@ public class Climber implements Loggable{
        else {
             Utils.ramp(0, angler, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
         }//climb if needed
-        if(ControlScheme.getClimbStart()) {
+        if(ControlScheme.shouldClimb()) {
            Utils.ramp(1, climber, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
         }//climb if needed
        else {
@@ -32,7 +32,16 @@ public class Climber implements Loggable{
         }//climb if needed
     }
     public String logString() {
-        return"";
+	String xmlString="<climber>\n";
+        xmlString=xmlString.concat("<beginMotor>\n"+
+                "<target>"+(ControlScheme.getClimbStart()?1:0)+"</target>\n"+
+                "<current>"+angler.get()+"</current>\n"+
+                "</beginMotor>\n");
+	xmlString=xmlString.concat("<climbMotor>\n"+
+                "<target>"+(ControlScheme.shouldClimb()?1:0)+"</target>\n"+
+                "<current>"+climber.get()+"</current>\n"+
+                "</climbMotor>\n");
+        xmlString=xmlString.concat("</climber>");
+        return xmlString;
     }
-
 }

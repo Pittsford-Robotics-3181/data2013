@@ -26,7 +26,13 @@ public class DriveSystem implements Loggable{
         drive.tankDrive(ControlScheme.tankLeft(), ControlScheme.tankRight());
     }
     public String logString() {
-        return"";
+	String xmlString="<driveSystem>\n";
+        xmlString=xmlString.concat("<frontRight>"+Hardware.frontRightJaguar.get()+"</frontRight>\n");
+        xmlString=xmlString.concat("<frontLeft>"+Hardware.frontLeftJaguar.get()+"</frontLeft>\n");
+        xmlString=xmlString.concat("<backLeft>"+Hardware.backRightJaguar.get()+"</backLeft>\n");
+        xmlString=xmlString.concat("<backRight>"+Hardware.backLeftJaguar.get()+"</backRight>\n");
+        xmlString=xmlString.concat("</driveSystem>");
+        return xmlString;
     }
 }
  

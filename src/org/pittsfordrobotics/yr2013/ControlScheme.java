@@ -129,21 +129,21 @@ public class ControlScheme {
         joystickMap[function]=stick;
         buttonMap[function]=button;
     }
-    public static String logString(){
-        String xmlString="<controlScheme>\n";
+    public static String logString(boolean Autonomous){
+        String xmlString=Autonomous?"<controlScheme mode=\"autonomous\">\n":"<controlScheme mode=\"teleop\">\n";
         xmlString=xmlString.concat("<driveValues>\n"+
-                "<Magnitude value=\""+ControlScheme.driveMagnitude()+"\" />\n"+
-                "<Direction value=\""+ControlScheme.driveDirection()+"\" />\n"+
-                "<Rotation value=\""+ControlScheme.driveRotation()+"\" />\n"+
+                "<Magnitude>"+ControlScheme.driveMagnitude()+"</Magnitude>\n"+
+                "<Direction>"+ControlScheme.driveDirection()+"</Direction>\n"+
+                "<Rotation>"+ControlScheme.driveRotation()+"</Rotation>\n"+
                 "</driveValues>\n");
-        xmlString=xmlString.concat("<shot>\n"+
-                "<adjustAngle value=\""+ControlScheme.shotAngle()+"\" />\n"+
-                "<shouldSpin value=\""+(ControlScheme.shouldSpin()?"true":"false")+"\" />\n"+
-                "<shouldFire value=\""+(ControlScheme.getTrigger()?"true":"false")+"\" />\n"+
-                "</driveValues>\n");
+        xmlString=xmlString.concat("<shotValues>\n"+
+                "<adjustAngle>"+ControlScheme.shotAngle()+"</adjustAngle>\n"+
+                "<shouldSpin>"+(ControlScheme.shouldSpin()?"true":"false")+"</shouldSpin>\n"+
+                "<shouldFire>"+(ControlScheme.getTrigger()?"true":"false")+"</shouldFire>\n"+
+                "</shotValues>\n");
         xmlString=xmlString.concat("<climbValues>\n"+
-                "<shouldBegin value=\""+(ControlScheme.getClimbStart()?"true":"false")+"\" />\n"+
-                "<shouldClimb value=\""+(ControlScheme.shouldClimb()?"true":"false")+"\" />\n"+
+                "<shouldBegin>"+(ControlScheme.getClimbStart()?"true":"false")+"</shouldBegin>\n"+
+                "<shouldClimb>"+(ControlScheme.shouldClimb()?"true":"false")+"</shouldClimb>\n"+
                 "</climbValues>\n");
         xmlString=xmlString.concat("</controlSchme>");
         return xmlString;

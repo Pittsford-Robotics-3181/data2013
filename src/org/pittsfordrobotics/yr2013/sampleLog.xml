@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1252"?>
+<?xml version="1.0"?>
 
 <!--
     Document   : sampleLog.xml
@@ -9,105 +9,61 @@
 -->
 
 <log mode="teleop">
-    <threadCycle thread="main">
-        <controlScheme>
-            <map>
-                <shooting>
-                    <joystick num="1" /> 
-                    <button num="0" /> 
-                </shooting>
-                <spinning>
-                    <joystick num="1" /> 
-                    <button num="7" /> 
-                </spinning>
-                <leftRot>
-                    <joystick num="0" /> 
-                    <button num="6" /> 
-                </leftRot>
-                <rightRot>
-                    <joystick num="0" /> 
-                    <button num="7" /> 
-                </rightRot>
-                <aimUp>
-                    <joystick num="1" /> 
-                    <button num="4" /> 
-                </aimUp>
-                <aimDown>
-                    <joystick num="1" /> 
-                    <button num="5" /> 
-                </aimDown>
-                <beginClimb>
-                    <joystick num="1" /> 
-                    <button num="1" /> 
-                </beginClimb>
-                <climbing>
-                    <joystick num="1" /> 
-                    <button num="2" /> 
-                </climbing>
-            </map>
+    <mainThread mode="Autonomous">
+	<controlScheme>
             <driveValues>
-                <Magnitude value=".7" /> 
-                <Direction value="true" /> 
-                <Rotation value="-1" /> 
+                <Magnitude>.7</Magnitude> 
+                <Direction>true</Direction>
+                <Rotation>-1</Rotation>
             </driveValues>
             <shotValues>
-                <adjustAngle value="1" /> 
-                <shouldSpin value="true" /> 
-                <shouldFire value="false" /> 
+                <adjustAngle>1</adjustAngle>
+                <shouldSpin>true</shouldSpin>
+                <shouldFire>false</shouldFire>
             </shotValues>
             <climbValues>
-                <shouldBegin value="false" /> 
-                <shouldClimb value="false" /> 
+                <shouldBegin>false</shouldBegin>
+                <shouldClimb>false</shouldClimb>
             </climbValues>
         </controlScheme>
         <shooter>
-            <angleMotor value="0.1"/>
-            <FireMotor1>
-                <Target value="1.0"/>
-                <Current value="0.5"/>
-            </FireMotor1>
-            <FireMotor2>
-                <Target value="1.0"/>
-                <Current value="0.5"/>
-            </FireMotor2>
-            <Servo position="0"/>
-        </shooter>
-        <shooter>
-            <angleMotor value="0.1"/>
-            <FireMotor1>
-                <Target value="1.0"/>
-                <Current value="0.5"/>
-            </FireMotor1>
-            <FireMotor2>
-                <Target value="1.0"/>
-                <Current value="0.5"/>
-            </FireMotor2>
-            <Servo position="0"/>
+            <angleMotor>.1</angleMotor>
+            <fireMotor1>
+                <target>1.0</target>
+                <current>.5</current>
+            </fireMotor1>
+            <fireMotor2>
+                <target>1.0</target>
+                <current>.5</current>
+            </fireMotor2>
+            <servo>0</Servo>
         </shooter>
         <climber>
             <beginMotor>
-                <Target value="1.0"/>
-                <Current value="0.5"/>
+                <target>0.0</target>
+                <current>0.0</current>
             </beginMotor>
             <climbMotor>
-                <Target value="1.0"/>
-                <Current value="0.5"/>
+                <target>0.0</target>
+                <current>0.0</Cucurrentrrent>
             </climbMotor>
         </climber>
         <driveSystem>
-            <frontLeft value="0.6"/>
-            <frontRight value="-0.8"/>
-            <backLeft value="-0.4"/>
-            <backRight value="0.9"/>
+            <frontLeft>.6</frontLeft>
+            <frontRight>-.8</frontRight>
+            <backLeft>-.4</backLeft>
+            <backRight>.9</backRight>
         </driveSystem>
-    </threadCycle>
-    <threadCycle thread="ramp">
+    </mainThread>
+    <!--threads not included unless we see issues
+    <rampThread>
         <FireMotor2 name="ShootingMotor1">
             <Target value="1.0"/>
             <Current value="0.6"/>
         </FireMotor2> 
         <StepSize value=".01"/>
         <TPS value="20"/>
-    </threadCycle>
+    </rampThread>
+    -->
 </log>
  

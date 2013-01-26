@@ -17,8 +17,8 @@ public class Shooter implements Loggable{
     public Jaguar fireMotor2;
     public Servo bump;
     private boolean isAngled;
-    private double FireSpeed1=.6;
-    private double FireSpeed2=.6;
+    private double fireSpeed1=.6;
+    private double fireSpeed2=.6;
     private static final double kAdjust=.05;
     Shooter (Jaguar Fire,Jaguar Fire2,Jaguar angle,Servo launch){
         fireMotor1=Fire;
@@ -36,15 +36,15 @@ public class Shooter implements Loggable{
     public void shoot(){
         if(isAngled){
           Utils.ramp (ControlScheme.shotAngle()*.5, angleMotor, Utils.kDefaultTicksPerSecond , Utils.kDefaultRampStepSize);//Adjust Angle
-          FireSpeed1=1;FireSpeed2=1;
+          fireSpeed1=1;fireSpeed2=1;
         }
         else{
-            FireSpeed1+=(ControlScheme.shotAngle()==0)?0:((ControlScheme.shotAngle()>0)?kAdjust:-kAdjust);
-            FireSpeed2+=(ControlScheme.shotAngle()==0)?0:((ControlScheme.shotAngle()>0)?kAdjust:-kAdjust);
+            fireSpeed1+=(ControlScheme.shotAngle()==0)?0:((ControlScheme.shotAngle()>0)?kAdjust:-kAdjust);
+            fireSpeed2+=(ControlScheme.shotAngle()==0)?0:((ControlScheme.shotAngle()>0)?kAdjust:-kAdjust);
         }
         if(ControlScheme.shouldSpin()) {
-            Utils.ramp(FireSpeed1, fireMotor1, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
-            Utils.ramp(FireSpeed2, fireMotor2, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
+            Utils.ramp(fireSpeed1, fireMotor1, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
+            Utils.ramp(fireSpeed2, fireMotor2, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
         }//Shoot if needed
         else {
             Utils.ramp(0, fireMotor1, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
@@ -56,6 +56,18 @@ public class Shooter implements Loggable{
     }
 
     public String logString() {
-        return"";
+	String xmlString="<shooter>\n";
+        xmlString=xmlString.concat("<angleMotor>"+angleMotor.get()+"</angleMotor>\n");
+        xmlString=xmlString.concat("<fireMotor1>\n"+
+                "<target>"+fireSpeed1+"</target>\n"+
+                "<current>"+fireMotor1.get()+"</current>\n"+
+                "</fireMotor1>\n");
+	xmlString=xmlString.concat("<fireMotor2>\n"+
+                "<target>"+fireSpeed2+"</target>\n"+
+                "<current>"+fireMotor2.get()+"</current>\n"+
+                "</fireMotor1>\n");
+	xmlString=xmlString.concat("<servo>"+bump.get()+"</servo>\n");
+        xmlString=xmlString.concat("</shooter>");
+        return xmlString;
     }
 }
