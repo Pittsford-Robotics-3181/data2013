@@ -34,7 +34,7 @@ public class ControlSchemeManager extends StaticWidget {
 	public static final int climbIndex = 7;
 	public static final int climbExtendIndex = 8;
 
-	static final String directory = "/";
+	static final String directory = "./driverPrefs";
 	public int[] joystickMap = {1, 1, 0, 0, 1, 1, 1, 1, 1};
 	public int[] buttonMap = {0, 7, 6, 7, 4, 5, 1, 2, 3};
 	private String[] descriptions = {"Shoot Disc", "Spin Up Shooter", "Rotate robot left", "Rotate robot right", "Aim shooter up", "Aim shooter down","Position For Climbing", "Pull Climbing Arm", "Extend Climbing Arm"};
@@ -52,7 +52,7 @@ public class ControlSchemeManager extends StaticWidget {
 	public void initProperties(MultiProperty mp){
 		for(int i = 0; i < 2; i++){
 			for(int j = 0; j <= 12; j++){
-				mp.add("Joystick:"+(i+1)+" Button:"+(j),i*0x10+j);
+				mp.add((j!=0?("Joystick:"+(i+1)+" Button:"+(j)):("Joystick:"+(i+1)+" Trigger")),i*0x10+j);
 			}
 		}
 	}
@@ -290,46 +290,58 @@ public class ControlSchemeManager extends StaticWidget {
 			case shootingIndex: {
 				Robot.getPreferences().putNumber("ShootingStick", stick);
 				Robot.getPreferences().putNumber("ShootingButt", button);
+				shootButton.setValue(stick*0x10+button);
 			}
 			break;
 			case spinningIndex: {
 				Robot.getPreferences().putNumber("SpinningStick", stick);
 				Robot.getPreferences().putNumber("SpinningButt", button);
+				spinUpButton.setValue(stick*0x10+button);				
 			}
 			break;
 			case driveLeftSideIndex: {
 				Robot.getPreferences().putNumber("DriveLeftStick", stick);
 				Robot.getPreferences().putNumber("DriveLeftButt", button);
+				turnLeft.setValue(stick*0x10+button);
 			}
 			break;
 			case driveRightSideIndex: {
 				Robot.getPreferences().putNumber("DriveRightStick", stick);
 				Robot.getPreferences().putNumber("DriveRightButt", button);
+				turnRight.setValue(stick*0x10+button);
 			}
 			break;
 			case aimUpIndex: {
 				Robot.getPreferences().putNumber("AimUpStick", stick);
 				Robot.getPreferences().putNumber("AimUpButt", button);
+				aimUp.setValue(stick*0x10+button);
 			}
 			break;
 			case aimDownIndex: {
 				Robot.getPreferences().putNumber("AimDownStick", stick);
 				Robot.getPreferences().putNumber("AimDownButt", button);
+				aimDown.setValue(stick*0x10+button);
 			}
 			break;
 			case beginClimbIndex: {
 				Robot.getPreferences().putNumber("BeginClimbStick", stick);
 				Robot.getPreferences().putNumber("BeginClimbButt", button);
+				beginClimb.setValue(stick*0x10+button);
+
 			}
 			break;
 			case climbIndex: {
 				Robot.getPreferences().putNumber("ClimbStick", stick);
 				Robot.getPreferences().putNumber("ClimbButt", button);
+				climb.setValue(stick*0x10+button);
+
 			}
 			break;
 			case climbExtendIndex: {
 				Robot.getPreferences().putNumber("ClimbExtendStick", stick);
 				Robot.getPreferences().putNumber("ClimbExtendButt", button);
+				climbExt.setValue(stick*0x10+button);
+
 			}
 			break;
 		}
