@@ -8,7 +8,6 @@ import edu.wpi.first.smartdashboard.gui.StaticWidget;
 import edu.wpi.first.smartdashboard.properties.*;
 import edu.wpi.first.smartdashboard.robot.Robot;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import java.awt.Graphics;
 import java.io.File;
 import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
@@ -17,8 +16,6 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import org.w3c.dom.Element;
 
 /**
@@ -90,21 +87,21 @@ public class ControlSchemeManager extends StaticWidget {
 	@Override
 	public void propertyChanged(Property property) {
 		if(property == shootButton){
-			setJoystickAndButtonForFunction((Integer)(property.getValue())/0x10,(Integer)(property.getValue())%0x10,0,true);
+			setJoystickAndButtonForFunction((Integer)(property.getValue())/0x10,(Integer)(property.getValue())%0x10,shootingIndex,true);
 		} else if(property == spinUpButton){
-			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,1,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,spinningIndex,true);
 		} else if(property == turnLeft){
-			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,2,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,driveLeftSideIndex,true);
 		} else if(property == turnRight){
-			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,3,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,driveRightSideIndex,true);
 		} else if(property == aimUp){
-			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,4,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,aimUpIndex,true);
 		} else if(property == aimDown){
-			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,5,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,aimDownIndex,true);
 		} else if(property == beginClimb){
-			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,6,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,beginClimbIndex,true);
 		} else if(property == climb){
-			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,7,true);
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,climbIndex,true);
 		}
 	}
 
