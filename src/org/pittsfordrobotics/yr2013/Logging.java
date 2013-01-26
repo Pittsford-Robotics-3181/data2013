@@ -4,7 +4,9 @@
  */
 package org.pittsfordrobotics.yr2013;
 import com.sun.squawk.microedition.io.FileConnection;
+import edu.wpi.first.wpilibj.Preferences;
 import java.io.DataOutputStream;
+import java.util.Date;
 import javax.microedition.io.Connector;
 /**
  *
@@ -31,7 +33,9 @@ public class Logging {
     public static void export(){
 	logString.concat("</log>");
 	try{
-	    String logFilePath="";//TODO: determine file path
+	    String logFilePath="./";
+	    logFilePath=logFilePath.concat(Preferences.getInstance().getString("DriverName","ANONYMOUSDRIVER"));
+	    logFilePath=logFilePath.concat((new Date()).toString());
 	   /* FileConnection fc = (FileConnection)Connector.open(logFilePath, Connector.WRITE);
 	    fc.create(); 
 	    DataOutputStream theFile = fc.openDataOutputStream();

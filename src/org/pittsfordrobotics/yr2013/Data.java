@@ -44,7 +44,7 @@ public class Data extends IterativeRobot {
     }
     public void teleopInit(){
         ControlScheme.isAutonomous=false;
-	Logging.init();//comment entire if you want to log autonomus
+	Logging.init();//comment entire line if you want to log autonomus
     }
     /**
      * This function is called periodically during operator control
