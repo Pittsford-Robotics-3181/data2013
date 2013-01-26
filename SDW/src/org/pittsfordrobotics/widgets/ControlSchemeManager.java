@@ -37,7 +37,7 @@ public class ControlSchemeManager extends StaticWidget {
 	static final String directory = "/";
 	public int[] joystickMap = {1, 1, 0, 0, 1, 1, 1, 1, 1};
 	public int[] buttonMap = {0, 7, 6, 7, 4, 5, 1, 2, 3};
-	private String[] descriptions = {"Shoot Disc", "Spin Up Shooter", "Rotate robot left", "Rotate robot right", "Aim shooter up", "Aim shooter down","Begin Climbing", "Climb"};
+	private String[] descriptions = {"Shoot Disc", "Spin Up Shooter", "Rotate robot left", "Rotate robot right", "Aim shooter up", "Aim shooter down","Position For Climbing", "Pull Climbing Arm", "Extend Climbing Arm"};
 	public MultiProperty shootButton = new MultiProperty(this,descriptions[0]);
 	public MultiProperty spinUpButton = new MultiProperty(this,descriptions[1]);
 	public MultiProperty turnLeft = new MultiProperty(this,descriptions[2]);
@@ -72,6 +72,7 @@ public class ControlSchemeManager extends StaticWidget {
 	public void setDriverName(String driverName) {
 		this.driverName = driverName;
 		loadDriveFiles();
+		Robot.getPreferences().putString("DriverName", driverName);
 	}
 
 	@Override
