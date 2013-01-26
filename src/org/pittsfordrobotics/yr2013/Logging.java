@@ -33,9 +33,9 @@ public class Logging {
     public static void export(){
 	logString.concat("</log>");
 	try{
-	    String logFilePath="./";
-	    logFilePath=logFilePath.concat(Preferences.getInstance().getString("DriverName","ANONYMOUSDRIVER"));
-	    logFilePath=logFilePath.concat((new Date()).toString());
+	    String logFilePath="./RobotLogs/";
+	    logFilePath=logFilePath.concat(Preferences.getInstance().getString("DriverName","ANONYMOUSDRIVER")+"/");
+	    logFilePath=logFilePath.concat((new Date()).toString()+".xml");
 	   /* FileConnection fc = (FileConnection)Connector.open(logFilePath, Connector.WRITE);
 	    fc.create(); 
 	    DataOutputStream theFile = fc.openDataOutputStream();
