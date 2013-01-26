@@ -32,9 +32,11 @@ public class ControlSchemeManager extends StaticWidget {
 	public static final int aimDownIndex = 5;
 	public static final int beginClimbIndex = 6;
 	public static final int climbIndex = 7;
+	public static final int climbExtendIndex = 8;
+
 	static final String directory = "/";
-	public int[] joystickMap = {1, 1, 0, 0, 1, 1, 1, 1};
-	public int[] buttonMap = {0, 7, 6, 7, 4, 5, 1, 2};
+	public int[] joystickMap = {1, 1, 0, 0, 1, 1, 1, 1, 1};
+	public int[] buttonMap = {0, 7, 6, 7, 4, 5, 1, 2, 3};
 	private String[] descriptions = {"Shoot Disc", "Spin Up Shooter", "Rotate robot left", "Rotate robot right", "Aim shooter up", "Aim shooter down","Begin Climbing", "Climb"};
 	public MultiProperty shootButton = new MultiProperty(this,descriptions[0]);
 	public MultiProperty spinUpButton = new MultiProperty(this,descriptions[1]);
@@ -44,12 +46,13 @@ public class ControlSchemeManager extends StaticWidget {
 	public MultiProperty aimDown = new MultiProperty(this,descriptions[5]);
 	public MultiProperty beginClimb = new MultiProperty(this,descriptions[6]);
 	public MultiProperty climb = new MultiProperty(this,descriptions[7]);
+	public MultiProperty climbExt = new MultiProperty(this,descriptions[8]);
 	private String driverName = "default";
 	
 	public void initProperties(MultiProperty mp){
 		for(int i = 0; i < 2; i++){
-			for(int j = 0; j < 12; j++){
-				mp.add("Joystick "+(i+1)+" Button "+(j+1),i*0x10+j);
+			for(int j = 0; j <= 12; j++){
+				mp.add("Joystick:"+(i+1)+" Button:"+(j),i*0x10+j);
 			}
 		}
 	}
@@ -82,6 +85,7 @@ public class ControlSchemeManager extends StaticWidget {
 		initProperties(aimDown);
 		initProperties(beginClimb);
 		initProperties(climb);
+		initProperties(climbExt);
 	}
 
 	@Override
@@ -102,6 +106,8 @@ public class ControlSchemeManager extends StaticWidget {
 			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,beginClimbIndex,true);
 		} else if(property == climb){
 			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,climbIndex,true);
+		} else if(property == climbExt){
+			setJoystickAndButtonForFunction((Integer)property.getValue()/0x10,(Integer)property.getValue()%0x10,climbExtendIndex,true);
 		}
 	}
 
@@ -224,6 +230,8 @@ public class ControlSchemeManager extends StaticWidget {
 				return "beginClimb";
 			case climbIndex:
 				return "climb";
+			case climbExtendIndex:
+				return "climbExtend";
 			default:
 				return "";
 		}
@@ -242,6 +250,7 @@ public class ControlSchemeManager extends StaticWidget {
 		setJoystickAndButtonForFunction(1, 5, aimDownIndex, false);
 		setJoystickAndButtonForFunction(1, 1, beginClimbIndex, false);
 		setJoystickAndButtonForFunction(1, 2, climbIndex, false);
+		setJoystickAndButtonForFunction(1, 3, climbExtendIndex, false);
 		saveDriveFiles();
 	}
 
@@ -315,6 +324,11 @@ public class ControlSchemeManager extends StaticWidget {
 			case climbIndex: {
 				Robot.getPreferences().putNumber("ClimbStick", stick);
 				Robot.getPreferences().putNumber("ClimbButt", button);
+			}
+			break;
+			case climbExtendIndex: {
+				Robot.getPreferences().putNumber("ClimbExtendStick", stick);
+				Robot.getPreferences().putNumber("ClimbExtendButt", button);
 			}
 			break;
 		}

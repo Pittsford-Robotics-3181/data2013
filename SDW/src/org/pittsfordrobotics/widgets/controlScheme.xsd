@@ -19,6 +19,7 @@
 		<xs:element name="aimDown" type="function" minOccurs="1"/>
 		<xs:element name="beginClimb" type="function" minOccurs="1"/>
 		<xs:element name="climb" type="function" minOccurs="1"/>
+		<xs:element name="climbExtend" type="function" minOccurs="1"/>
 	    </xs:all>
 	</xs:complexType>
     </xs:element>
