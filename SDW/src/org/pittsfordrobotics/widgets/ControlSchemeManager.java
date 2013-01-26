@@ -5,8 +5,9 @@
 package org.pittsfordrobotics.widgets;
 
 import edu.wpi.first.smartdashboard.gui.StaticWidget;
-import edu.wpi.first.smartdashboard.properties.Property;
+import edu.wpi.first.smartdashboard.properties.*;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import java.awt.Graphics;
 import java.io.File;
 import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
@@ -34,10 +35,26 @@ public class ControlSchemeManager extends StaticWidget {
 	public static final int beginClimbIndex = 6;
 	public static final int climbIndex = 7;
 	static final String directory = "/";
-	public static boolean NetworkIsIdiot;//The Network is being an idiot
 	public int[] joystickMap = {1, 1, 0, 0, 1, 1, 1, 1};
 	public int[] buttonMap = {0, 7, 6, 7, 4, 5, 1, 2};
-	private String driverName;
+	private String[] descriptions = {"Shoot Disc", "Spin Up Shooter", "Rotate robot left", "Rotate robot right", "Aim shooter up", "Aim shooter down","Begin Climbing", "Climb"};
+	public MultiProperty shootButton = new MultiProperty(this,descriptions[0]);
+	public MultiProperty spinUpButton = new MultiProperty(this,descriptions[1]);
+	public MultiProperty turnLeft = new MultiProperty(this,descriptions[2]);
+	public MultiProperty turnRight = new MultiProperty(this,descriptions[3]);
+	public MultiProperty aimUp = new MultiProperty(this,descriptions[4]);
+	public MultiProperty aimDown = new MultiProperty(this,descriptions[5]);
+	public MultiProperty beginClimb = new MultiProperty(this,descriptions[6]);
+	public MultiProperty climb = new MultiProperty(this,descriptions[7]);
+	private String driverName = "default";
+	
+	public void initProperties(MultiProperty mp){
+		for(int i = 0; i < 2; i++){
+			for(int j = 0; j < 12; j++){
+				mp.add("Joystick "+(i+1)+" Button "+(j+1),i*0x10+j);
+			}
+		}
+	}
 
 	/**
 	 * @return the driver's name
@@ -59,16 +76,35 @@ public class ControlSchemeManager extends StaticWidget {
 	@Override
 	public void init() {
 		NetworkTable.setTeam(3181);//tell the network table which Robot we are interested in
-		Moniter watch = new Moniter();//create the Thread to watch for ControlScheme issues
-		watch.start();//run the thread
-		NetworkMoniter net = new NetworkMoniter();//create the Thread to moniter network issues
-		net.start();//run the thread
-		// throw new UnsupportedOperationException("Not supported yet.");
+		initProperties(shootButton);
+		initProperties(spinUpButton);
+		initProperties(turnLeft);
+		initProperties(turnRight);
+		initProperties(aimUp);
+		initProperties(aimDown);
+		initProperties(beginClimb);
+		initProperties(climb);
 	}
 
 	@Override
 	public void propertyChanged(Property property) {
-		//throw new UnsupportedOperationException("Not supported yet.");
+		if(property == shootButton){
+			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,0,true);
+		} else if(property == spinUpButton){
+			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,1,true);
+		} else if(property == turnLeft){
+			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,2,true);
+		} else if(property == turnRight){
+			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,3,true);
+		} else if(property == aimUp){
+			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,4,true);
+		} else if(property == aimDown){
+			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,5,true);
+		} else if(property == beginClimb){
+			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,6,true);
+		} else if(property == climb){
+			setJoystickAndButtonForFunction((int)property.getValue()/0x10,(int)property.getValue()%0x10,7,true);
+		}
 	}
 
 	/**
@@ -292,83 +328,5 @@ public class ControlSchemeManager extends StaticWidget {
 			saveDriveFiles();
 		}
 		return true;
-	}
-
-	/**
-	 * Thread that makes sure there weren't any remap problems
-	 */
-	class Moniter extends Thread {
-
-		private static final int ticksPerSecond = 5;
-
-		@Override
-		public void run() {
-			try {
-				while(true) {
-					/*
-					 * check and see if there were any remap problems
-					 */
-					if(NetworkTable.getTable("Controls").getBoolean("RemapFailure") && !NetworkIsIdiot) {
-						/*
-						 * Remap everything based on what the Robot says
-						 */
-						joystickMap[0] = (int)NetworkTable.getTable("Controls").getNumber("ShootingStick");
-						buttonMap[0] = (int)NetworkTable.getTable("Controls").getNumber("ShootingButt");
-						joystickMap[1] = (int)NetworkTable.getTable("Controls").getNumber("SpinningStick");
-						buttonMap[1] = (int)NetworkTable.getTable("Controls").getNumber("SpinningButt");
-						joystickMap[2] = (int)NetworkTable.getTable("Controls").getNumber("DriveLeftStick");
-						buttonMap[2] = (int)NetworkTable.getTable("Controls").getNumber("DriveLeftButt");
-						joystickMap[3] = (int)NetworkTable.getTable("Controls").getNumber("DriveRightStick");
-						buttonMap[3] = (int)NetworkTable.getTable("Controls").getNumber("DriveRightButt");
-						joystickMap[4] = (int)NetworkTable.getTable("Controls").getNumber("AimUpStick");
-						buttonMap[4] = (int)NetworkTable.getTable("Controls").getNumber("AimUpButt");
-						joystickMap[5] = (int)NetworkTable.getTable("Controls").getNumber("AimDownStick");
-						buttonMap[5] = (int)NetworkTable.getTable("Controls").getNumber("AimDownButt");
-						joystickMap[6] = (int)NetworkTable.getTable("Controls").getNumber("BeginClimbStick");
-						buttonMap[6] = (int)NetworkTable.getTable("Controls").getNumber("BeginClimbButt");
-						joystickMap[7] = (int)NetworkTable.getTable("Controls").getNumber("ClimbStick");
-						buttonMap[7] = (int)NetworkTable.getTable("Controls").getNumber("ClimbButt");
-						/*
-						 * Don't repeat this until another problem arises
-						 */
-						NetworkTable.getTable("Controls").putBoolean("RemapFailure", false);
-						/*
-						 * TODO: Tell Ben to redisplay the control map
-						 */
-					}
-					Thread.sleep(1000 / ticksPerSecond);//Delay for some time
-				}
-			}
-			catch(Exception ex) {
-				//Do somehting
-			}
-		}
-	}
-
-	class NetworkMoniter extends Thread {
-
-		private static final int ticksPerSecond = 1;
-
-		@Override
-		public void run() {
-			try {
-				while(true) {
-					/*
-					 * check and see if there were any remap problems
-					 */
-					if(NetworkTable.getTable("Controls").getBoolean("NetworkIdiot")) {
-						NetworkIsIdiot = true;
-						/*
-						 * TODO: Tell Ben that the network is being an idiot
-						 */
-					}
-					NetworkTable.getTable("Controls").putBoolean("NetworkIdiot", true);//ask the robot to reply
-					Thread.sleep(1000 / ticksPerSecond);//Delay for some time
-				}
-			}
-			catch(Exception ex) {
-				//Do somehting
-			}
-		}
 	}
 }
