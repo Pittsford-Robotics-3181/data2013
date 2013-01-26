@@ -23,7 +23,7 @@
             </shotValues>
             <climbValues>
                 <shouldBegin>false</shouldBegin>
-                <shouldClimb>false</shouldClimb>
+                <climb>0</climb>
             </climbValues>
         </controlScheme>
         <shooter>

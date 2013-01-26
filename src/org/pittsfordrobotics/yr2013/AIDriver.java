@@ -9,7 +9,7 @@ package org.pittsfordrobotics.yr2013;
  * @author robbiemarkwick
  */
 public class AIDriver {
-    public static boolean[] functionValues=new boolean[8];
+    public static boolean[] functionValues=new boolean[9];
     public static double driveMag;
     public static double driveDir;
     public void drive(){

@@ -22,9 +22,10 @@ public class ControlScheme {
     public static final int aimDownIndex = 5;
     public static final int beginClimbIndex = 6;
     public static final int climbIndex = 7;
+    public static final int climbExtendIndex = 8;
     public static boolean isAutonomous;
-    private static int[] joystickMap={1,1,0,0,1,1,1,1}; 
-    private static int[] buttonMap={0,7,6,7,4,5,1,2};
+    private static int[] joystickMap={1,1,0,0,1,1,1,1,1}; 
+    private static int[] buttonMap={0,7,6,7,4,5,1,2,3};
     static Joystick joy0;//left driving stick in tank only
     static Joystick joy1;//driving stick (right in tank)
     static Joystick joy2;//Shooting/Climbing Stick
@@ -51,9 +52,13 @@ public class ControlScheme {
         if(isAutonomous)return Hardware.aiDriver.functionValues[beginClimbIndex];
         return valueForButtonOnJoystick(joystickMap[beginClimbIndex],buttonMap[beginClimbIndex]);
     }
-    public static boolean shouldClimb(){
-         if(isAutonomous)return Hardware.aiDriver.functionValues[climbIndex];
-        return valueForButtonOnJoystick(joystickMap[climbIndex],buttonMap[climbIndex]);
+    public static double climbDir(){
+        double num=0;
+	if(isAutonomous) num+=Hardware.aiDriver.functionValues[climbIndex]?-1:0;
+        else num+=valueForButtonOnJoystick(joystickMap[climbIndex],buttonMap[climbIndex])?-1:0;
+	if(isAutonomous) num+=Hardware.aiDriver.functionValues[climbExtendIndex]?1:0;
+        else num+=valueForButtonOnJoystick(joystickMap[climbExtendIndex],buttonMap[climbExtendIndex])?1:0;
+	return num;
     }
     public static double driveMagnitude(){
 	if(isAutonomous)return Hardware.aiDriver.driveMag;
@@ -119,7 +124,7 @@ public class ControlScheme {
                 "</shotValues>\n");
         xmlString=xmlString.concat("<climbValues>\n"+
                 "<shouldBegin>"+(ControlScheme.shouldStartClimb()?"true":"false")+"</shouldBegin>\n"+
-                "<shouldClimb>"+(ControlScheme.shouldClimb()?"true":"false")+"</shouldClimb>\n"+
+                "<climb>"+ControlScheme.climbDir()+"</climb>\n"+
                 "</climbValues>\n");
         xmlString=xmlString.concat("</controlSchme>");
         return xmlString;
