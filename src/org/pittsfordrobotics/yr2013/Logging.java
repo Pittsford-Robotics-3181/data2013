@@ -33,9 +33,21 @@ public class Logging {
     public static void export(){
 	logString.concat("</log>");
 	try{
-	    String logFilePath="./RobotLogs/";
-	    logFilePath=logFilePath.concat(Preferences.getInstance().getString("DriverName","ANONYMOUSDRIVER")+"/");
-	    logFilePath=logFilePath.concat((new Date()).toString()+".xml");
+	    String logFilePath="./robotLogs/";
+	    logFilePath=logFilePath.concat(Preferences.getInstance().getString("DriverName","anonymousDriver")+"/");
+	    Date d=new Date();//Get the Current Date
+	    d.setTime(d.getTime()-15706*24*60*60*1000);//Reduce to milliseconds since start of 2013
+	    int month=(int) d.getTime()>31*24*60*1000?(d.getTime()>59*24*60*1000?2:1):0;//Extract month
+	    if(month!=0)d.setTime(d.getTime()-(month==1?31:59)*24*60*60*1000);//Reduce date to milliseconds since start of montth
+	    int day=(int) (d.getTime()/(24*60*60*1000));//Extract Day
+	    d.setTime(d.getTime()%(24*60*60*1000));//Reduce date to milliseconds since start of the day
+	    int hour=(int) (d.getTime()/(60*60*1000));//Extract Hour
+	    d.setTime(d.getTime()%(60*60*1000));//Reduce date to milliseconds since start of the hour
+	    int minute=(int) (d.getTime()/(60*1000));//Extract Minute
+	    d.setTime(d.getTime()%(60*1000));//Reduce date to milliseconds since start of the minute
+	    int second=(int) (d.getTime()/(1000));//Extract Seconds
+	    
+	    logFilePath=logFilePath.concat(month+"-"+day+"_"+hour+"-"+(minute<10?"0":"")+minute+"-"+(second<10?"0":"")+second+".xml");
 	   /* FileConnection fc = (FileConnection)Connector.open(logFilePath, Connector.WRITE);
 	    fc.create(); 
 	    DataOutputStream theFile = fc.openDataOutputStream();
