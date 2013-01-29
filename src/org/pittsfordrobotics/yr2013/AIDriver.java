@@ -10,8 +10,8 @@ package org.pittsfordrobotics.yr2013;
  */
 public class AIDriver {
     public boolean[] functionValues=new boolean[9];
-    public double driveMag;
-    public double driveDir;
+    public double driveX;
+    public double driveY;
     public void drive(){
 	/*
 	 * To simulate values:

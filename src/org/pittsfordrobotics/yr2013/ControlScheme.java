@@ -60,13 +60,13 @@ public class ControlScheme {
         else num+=valueForButtonOnJoystick(joystickMap[climbExtendIndex],buttonMap[climbExtendIndex])?1:0;
 	return num;
     }
-    public static double driveMagnitude(){
-	if(isAutonomous)return Hardware.aiDriver.driveMag;
-        return Utils.checkClearance(joy1.getMagnitude(), .1);
+    public static double driveX(){
+	if(isAutonomous)return Hardware.aiDriver.driveX;
+        return Utils.checkClearance(joy1.getX(), .05);
     }
-    public static double driveDirection(){
-	if(isAutonomous)return Hardware.aiDriver.driveDir;
-        return Utils.checkAngle(joy1.getDirectionDegrees(),Utils.kDefaultDegreeClearnace,true);
+    public static double driveY(){
+	if(isAutonomous)return Hardware.aiDriver.driveY;
+        return Utils.checkClearance(joy1.getY(), .05);
     }
     public static double driveRotation(){
         double num=0;
@@ -113,8 +113,8 @@ public class ControlScheme {
     public static String logString(boolean Autonomous){
         String xmlString=Autonomous?"<controlScheme mode=\"autonomous\">\n":"<controlScheme mode=\"teleop\">\n";
         xmlString=xmlString.concat("<driveValues>\n"+
-                "<Magnitude>"+ControlScheme.driveMagnitude()+"</Magnitude>\n"+
-                "<Direction>"+ControlScheme.driveDirection()+"</Direction>\n"+
+                "<X>"+ControlScheme.driveX()+"</X>\n"+
+                "<Y>"+ControlScheme.driveY()+"</Y>\n"+
                 "<Rotation>"+ControlScheme.driveRotation()+"</Rotation>\n"+
                 "</driveValues>\n");
         xmlString=xmlString.concat("<shotValues>\n"+

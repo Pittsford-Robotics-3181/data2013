@@ -39,6 +39,8 @@ public class Data extends IterativeRobot {
      */
     public void autonomousPeriodic() {
 	Hardware.aiDriver.drive();
+	Hardware.driving.drive();
+        Hardware.shooter.shoot();
 	Loggable items[]={Hardware.driving,Hardware.shooter};
 	Logging.logItems(items, true, true);
     }
@@ -55,8 +57,7 @@ public class Data extends IterativeRobot {
         Hardware.climber.climb();
 	Loggable items[]={Hardware.driving,Hardware.shooter,Hardware.climber};
 	Logging.logItems(items, true, false);
-    // ^ again... DAFUQ IS THIS?
-	}
+    }
     
     
     public void disabledInit(){

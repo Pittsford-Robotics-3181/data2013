@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package org.pittsfordrobotics.yr2013;
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -13,14 +14,25 @@ import edu.wpi.first.wpilibj.SpeedController;
  */
 public class DriveSystem implements Loggable{
     private RobotDrive drive;
+    private static  Jaguar frontRightJaguar;
+    private static  Jaguar frontLeftJaguar;
+    private static  Jaguar backRightJaguar;
+    private static  Jaguar backLeftJaguar;
     DriveSystem(SpeedController frontRight,SpeedController frontLeft, SpeedController backLeft, SpeedController backRight){
-        drive=new RobotDrive(frontLeft,backLeft,frontRight,backRight);
+        frontRightJaguar=(Jaguar) frontRight;
+	frontLeftJaguar=(Jaguar) frontLeft;
+	backLeftJaguar=(Jaguar) backLeft;
+	backRightJaguar=(Jaguar) backRight;
     }
     DriveSystem(SpeedController left,SpeedController right){
         drive=new RobotDrive(left,right);
     }
     public void drive(){
-        drive.mecanumDrive_Polar(ControlScheme.driveMagnitude(), ControlScheme.driveDirection(), ControlScheme.driveRotation());
+	frontLeftJaguar.set(ControlScheme.driveX() + ControlScheme.driveY() + ControlScheme.driveRotation());
+        frontRightJaguar.set(-ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation());
+        backLeftJaguar.set(-ControlScheme.driveX() + ControlScheme.driveY() + ControlScheme.driveRotation());
+        backRightJaguar.set(ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation());
+       // drive.mecanumDrive_Polar(ControlScheme.driveMagnitude(), ControlScheme.driveDirection(), ControlScheme.driveRotation());
     }
     public void tankDrive(){
         drive.tankDrive(ControlScheme.tankLeft(), ControlScheme.tankRight());
