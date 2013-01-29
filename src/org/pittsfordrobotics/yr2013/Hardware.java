@@ -26,8 +26,8 @@ public class Hardware {
     public static final Victor ShootingMotor=new Victor(5);
     public static final Victor ShootingMotor2=new Victor(6);
 
-    public static Victor ShotAngleMotor=new Victor(7);
-    public static Servo ShootLaunch=new Servo(8);
+    public static final Victor ShotAngleMotor=new Victor(7);
+    public static final Servo ShootLaunch=new Servo(8);
     public static Shooter shooter=new Shooter(ShootingMotor,ShootingMotor2,ShotAngleMotor,ShootLaunch);
     
     public static final Victor ClimbMotor1=new Victor(9);//Climbing
