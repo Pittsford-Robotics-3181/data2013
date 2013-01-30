@@ -52,6 +52,7 @@ public class Data extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+	Hardware.aiDriver.drive();
         Hardware.driving.drive();
         Hardware.shooter.shoot();
         Hardware.climber.climb();

@@ -4,6 +4,9 @@
  */
 package org.pittsfordrobotics.yr2013;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 
 /**
@@ -13,14 +16,32 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class Climber implements Loggable{
     public SpeedController climber;
     public SpeedController angler;
-    Climber (SpeedController climb,SpeedController angle){
+    public Compressor compress;
+    public Solenoid up;
+    public Solenoid down;
+    public DigitalInput upSwitch;
+    public DigitalInput downSwitch;
+    Climber (SpeedController climb,SpeedController angle,Compressor gear,Solenoid uPist, Solenoid dPist, DigitalInput uSwitch, DigitalInput dSwitch){
         climber=climb;
         angler=angle;
+	compress=gear;
+	up=uPist;//Piston that switches to gear for extending arm
+	down=dPist;//Piston that switches to gear for climbing up
+	upSwitch=uSwitch;//Switch if we have reached max extent
+	downSwitch=dSwitch;//Switch if we need to extend
+	compress.start();
     }
     public void climb(){ 
-        if(ControlScheme.shouldStartClimb()) Utils.ramp(1, angler, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//position for climbing if needed
-       else Utils.ramp(0, angler, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
-	Utils.ramp(ControlScheme.climbDir(), climber, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//move the climbing arm
+	   Utils.ramp(ControlScheme.shouldStartClimb()?1:0, angler, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//position for climbing if needed
+	   double climbDir=ControlScheme.climbDir();
+	   if(climbDir>0&&!upSwitch.get())
+	       Utils.ramp(climbDir, climber, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//move the climbing arm
+	   else if(climbDir<0&&!downSwitch.get())
+	       Utils.ramp(climbDir, climber, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//move the climbing arm
+	   up.set(downSwitch.get());
+	   down.set(upSwitch.get());
+
+
     }
     public String logString() {
 	String xmlString="<climber>\n";
