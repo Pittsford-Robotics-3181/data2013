@@ -35,7 +35,7 @@ public class ControlSchemeManager extends StaticWidget {
     public static final int climbExtendIndex = 8;
     static final String directory = "./driverPrefs";
     public int[] joystickMap = {1, 1, 0, 0, 1, 1, 1, 1, 1};
-    public int[] buttonMap = {0, 7, 6, 7, 4, 5, 1, 2, 3};
+    public int[] buttonMap = {0, 7, 8, 9, 4, 5, 1, 2, 3};
     private String[] descriptions = {"Shoot Disc", "Spin Up Shooter", "Rotate robot left", "Rotate robot right", "Aim shooter up", "Aim shooter down", "Position For Climbing", "Pull Climbing Arm", "Extend Climbing Arm"};
     public MultiProperty shootButton = new MultiProperty(this, descriptions[0]);
     public MultiProperty spinUpButton = new MultiProperty(this, descriptions[1]);
@@ -325,10 +325,10 @@ public class ControlSchemeManager extends StaticWidget {
 	    setJoystickAndButtonForFunction(1, 7, spinningIndex, false);
 	}
 	if (joystickMap[2] == -1 || buttonMap[2] == -1) {
-	    setJoystickAndButtonForFunction(0, 6, driveLeftSideIndex, false);
+	    setJoystickAndButtonForFunction(0, 8, driveLeftSideIndex, false);
 	}
 	if (joystickMap[3] == -1 || buttonMap[3] == -1) {
-	    setJoystickAndButtonForFunction(0, 7, driveRightSideIndex, false);
+	    setJoystickAndButtonForFunction(0, 9, driveRightSideIndex, false);
 	}
 	if (joystickMap[4] == -1 || buttonMap[4] == -1) {
 	    setJoystickAndButtonForFunction(1, 4, aimUpIndex, false);
