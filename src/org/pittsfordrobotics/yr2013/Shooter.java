@@ -3,7 +3,8 @@
  * and open the template in the editor.
  */
 package org.pittsfordrobotics.yr2013;
-import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 
 
@@ -15,23 +16,26 @@ public class Shooter implements Loggable{
     public SpeedController angleMotor;
     public SpeedController fireMotor1;
     public SpeedController fireMotor2;
-    public Servo bump;
+    public Solenoid bump;
     private boolean isAngled;
     private double fireSpeed1=.6;
     private double fireSpeed2=.6;
     private static final double kAdjust=.05;
-    Shooter (SpeedController Fire,SpeedController Fire2,SpeedController angle,Servo launch){
+    private boolean hasShot=false;
+    Shooter (SpeedController Fire,SpeedController Fire2,SpeedController angle,Compressor comp,Solenoid launch){
         fireMotor1=Fire;
         fireMotor2=Fire2;
         angleMotor=angle;
-        bump=launch;
+	bump=launch;
         isAngled=true;
+	comp.start();
     }
-    Shooter (SpeedController Fire,SpeedController Fire2,Servo launch){
+    Shooter (SpeedController Fire,SpeedController Fire2,Compressor comp,Solenoid launch){
         fireMotor1=Fire;
         fireMotor2=Fire2;
-        bump=launch;
-        isAngled=false;
+	bump=launch; 
+	isAngled=false;
+	comp.start();
     }
     public void shoot(){
         if(isAngled){
@@ -50,9 +54,11 @@ public class Shooter implements Loggable{
             Utils.ramp(0, fireMotor1, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
             Utils.ramp(0, fireMotor2, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
         }//Stop Shooting if needed
-        bump.set(ControlScheme.shouldShoot()?1:0);//Launch Disks if and only if the driver says so
-        
-
+	if(!ControlScheme.shouldShoot()){
+	    bump.set(!hasShot);//Launch Disks if and only if the driver says so
+	    hasShot=true;//Don't  shoot again until trigger is released and pressed again
+	}
+	else hasShot=false;//Allow another shot as soon as trigger is presed
     }
 
     public String logString() {

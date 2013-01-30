@@ -26,12 +26,14 @@ public class Hardware {
     public static DriveSystem driving=new DriveSystem(frontRightJaguar,frontLeftJaguar,backLeftJaguar,backRightJaguar);
     //public  static DriveSystem driving=new DriveSystem(driveMotor2,DriveMotor1); //uncomment this for tank drive
     
-    public static final Victor ShootingMotor=new Victor(5);
-    public static final Victor ShootingMotor2=new Victor(6);
+    public static final Victor shootingMotor=new Victor(5);
+    public static final Victor shootingMotor2=new Victor(6);
 
-    public static final Victor ShotAngleMotor=new Victor(7);
-    public static final Servo ShootLaunch=new Servo(8);
-    public static Shooter shooter=new Shooter(ShootingMotor,ShootingMotor2,ShotAngleMotor,ShootLaunch);
+    public static final Victor shotAngleMotor=new Victor(7);
+    //climbing pneumatics
+    public static final Compressor shootCompressor=new Compressor(8,17);
+    public static final Solenoid shootLaunch = new Solenoid(15);
+    public static Shooter shooter=new Shooter(shootingMotor,shootingMotor2,shotAngleMotor,shootCompressor,shootLaunch);
     
     //climbing motors
     public static final Victor ClimbMotor1=new Victor(9);
@@ -42,7 +44,7 @@ public class Hardware {
     public static final Solenoid pistonDown = new Solenoid(14);
     //climbing switches
     public static final DigitalInput upSwitch= new DigitalInput(15);
-    public static final DigitalInput downSwitch= new DigitalInput(15);
+    public static final DigitalInput downSwitch= new DigitalInput(16);
     //climber object
     public static Climber climber=new Climber(ClimbMotor1,ClimbMotor2,climbCompressor,pistonUp,pistonDown,upSwitch,downSwitch);
     
