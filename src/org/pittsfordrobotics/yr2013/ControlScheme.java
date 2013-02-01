@@ -76,16 +76,16 @@ public class ControlScheme {
 	return num;
     }
     public static double driveX(){
-	if(isAutonomous)return Hardware.aiDriver.driveX;
+	if(isAutonomous||shouldSpin())return Hardware.aiDriver.driveX;
         return Utils.checkClearance(joy1.getX(), .05);
     }
     public static double driveY(){
-	if(isAutonomous)return Hardware.aiDriver.driveY;
+	if(isAutonomous||shouldSpin())return Hardware.aiDriver.driveY;
         return Utils.checkClearance(joy1.getY(), .05);
     }
     public static double driveRotation(){
         double num=0;
-	if(isAutonomous){
+	if(isAutonomous||shouldSpin()){
 	    num+=Hardware.aiDriver.functionValues[driveLeftSideIndex]?-1:0;
 	    num+=Hardware.aiDriver.functionValues[driveRightSideIndex]?1:0;
 	}

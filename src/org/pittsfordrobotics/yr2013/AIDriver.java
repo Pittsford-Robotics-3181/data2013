@@ -13,14 +13,18 @@ public class AIDriver {
     public double driveX;
     public double driveY;
     private boolean movingArmUp=true;
+    /**
+     * LIAM: this is the method you can implement for automatic aiming
+     */
     public void drive(){
 	/*
 	 * To simulate values:
 	 * Buttons: if the button should be pushed, set its value in functionValues to true, otherwise false
-	 * driveing joystick: driveMag and driveDir are the magnitude and direction of the drive vector
+	 * driveing joystick: driveX and driveY are the X and Y of the drive vector
+	 * Function constants are found in ControlScheme
 	 */
-	//Simulate driving in Autonomous
-	//Simulate Shooter Aim
+	//Automatic driving
+	//Automatic Shooter Aim
 	//Auto-Drive Climber
 	boolean newValue=movingArmUp;
 	if(Hardware.upSwitch.get())newValue=false;
