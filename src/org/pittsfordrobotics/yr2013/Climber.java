@@ -21,6 +21,7 @@ public class Climber implements Loggable{
     public Solenoid down;
     public DigitalInput upSwitch;
     public DigitalInput downSwitch;
+    boolean didSwitchGears=false;
     Climber (SpeedController climb,SpeedController angle,Compressor gear,Solenoid uPist, Solenoid dPist, DigitalInput uSwitch, DigitalInput dSwitch){
         climber=climb;
         angler=angle;
@@ -34,12 +35,17 @@ public class Climber implements Loggable{
     public void climb(){ 
 	   Utils.ramp(ControlScheme.shouldStartClimb()?1:0, angler, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//position for climbing if needed
 	   double climbDir=ControlScheme.climbDir();
-	   if(climbDir>0&&!upSwitch.get())
+	   if(climbDir>0&&!upSwitch.get()){
 	       Utils.ramp(climbDir, climber, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//move the climbing arm
-	   else if(climbDir<0&&!downSwitch.get())
+	       didSwitchGears=false;
+	   }
+	   else if(climbDir<0&&!downSwitch.get()){
 	       Utils.ramp(climbDir, climber, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//move the climbing arm
-	   up.set(downSwitch.get());
-	   down.set(upSwitch.get());
+	       didSwitchGears=false;
+	   }
+	   up.set(downSwitch.get()&&!didSwitchGears);
+	   down.set(upSwitch.get()&&!didSwitchGears);
+	   didSwitchGears=true;
 
 
     }
