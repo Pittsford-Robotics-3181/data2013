@@ -31,22 +31,21 @@ public class Hardware {
 
     public static final Victor shotAngleMotor=new Victor(7);
     //climbing pneumatics
-    public static final Compressor shootCompressor=new Compressor(8,17);
+   //public static final Compressor shootCompressor=new Compressor(8,17);
     public static final Solenoid shootLaunch = new Solenoid(15);
-    public static Shooter shooter=new Shooter(shootingMotor,shootingMotor2,shotAngleMotor,shootCompressor,shootLaunch);
+    public static Shooter shooter=new Shooter(shootingMotor,shootingMotor2,shotAngleMotor,shootLaunch);
     
     //climbing motors
     public static final Victor ClimbMotor1=new Victor(9);
     public static final Victor ClimbMotor2=new Victor(10);
     //climbing pneumatics
-    public static final Compressor climbCompressor=new Compressor(11,12);
+    //public static final Compressor climbCompressor=new Compressor(11,12);
     public static final Solenoid pistonUp = new Solenoid(13);
-    public static final Solenoid pistonDown = new Solenoid(14);
     //climbing switches
     public static final DigitalInput upSwitch= new DigitalInput(15);
     public static final DigitalInput downSwitch= new DigitalInput(16);
     //climber object
-    public static Climber climber=new Climber(ClimbMotor1,ClimbMotor2,climbCompressor,pistonUp,pistonDown,upSwitch,downSwitch);
+    public static Climber climber=new Climber(ClimbMotor1,ClimbMotor2,pistonUp,upSwitch,downSwitch);
     
     public static AIDriver aiDriver=new AIDriver();
 }

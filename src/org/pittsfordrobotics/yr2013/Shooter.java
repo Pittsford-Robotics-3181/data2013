@@ -22,20 +22,18 @@ public class Shooter implements Loggable{
     private double fireSpeed2=.6;
     private static final double kAdjust=.05;
     private boolean hasShot=false;
-    Shooter (SpeedController Fire,SpeedController Fire2,SpeedController angle,Compressor comp,Solenoid launch){
+    Shooter (SpeedController Fire,SpeedController Fire2,SpeedController angle,Solenoid launch){
         fireMotor1=Fire;
         fireMotor2=Fire2;
         angleMotor=angle;
 	bump=launch;
         isAngled=true;
-	comp.start();
     }
-    Shooter (SpeedController Fire,SpeedController Fire2,Compressor comp,Solenoid launch){
+    Shooter (SpeedController Fire,SpeedController Fire2,Solenoid launch){
         fireMotor1=Fire;
         fireMotor2=Fire2;
 	bump=launch; 
 	isAngled=false;
-	comp.start();
     }
     public void shoot(){
         if(isAngled){

@@ -18,16 +18,12 @@ public class Climber implements Loggable{
     public SpeedController angler;
     public Compressor compress;
     public Solenoid up;
-    public Solenoid down;
     public DigitalInput upSwitch;
     public DigitalInput downSwitch;
-    boolean didSwitchGears=false;
-    Climber (SpeedController climb,SpeedController angle,Compressor gear,Solenoid uPist, Solenoid dPist, DigitalInput uSwitch, DigitalInput dSwitch){
+    Climber (SpeedController climb,SpeedController angle,Solenoid uPist, DigitalInput uSwitch, DigitalInput dSwitch){
         climber=climb;
         angler=angle;
-	compress=gear;
 	up=uPist;//Piston that switches to gear for extending arm
-	down=dPist;//Piston that switches to gear for climbing up
 	upSwitch=uSwitch;//Switch if we have reached max extent
 	downSwitch=dSwitch;//Switch if we need to extend
 	compress.start();
@@ -37,15 +33,12 @@ public class Climber implements Loggable{
 	   double climbDir=ControlScheme.climbDir();
 	   if(climbDir>0&&!upSwitch.get()){
 	       Utils.ramp(climbDir, climber, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//move the climbing arm
-	       didSwitchGears=false;
+	       up.set(true);
 	   }
 	   else if(climbDir<0&&!downSwitch.get()){
 	       Utils.ramp(climbDir, climber, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);//move the climbing arm
-	       didSwitchGears=false;
+	       up.set(false);
 	   }
-	   up.set(downSwitch.get()&&!didSwitchGears);
-	   down.set(upSwitch.get()&&!didSwitchGears);
-	   didSwitchGears=true;
 
 
     }
