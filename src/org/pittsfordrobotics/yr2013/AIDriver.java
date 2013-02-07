@@ -23,7 +23,7 @@ public class AIDriver {
 	 * driveing joystick: driveX and driveY are the X and Y of the drive vector
 	 * Function constants are found in ControlScheme
 	 */
-	//Automatic driving
+	//Automatic driveSystem
 	//Automatic Shooter Aim
 	//Auto-Drive Climber
 	boolean newValue=movingArmUp;

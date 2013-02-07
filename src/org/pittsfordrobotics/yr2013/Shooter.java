@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 /**
  *
  * @author robbiemarkwick
+ * @deprecated 
  */
 public class Shooter implements Loggable{
     public SpeedController angleMotor;
@@ -37,14 +38,11 @@ public class Shooter implements Loggable{
     }
     public void shoot(){
         if(isAngled){
-          Utils.ramp (ControlScheme.shotAngle()*.5, angleMotor, Utils.kDefaultTicksPerSecond , Utils.kDefaultRampStepSize);//Adjust Angle
-          fireSpeed1=1;fireSpeed2=1;
-        }
-        else{
-            fireSpeed1+=(ControlScheme.shotAngle()==0)?0:((ControlScheme.shotAngle()>0)?kAdjust:-kAdjust);
-            fireSpeed2+=(ControlScheme.shotAngle()==0)?0:((ControlScheme.shotAngle()>0)?kAdjust:-kAdjust);
-        }
-        if(ControlScheme.shouldSpin()) {
+          //Utils.ramp (ControlScheme.shotAngle()*.5, angleMotor, Utils.kDefaultTicksPerSecond , Utils.kDefaultRampStepSize);//Adjust Angle
+           }
+        Hardware.dsOutput.say(3, "TRYING TO SHOOT");
+        if(ControlScheme.joy1.getTrigger()) {
+            Hardware.dsOutput.say(2, "SPINNING");
             Utils.ramp(fireSpeed1, fireMotor1, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
             Utils.ramp(fireSpeed2, fireMotor2, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
         }//Shoot if needed
@@ -52,7 +50,7 @@ public class Shooter implements Loggable{
             Utils.ramp(0, fireMotor1, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
             Utils.ramp(0, fireMotor2, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
         }//Stop Shooting if needed
-	if(!ControlScheme.shouldShoot()){
+	if(!ControlScheme.joy2.getTrigger()){
 	    bump.set(!hasShot);//Launch Disks if and only if the driver says so
 	    hasShot=true;//Don't  shoot again until trigger is released and pressed again
 	}

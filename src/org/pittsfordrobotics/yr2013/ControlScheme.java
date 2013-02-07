@@ -7,7 +7,6 @@
 package org.pittsfordrobotics.yr2013;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  * @author Robbie Markwick
@@ -18,27 +17,27 @@ public class ControlScheme {
     public static final int spinningIndex = 1;
     public static final int driveLeftSideIndex = 2;
     public static final int driveRightSideIndex = 3;
-    public static final int aimUpIndex = 4;
-    public static final int aimDownIndex = 5;
+    public static final int aimUpIndex = 10;
+    public static final int aimDownIndex = 11;
     public static final int beginClimbIndex = 6;
     public static final int climbIndex = 7;
     public static final int climbExtendIndex = 8;
     public static boolean isAutonomous;
     public static final boolean isAutoClimb=false;
-    private static int[] joystickMap={1,1,0,0,1,1,1,1,1}; 
-    private static int[] buttonMap={0,7,6,7,4,5,1,2,3};
+    private static int[] joystickMap={1,1,0,0,1,1,1,1,1,1,1};
+    private static int[] buttonMap={0,2,6,7,4,5,1,2,3,10,11,10,11};
     private static final int kShotAngleAdjust=1;
-    static Joystick joy0;//left driving stick in tank only
-    static Joystick joy1;//driving stick (right in tank)
-    static Joystick joy2;//Shooting/Climbing Stick
+    static Joystick joy0;//left driveSystem stick in tank only
+    public static Joystick joy1 = new Joystick(1);//driveSystem stick (right in tank)
+    public static Joystick joy2 = new Joystick(2);//Shooting/Climbing Stick
     private static Joystick[] sticks={joy1,joy2};//does not include the left if tank-Driving (lefty drivers can physically swap them)
     
 
-    public static boolean shouldShoot(){
+    public static boolean doShoot(){
 	if(isAutonomous)return Hardware.aiDriver.functionValues[shootingIndex];
         return valueForFunction(shootingIndex);
     }
-    public static boolean shouldSpin(){
+    public static boolean doSpin(){
 	if(isAutonomous)return Hardware.aiDriver.functionValues[spinningIndex];
         return valueForFunction(spinningIndex);
     }
@@ -76,16 +75,16 @@ public class ControlScheme {
 	return num;
     }
     public static double driveX(){
-	if(isAutonomous||shouldSpin())return Hardware.aiDriver.driveX;
+	if(isAutonomous||doSpin())return Hardware.aiDriver.driveX;
         return Utils.checkClearance(joy1.getX(), .05);
     }
     public static double driveY(){
-	if(isAutonomous||shouldSpin())return Hardware.aiDriver.driveY;
+	if(isAutonomous||doSpin())return Hardware.aiDriver.driveY;
         return Utils.checkClearance(joy1.getY(), .05);
     }
     public static double driveRotation(){
         double num=0;
-	if(isAutonomous||shouldSpin()){
+	if(isAutonomous||doSpin()){
 	    num+=Hardware.aiDriver.functionValues[driveLeftSideIndex]?-1:0;
 	    num+=Hardware.aiDriver.functionValues[driveRightSideIndex]?1:0;
 	}
@@ -138,8 +137,8 @@ public class ControlScheme {
                 "</driveValues>\n");
         xmlString=xmlString.concat("<shotValues>\n"+
                 "<adjustAngle>"+ControlScheme.shotAngle()+"</adjustAngle>\n"+
-                "<shouldSpin>"+(ControlScheme.shouldSpin()?"true":"false")+"</shouldSpin>\n"+
-                "<shouldFire>"+(ControlScheme.shouldShoot()?"true":"false")+"</shouldFire>\n"+
+                "<shouldSpin>"+(ControlScheme.doSpin()?"true":"false")+"</shouldSpin>\n"+
+                "<shouldFire>"+(ControlScheme.doShoot()?"true":"false")+"</shouldFire>\n"+
                 "</shotValues>\n");
         xmlString=xmlString.concat("<climbValues>\n"+
                 "<shouldBegin>"+(ControlScheme.shouldStartClimb()?"true":"false")+"</shouldBegin>\n"+
