@@ -9,14 +9,16 @@ package org.pittsfordrobotics.yr2013;
  * @author robbiemarkwick
  */
 public class AIDriver {
-    public boolean[] functionValues=new boolean[9];
+
+    public boolean[] functionValues = new boolean[9];
     public double driveX;
     public double driveY;
-    private boolean movingArmUp=true;
+    private boolean movingArmUp = true;
+
     /**
      * LIAM: this is the method you can implement for automatic aiming
      */
-    public void drive(){
+    public void drive() {
 	/*
 	 * To simulate values:
 	 * Buttons: if the button should be pushed, set its value in functionValues to true, otherwise false
@@ -26,21 +28,19 @@ public class AIDriver {
 	//Automatic driveSystem
 	//Automatic Shooter Aim
 	//Auto-Drive Climber
-	boolean newValue=movingArmUp;
-	if(Hardware.upSwitch.get())newValue=false;
-	else if(Hardware.downSwitch.get())newValue=true;
-	if(newValue!=movingArmUp){
-	    movingArmUp=newValue;
-	    functionValues[ControlScheme.climbIndex]=false;
-	    functionValues[ControlScheme.climbExtendIndex]=false;
+	boolean newValue = movingArmUp;
+	if (Hardware.upSwitch.get()) {
+	    newValue = false;
+	} else if (Hardware.downSwitch.get()) {
+	    newValue = true;
 	}
-	else{
-		 functionValues[ControlScheme.climbIndex]=!movingArmUp;
-		 functionValues[ControlScheme.climbExtendIndex]=movingArmUp;
-	    
+	if (newValue != movingArmUp) {
+	    movingArmUp = newValue;
+	    functionValues[ControlScheme.climbIndex] = false;
+	    functionValues[ControlScheme.climbExtendIndex] = false;
+	} else {
+	    functionValues[ControlScheme.climbIndex] = !movingArmUp;
+	    functionValues[ControlScheme.climbExtendIndex] = movingArmUp;
 	}
-	
-	
     }
-    
 }

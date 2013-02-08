@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
-import org.pittsfordrobotics.yr2013.liamcomponents.Shooter;
+import org.pittsfordrobotics.yr2013.robbieComponents.Shooter;
+import org.pittsfordrobotics.yr2013.robbieComponents.Climber;
 
 /**
  * @author Robbie Markwick
@@ -43,13 +44,13 @@ public class Hardware {
     public static final Victor ClimbMotor1=new Victor(9);
     public static final Victor ClimbMotor2=new Victor(10);
     //climbing pneumatics
-    //public static final Compressor climbCompressor=new Compressor(11,12);
+    public static final Compressor climbCompressor=new Compressor(11,12);
     public static final Solenoid pistonUp = new Solenoid(1, 3);
     //climbing switches
     public static final DigitalInput upSwitch= new DigitalInput(5);
     public static final DigitalInput downSwitch= new DigitalInput(6);
     //climber object
-    //public static Climber climber=new Climber(ClimbMotor1,ClimbMotor2,pistonUp,upSwitch,downSwitch);
+    public static Climber climber=new Climber(ClimbMotor1,ClimbMotor2,pistonUp,upSwitch,downSwitch);
     
     public static AIDriver aiDriver=new AIDriver();
 }

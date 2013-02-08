@@ -24,11 +24,9 @@ public class Data extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    
     public void robotInit() {
         Hardware.dsOutput.say(1, "Initializing...");
-		
-		Hardware.dsOutput.say(1, "Done.");
+	Hardware.dsOutput.say(1, "Done.");
     }
     public void autonomousInit(){
 	ControlScheme.isAutonomous=true;
@@ -41,8 +39,8 @@ public class Data extends IterativeRobot {
 	Hardware.aiDriver.drive();
 	Hardware.driveSystem.drive();
         Hardware.shooter.shoot();
-	//Loggable items[]={Hardware.driveSystem,Hardware.shooter};
-	//Logging.logItems(items, true, true);
+	Loggable items[]={Hardware.driveSystem,Hardware.shooter};
+	Logging.logItems(items, true, true);
     }
     public void teleopInit(){
         ControlScheme.isAutonomous=false;
@@ -57,9 +55,9 @@ public class Data extends IterativeRobot {
 	//Hardware.aiDriver.drive();
         //Hardware.driveSystem.drive();
         Hardware.shooter.shoot();
-        //Hardware.climber.climb();
-	//Loggable items[]={Hardware.driveSystem,Hardware.shooter,Hardware.climber};
-	//Logging.logItems(items, true, false);
+        Hardware.climber.climb();
+	Loggable items[]={Hardware.driveSystem,Hardware.shooter,Hardware.climber};
+	Logging.logItems(items, true, false);
     }
     
     
