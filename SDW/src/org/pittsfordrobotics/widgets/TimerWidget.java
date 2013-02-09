@@ -27,7 +27,7 @@ public class TimerWidget extends Widget{
 	@Override
 	public void setValue(Object value) {
 		teamColor = ((Character)value & colorMask) == colorMask;
-		timeRemaining = ((Character)value & ~colorMask);
+		timeRemaining = (char)((Character)value & ~colorMask);
 		initialTime = System.currentTimeMillis();
 	}
 
@@ -53,11 +53,11 @@ public class TimerWidget extends Widget{
 	public void paintComponent(Graphics g){
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(Color.WHITE);
-		g2.drawRect(0, 0, WIDTH, HEIGHT);
+		g2.fillRoundRect(0, 0, WIDTH, HEIGHT,4,4);
 		g2.setColor(teamColor ? Color.RED : Color.BLUE);
-		g2.drawRect(1,1,WIDTH-2,HEIGHT-2);
+		g2.fillRoundRect(1,1,WIDTH-2,HEIGHT-2,4,4);
 		g2.setColor(new Color(100,100,100));
-		g2.drawOval(48,4,24,24);
+		g2.fillOval(48,4,24,24);
 		g2.setColor(new Color(245,234,204));
 		g2.fillArc(48,4,24,24,90,(int)(360*(System.currentTimeMillis() - initialTime)/(System.currentTimeMillis() - initialTime + timeRemaining)));
 		g2.setColor(new Color(100,100,100));
