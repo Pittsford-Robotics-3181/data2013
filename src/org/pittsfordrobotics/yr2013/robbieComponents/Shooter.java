@@ -28,6 +28,7 @@ public class Shooter implements Loggable {
 	fireMotor2 = Fire2;
 	angleMotor = angle;
 	bump = launch;
+	launcher.start();
     }
 
     public void shoot() {
@@ -43,7 +44,6 @@ public class Shooter implements Loggable {
 	    Utils.ramp(0, fireMotor1, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
 	    Utils.ramp(0, fireMotor2, Utils.kDefaultTicksPerSecond, Utils.kDefaultRampStepSize);
 	}//Stop Shooting if needed
-	launcher.start();
     }
 
     public String logString() {

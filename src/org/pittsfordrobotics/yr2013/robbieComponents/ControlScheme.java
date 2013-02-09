@@ -16,8 +16,8 @@ public class ControlScheme {
     private static final int spinningIndex = 1; //spinning shooter wheels
     private static final int driveLeftSideIndex = 2;//rotate left
     private static final int driveRightSideIndex = 3;//rotate right
-    private static final int aimUpIndex = 10;//aim shooter up
-    private static final int aimDownIndex = 11;//aim shooter down
+    private static final int aimUpIndex = 4;//aim shooter up
+    private static final int aimDownIndex = 5;//aim shooter down
     private static final int beginClimbIndex = 6;//set up for climbing
     private static final int climbIndex = 7;//pull the robot up
     private static final int climbExtendIndex = 8;//extend the climbing arm, might be automated
@@ -26,8 +26,8 @@ public class ControlScheme {
     public static final boolean isAutoClimb=false;
     private static final int kShotAngleAdjust=1;
     
-    public static Joystick joy1 = new Joystick(1);//driveSystem stick
-    public static Joystick joy2 = new Joystick(2);//Shooting+Climbing Stick
+    public static Joystick joy1 = Hardware.driveJoystick;//driveSystem stick
+    public static Joystick joy2 = Hardware.auxJoystick;//Shooting+Climbing Stick
     
 
     public static boolean doShoot(){

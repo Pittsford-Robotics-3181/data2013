@@ -21,8 +21,8 @@ public class AIDriver {
     private static final int spinningIndex = 1; //spinning shooter wheels
     private static final int driveLeftSideIndex = 2;//rotate left
     private static final int driveRightSideIndex = 3;//rotate right
-    private static final int aimUpIndex = 10;//aim shooter up
-    private static final int aimDownIndex = 11;//aim shooter down
+    private static final int aimUpIndex = 4;//aim shooter up
+    private static final int aimDownIndex = 5;//aim shooter down
     private static final int beginClimbIndex = 6;//set up for climbing
     private static final int climbIndex = 7;//pull the robot up
     private static final int climbExtendIndex = 8;//extend the climbing arm, might be automated
