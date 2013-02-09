@@ -52,8 +52,8 @@ public class Data extends IterativeRobot {
     public void teleopPeriodic() {
         Hardware.dsOutput.clearOutput();
         ControlScheme.isAutonomous=false;
-	//Hardware.aiDriver.drive();
-        //Hardware.driveSystem.drive();
+	Hardware.aiDriver.drive();
+        Hardware.driveSystem.drive();
         Hardware.shooter.shoot();
         Hardware.climber.climb();
 	Loggable items[]={Hardware.driveSystem,Hardware.shooter,Hardware.climber};
