@@ -23,6 +23,9 @@ public class Shooter extends Thread {
     @override
     public void run()
     {
+        double speed = -frontMotor.get();
+        
+        double speed2 = -backMotor.get();
         if(ControlScheme.doShoot())
         {
             discPusher.set(true);
@@ -31,12 +34,27 @@ public class Shooter extends Thread {
         }
         if(ControlScheme.doShooterSpin())
         {
-            double speed = 0.0;
             if(speed < maxSpeed)
             {
-                
+                speed += 0.01;
+            }
+            if(speed2 < maxSpeed)
+            {
+                speed2 += 0.01;
+            }
+        }else{
+            
+            if(speed > 0.0)
+            {
+             speed -= 0.01;   
+            }
+            if(speed2 > 0.0)
+            {
+             speed2 -= 0.01;   
             }
         }
+        frontMotor.set(-speed);
+        backMotor.set(-speed2);
         
     }
     
