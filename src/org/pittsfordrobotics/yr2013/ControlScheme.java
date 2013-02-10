@@ -60,4 +60,12 @@ public class ControlScheme {
         {
             return Hardware.auxJoystick.getRawButton(4) || Hardware.auxJoystick.getRawButton(5);
         }
+        public static boolean angleUp()
+        {
+            return Hardware.auxJoystick.getRawButton(3);
+        }
+        public static boolean angleDown()
+        {
+            return Hardware.auxJoystick.getRawButton(2);
+        }
 }
