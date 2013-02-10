@@ -3,8 +3,8 @@
  * and open the template in the editor.
  */
 package org.pittsfordrobotics.yr2013.components;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Timer;
+import org.pittsfordrobotics.yr2013.ControlScheme;
+import edu.wpi.first.wpilibj.*;
 /**
  *
  * @author liam
@@ -20,7 +20,6 @@ public class Shooter extends Thread {
          this.angleMotor = angleMotor;
          this.discPusher = discPusher;
      }
-    @override
     public void run()
     {
         double speed = -frontMotor.get();
