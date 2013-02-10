@@ -55,7 +55,7 @@ public class Shooter extends Thread {
         }
         frontMotor.set(-speed);
         backMotor.set(-speed2);
-        
+        Timer.delay(0.005);
     }
     
 }

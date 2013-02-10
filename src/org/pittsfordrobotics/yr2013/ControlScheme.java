@@ -51,5 +51,13 @@ public class ControlScheme {
 		public static final int ERROR_UNSPECIFIED = 5;
 		private int id = 0;
 		private AbsoluteDirection(int id){this.id=id;}
-}
+        }
+        public static boolean doShoot()
+        {
+            return Hardware.auxJoystick.getTrigger();
+        }
+        public static boolean doShooterSpin()
+        {
+            return Hardware.auxJoystick.getRawButton(4) || Hardware.auxJoystick.getRawButton(5);
+        }
 }
