@@ -23,6 +23,11 @@ public class Data extends IterativeRobot {
      */
     public void robotInit() {
     }
+	
+	public void disabledInit(){
+		robotDrive = new DriveSystem(Hardware.driveJoystick,Hardware.auxJoystick,Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
+		shooter = new Shooter(Hardware.shootingMotor,Hardware.shootingMotor2,Hardware.shotAngleMotor,Hardware.shootLaunch);
+	}
 
     /**
      * This function is called periodically during autonomous
@@ -35,6 +40,7 @@ public class Data extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopInit() {
+		System.out.println("Starting Threads");
         robotDrive.start();
 		shooter.start();
     }

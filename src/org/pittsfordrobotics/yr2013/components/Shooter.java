@@ -6,6 +6,7 @@ package org.pittsfordrobotics.yr2013.components;
 
 import org.pittsfordrobotics.yr2013.ControlScheme;
 import edu.wpi.first.wpilibj.*;
+import org.pittsfordrobotics.yr2013.*;
 
 /**
  *
@@ -51,6 +52,7 @@ public class Shooter extends Thread {
 					speed2 -= 0.01;
 				}
 			}
+			Hardware.shotAngleMotor.set(Hardware.auxJoystick.getRawButton(3) ? -1 : Hardware.auxJoystick.getRawButton(2) ? 1 : 0);
 			frontMotor.set(-speed);
 			backMotor.set(-speed2);
 			Timer.delay(0.005);
