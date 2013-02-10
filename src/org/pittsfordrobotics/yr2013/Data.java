@@ -8,18 +8,18 @@
 package org.pittsfordrobotics.yr2013;
 
 
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.*;
 
 /**
  *  @author LiamMiddlebrook
  */
 public class Data extends IterativeRobot {
+	DriveSystem robotDrive = new DriveSystem(Hardware.driveJoystick,Hardware.auxJoystick,Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-
     }
 
     /**
@@ -32,8 +32,8 @@ public class Data extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
-    public void teleopPeriodic() {
-        
+    public void teleopInit() {
+        robotDrive.start();
     }
     
     /**

@@ -22,10 +22,13 @@ public class DriveSystem extends Thread{
 		this.backLeft = backLeft;
 	}
 	public void run(){
+		while(DriverStation.getInstance().isEnabled() && !DriverStation.getInstance().isAutonomous()){
 		frontLeft.set(driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) + rotation());
         frontRight.set(-driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) - rotation());
         backLeft.set(-driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) + rotation());
         backRight.set(driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) - rotation());
+		Timer.delay(0.005);
+		}
 	}
 	public int rotation(){
 		return ControlScheme.driveRotateCW() ? 1 : ControlScheme.driveRotateCCW() ? -1 : 0;
