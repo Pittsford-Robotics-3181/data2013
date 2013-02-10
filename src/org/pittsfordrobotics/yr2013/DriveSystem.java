@@ -22,9 +22,12 @@ public class DriveSystem extends Thread{
 		this.backLeft = backLeft;
 	}
 	public void run(){
-		frontLeft.set(driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) + 0);
-        frontRight.set(-driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) - 0);
-        backLeft.set(-driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) + 0);
-        backRight.set(driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) - 0);
+		frontLeft.set(driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) + rotation());
+        frontRight.set(-driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) - rotation());
+        backLeft.set(-driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) + rotation());
+        backRight.set(driveJoystick.getX()*Math.abs(driveJoystick.getX()) + driveJoystick.getY()*Math.abs(driveJoystick.getY()) - rotation());
+	}
+	public int rotation(){
+		return ControlScheme.driveRotateCW() ? 1 : ControlScheme.driveRotateCCW() ? -1 : 0;
 	}
 }

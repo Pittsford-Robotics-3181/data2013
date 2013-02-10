@@ -8,20 +8,7 @@ package org.pittsfordrobotics.yr2013;
  *
  * @author liammiddlebrook
  */
-final class AbsoluteDirection{
-    public static final AbsoluteDirection FORWARD = new AbsoluteDirection(0);
-    public static final AbsoluteDirection BACKWARD = new AbsoluteDirection(1);
-    public static final AbsoluteDirection STRAFE_LEFT = new AbsoluteDirection(2);
-    public static final AbsoluteDirection STRAFE_RIGHT = new AbsoluteDirection(3);
-    public static final AbsoluteDirection UNSPECIFIED = new AbsoluteDirection(5);
-    public static final int DIR_FORWARD = 0;
-    public static final int DIR_BACKWARD = 1;
-    public static final int DIR_STRAFE_LEFT = 2;
-    public static final int DIR_STRAFE_RIGHT = 3;
-    public static final int ERROR_UNSPECIFIED = 5;
-    private int id = 0;
-    private AbsoluteDirection(int id){this.id=id;}
-}
+
 public class ControlScheme {
     public static AbsoluteDirection perfectStrafe()
     {
@@ -51,4 +38,18 @@ public class ControlScheme {
     {
         return Hardware.driveJoystick.getRawButton(9);
     }
+	static final class AbsoluteDirection{
+		public static final AbsoluteDirection FORWARD = new AbsoluteDirection(0);
+		public static final AbsoluteDirection BACKWARD = new AbsoluteDirection(1);
+		public static final AbsoluteDirection STRAFE_LEFT = new AbsoluteDirection(2);
+		public static final AbsoluteDirection STRAFE_RIGHT = new AbsoluteDirection(3);
+		public static final AbsoluteDirection UNSPECIFIED = new AbsoluteDirection(5);
+		public static final int DIR_FORWARD = 0;
+		public static final int DIR_BACKWARD = 1;
+		public static final int DIR_STRAFE_LEFT = 2;
+		public static final int DIR_STRAFE_RIGHT = 3;
+		public static final int ERROR_UNSPECIFIED = 5;
+		private int id = 0;
+		private AbsoluteDirection(int id){this.id=id;}
+}
 }
