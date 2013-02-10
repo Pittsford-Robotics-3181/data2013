@@ -13,6 +13,12 @@ final class AbsoluteDirection{
     public static final AbsoluteDirection BACKWARD = new AbsoluteDirection(1);
     public static final AbsoluteDirection STRAFE_LEFT = new AbsoluteDirection(2);
     public static final AbsoluteDirection STRAFE_RIGHT = new AbsoluteDirection(3);
+    public static final AbsoluteDirection UNSPECIFIED = new AbsoluteDirection(5);
+    public static final int DIR_FORWARD = 0;
+    public static final int DIR_BACKWARD = 1;
+    public static final int DIR_STRAFE_LEFT = 2;
+    public static final int DIR_STRAFE_RIGHT = 3;
+    public static final int ERROR_UNSPECIFIED = 5;
     private int id = 0;
     private AbsoluteDirection(int id){this.id=id;}
 }
@@ -34,6 +40,15 @@ public class ControlScheme {
         if(Hardware.driveJoystick.getRawButton(5))
         {
             return AbsoluteDirection.STRAFE_RIGHT;
-        4
+        }
+        return AbsoluteDirection.UNSPECIFIED;
+    }
+    public static boolean driveRotateCCW()
+    {
+        return Hardware.driveJoystick.getRawButton(8);
+    }
+    public static boolean driveRotateCW()
+    {
+        return Hardware.driveJoystick.getRawButton(9);
     }
 }
