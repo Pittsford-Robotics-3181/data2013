@@ -35,7 +35,7 @@ public class Hardware {
     public static final Victor shotAngleMotor=new Victor(1, 6);
     //climbing pneumatics
    //public static final Compressor shootCompressor=new Compressor(8,17);
-    public static final Solenoid shootLaunch = new Solenoid(1,5);
+    public static final Solenoid shootLaunch = new Solenoid(1,3);
 //    public static final Shooter shooter=new Shooter(shootingMotor,shootingMotor2,shotAngleMotor,shootLaunch);
    
     //climbing motors

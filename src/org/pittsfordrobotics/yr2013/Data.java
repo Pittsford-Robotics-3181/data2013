@@ -9,13 +9,15 @@ package org.pittsfordrobotics.yr2013;
 
 
 import edu.wpi.first.wpilibj.*;
+import org.pittsfordrobotics.yr2013.components.Shooter;
 
 /**
  *  @author LiamMiddlebrook
  */
 public class Data extends IterativeRobot {
 	DriveSystem robotDrive = new DriveSystem(Hardware.driveJoystick,Hardware.auxJoystick,Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
-    /**
+    Shooter shooter = new Shooter(Hardware.shootingMotor,Hardware.shootingMotor2,Hardware.shotAngleMotor,Hardware.shootLaunch);
+	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
@@ -34,6 +36,7 @@ public class Data extends IterativeRobot {
      */
     public void teleopInit() {
         robotDrive.start();
+		shooter.start();
     }
     
     /**
