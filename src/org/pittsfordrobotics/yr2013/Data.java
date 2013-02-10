@@ -9,7 +9,7 @@ package org.pittsfordrobotics.yr2013;
 
 
 import edu.wpi.first.wpilibj.*;
-import org.pittsfordrobotics.yr2013.components.Shooter;
+import org.pittsfordrobotics.yr2013.components.*;
 
 /**
  *  @author LiamMiddlebrook
@@ -17,11 +17,13 @@ import org.pittsfordrobotics.yr2013.components.Shooter;
 public class Data extends IterativeRobot {
 	DriveSystem robotDrive = new DriveSystem(Hardware.driveJoystick,Hardware.auxJoystick,Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
     Shooter shooter = new Shooter(Hardware.shootingMotor,Hardware.shootingMotor2,Hardware.shotAngleMotor,Hardware.shootLaunch);
+	SmartDashboardCommunications dsComm = new SmartDashboardCommunications();
 	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+		dsComm.start();
     }
 	
 	public void disabledInit(){
@@ -44,6 +46,13 @@ public class Data extends IterativeRobot {
         robotDrive.start();
 		shooter.start();
     }
+	public void teleopPeriodic(){
+		Hardware.solenoid1.set(Hardware.auxJoystick.getRawButton(6));
+		Hardware.solenoid3.set(Hardware.auxJoystick.getRawButton(11));
+		Hardware.solenoid4.set(Hardware.auxJoystick.getRawButton(10));
+		Hardware.shootLaunch.set(Hardware.auxJoystick.getRawButton(7));
+	
+}
     
     /**
      * This function is called periodically during test mode

@@ -35,7 +35,10 @@ public class Hardware {
     public static final Jaguar shotAngleMotor=new Jaguar(2, 6);
     //climbing pneumatics
    //public static final Compressor shootCompressor=new Compressor(8,17);
+	public static final Solenoid solenoid1 = new Solenoid(1,1);
+	public static final Solenoid solenoid3 = new Solenoid(1,3);
     public static final Solenoid shootLaunch = new Solenoid(1,2);
+	public static final Solenoid solenoid4 = new Solenoid(1,4);
 //    public static final Shooter shooter=new Shooter(shootingMotor,shootingMotor2,shotAngleMotor,shootLaunch);
    
     //climbing motors
