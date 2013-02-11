@@ -16,7 +16,7 @@ import java.util.logging.*;
  * @author Benjamin Pylko <spectare at sourceforge.net>
  */
 public class AmmoWidget extends Widget{
-	public static final String NAME = "Countdown Timer for the match";
+	public static final String NAME = "Ammo Counting Widget";
 	public static final DataType[] TYPES = { DataType.NUMBER };
 	char colorMask = 0b1000000000000000;
 	Font tf2 = null;

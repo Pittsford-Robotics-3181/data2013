@@ -35,7 +35,7 @@ public class CrossHairs extends CrossHairsWidget{
 		g2.fillRect(17,16,15,1);
 		g2.fillRect(15,0,1,15);
 		g2.fillRect(15,18,1,15);
-		setLocation(centerReference.getWidth()/2,centerReference.getHeight()/2);
+		setLocation(centerReference.getWidth()/2-16,centerReference.getHeight()/2-16);
 	}
 	
 }
