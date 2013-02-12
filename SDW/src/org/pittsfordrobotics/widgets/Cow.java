@@ -27,7 +27,7 @@ public class Cow extends StaticWidget{
 	private Font monospaced;
 	@Override
 	public void init() {
-		String init = fortunes[(int)Math.round(Math.random()*fortunes.length)].trim();
+		String init = fortunes[(int)(Math.random()*fortunes.length)].trim();
 		fortunes = null;
 		fortune = wordWrap(init,28,getLocale());
 		fortune = fortune.replaceAll("\\n","\n|");
