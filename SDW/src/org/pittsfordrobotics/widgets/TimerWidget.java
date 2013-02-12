@@ -70,7 +70,9 @@ public class TimerWidget extends Widget{
 		g2.setColor(new Color(100,100,100));
 		g2.fillOval(80,8,32,32);
 		g2.setColor(new Color(245,234,204));
+		try{
 		g2.fillArc(80,8,32,32,90,-(int)(360*(System.currentTimeMillis()/1000 - initialTime/1000)/(System.currentTimeMillis()/1000 - initialTime/1000 + timeRemaining)));
+		} catch(Exception e){}
 		g2.setFont(tf2);
 		g2.drawString(timeFormat(timeRemaining),10,32);
 	}
