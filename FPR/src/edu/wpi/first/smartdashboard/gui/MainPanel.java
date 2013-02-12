@@ -88,10 +88,20 @@ public final class MainPanel extends JPanel {
 					currentPanel.setCursor(blankCursor);
 				xPixelsPerSecond=(MouseInfo.getPointerInfo().getLocation().getX()-originX)/(System.currentTimeMillis()-oldMillis);
 				yPixelsPerSecond=(MouseInfo.getPointerInfo().getLocation().getY()-originY)/(System.currentTimeMillis()-oldMillis);
-			} else {
+					edu.wpi.first.smartdashboard.robot.Robot.getTable().putBoolean("IsFPR",true);
+				edu.wpi.first.smartdashboard.robot.Robot.getTable().putNumber("MouseXVelocity",xPixelsPerSecond);
+				edu.wpi.first.smartdashboard.robot.Robot.getTable().putNumber("MouseYVelocity",yPixelsPerSecond);
+				} else {
 					currentPanel.setCursor(Cursor.getDefaultCursor());
 					xPixelsPerSecond = 0;
 					yPixelsPerSecond = 0;
+					edu.wpi.first.smartdashboard.robot.Robot.getTable().putBoolean("IsFPR",false);
+					try {
+						Thread.sleep(200);
+					}
+					catch(InterruptedException ex) {
+						Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+					}
 				}
 		}
 		}

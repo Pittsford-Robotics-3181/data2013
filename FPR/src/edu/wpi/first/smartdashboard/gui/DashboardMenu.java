@@ -24,7 +24,7 @@ import org.jfree.ui.ExtensionFileFilter;
  * @author Joe Grinstead
  */
 public class DashboardMenu extends JMenuBar {
-
+	private static boolean isEditable;
     /**
      * Creates a menu for the given panel.
      *
@@ -120,6 +120,9 @@ public class DashboardMenu extends JMenuBar {
             public void actionPerformed(ActionEvent e) {
                 for (DashboardPanel panel : MainPanel.panels.values()) {
                     panel.setEditable(!panel.isEditable());
+					try{
+					isEditable = editMode.getState();
+					} catch(Exception ex){}
                 }
             }
         });
@@ -235,4 +238,7 @@ public class DashboardMenu extends JMenuBar {
         add(fileMenu);
         add(viewMenu);
     }
+	public static boolean isEditable(){
+		return isEditable;
+	}
 }
