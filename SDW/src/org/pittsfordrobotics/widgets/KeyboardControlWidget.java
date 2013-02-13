@@ -30,7 +30,6 @@ public class KeyboardControlWidget extends StaticWidget{
 	private byte command = 0b000000;
 	private ITable table = Robot.getTable();
 	private NativeKeyListener nke = new NativeKeyListener(){
-		int wait = 0;
 		@Override
 		public void nativeKeyPressed(NativeKeyEvent nke) {
 			if(forward.getValue().toString().equalsIgnoreCase(""+(char)nke.getKeyCode())){
@@ -80,8 +79,6 @@ public class KeyboardControlWidget extends StaticWidget{
 
 		@Override
 		public void nativeKeyTyped(NativeKeyEvent nke) {
-			nativeKeyPressed(nke);
-			nativeKeyReleased(nke);
 		}
 		
 	};
