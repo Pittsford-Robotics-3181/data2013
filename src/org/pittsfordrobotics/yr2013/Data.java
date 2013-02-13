@@ -15,7 +15,7 @@ import org.pittsfordrobotics.yr2013.components.*;
  *  @author LiamMiddlebrook
  */
 public class Data extends IterativeRobot {
-	DriveSystem robotDrive = new DriveSystem(Hardware.driveJoystick,Hardware.auxJoystick,Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
+	DriveSystem robotDrive = new DriveSystem(Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
     Shooter shooter = new Shooter(Hardware.shootingMotor,Hardware.shootingMotor2,Hardware.shotAngleMotor,Hardware.shootLaunch);
 	SmartDashboardCommunications dsComm = new SmartDashboardCommunications();
 	/**
@@ -27,7 +27,7 @@ public class Data extends IterativeRobot {
     }
 	
 	public void disabledInit(){
-		robotDrive = new DriveSystem(Hardware.driveJoystick,Hardware.auxJoystick,Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
+		robotDrive = new DriveSystem(Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
 		shooter = new Shooter(Hardware.shootingMotor,Hardware.shootingMotor2,Hardware.shotAngleMotor,Hardware.shootLaunch);
 	}
 

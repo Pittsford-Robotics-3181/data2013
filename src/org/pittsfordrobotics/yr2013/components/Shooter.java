@@ -52,7 +52,7 @@ public class Shooter extends Thread {
 					speed2 -= 0.01;
 				}
 			}
-			Hardware.shotAngleMotor.set(ControlScheme.angleUp() ? -1 : ControlScheme.angleDown() ? 1 : 0);
+			Hardware.shotAngleMotor.set(ControlScheme.angleDown() - ControlScheme.angleUp());
 			frontMotor.set(-speed);
 			backMotor.set(-speed2);
 			Timer.delay(0.005);

@@ -4,6 +4,8 @@
  */
 package org.pittsfordrobotics.yr2013;
 
+import edu.wpi.first.wpilibj.smartdashboard.*;
+
 /**
  *
  * @author liammiddlebrook
@@ -54,18 +56,45 @@ public class ControlScheme {
         }
         public static boolean doShoot()
         {
+			if(SmartDashboard.getBoolean("IsFPR")){
+				return ((int)(SmartDashboard.getNumber("MouseButtons")) & 1) == 1;
+			}
             return Hardware.auxJoystick.getTrigger();
         }
         public static boolean doShooterSpin()
         {
+			if(SmartDashboard.getBoolean("IsFPR")){
+				return ((int)(SmartDashboard.getNumber("MouseButtons")) & 2) == 2;
+			}
             return Hardware.auxJoystick.getRawButton(4) || Hardware.auxJoystick.getRawButton(5);
         }
-        public static boolean angleUp()
+        public static double angleUp()
         {
-            return Hardware.auxJoystick.getRawButton(3);
+			if(SmartDashboard.getBoolean("IsFPR")){
+			return Math.max(0,SmartDashboard.getNumber("MouseYVelocity")/14.0);
+		}
+            return Hardware.auxJoystick.getRawButton(3) ? 1 : 0;
         }
-        public static boolean angleDown()
+        public static double angleDown()
         {
-            return Hardware.auxJoystick.getRawButton(2);
+			if(SmartDashboard.getBoolean("IsFPR")){
+			return Math.min(0,SmartDashboard.getNumber("MouseYVelocity")/14.0);
+		}
+            return Hardware.auxJoystick.getRawButton(2) ? 1 : 0;
         }
+		public static double strafeY(){
+			if(SmartDashboard.getBoolean("IsFPR")){
+				return (((int)SmartDashboard.getNumber("Keyboard")) & 1) == 1 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 2) == 2 ? -0.5 : 0;
+			}
+			return Hardware.driveJoystick.getY();
+		}
+		public static double strafeX(){
+			if(SmartDashboard.getBoolean("IsFPR")){
+				return (((int)SmartDashboard.getNumber("Keyboard")) & 4) == 4 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 8) == 8 ? -0.5 : 0;
+			}
+			return Hardware.driveJoystick.getX();
+		}
+		public static double getZ(){
+			return Hardware.driveJoystick.getZ();
+		}
 }
