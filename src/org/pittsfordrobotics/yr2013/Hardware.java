@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
-
+import org.pittsfordrobotics.yr2013.robbieComponents.*;
 /**
  * @author Robbie Markwick
  * @author Liam Middlebrook
@@ -39,7 +39,7 @@ public class Hardware {
 	public static final Solenoid solenoid3 = new Solenoid(1,3);
     public static final Solenoid shootLaunch = new Solenoid(1,2);
 	public static final Solenoid solenoid4 = new Solenoid(1,4);
-//    public static final Shooter shooter=new Shooter(shootingMotor,shootingMotor2,shotAngleMotor,shootLaunch);
+   // public static final Shooter shooter=new Shooter(shootingMotor,shootingMotor2,shotAngleMotor,shootLaunch);
    
     //climbing motors
     //public static final Victor ClimbMotor1=new Victor(9);
@@ -53,5 +53,4 @@ public class Hardware {
     //climber object
 //    public static Climber climber=new Climber(ClimbMotor1,ClimbMotor2,pistonUp,upSwitch,downSwitch);
    
-//    public static AIDriver aiDriver=new AIDriver();
 }

@@ -7,12 +7,13 @@ package org.pittsfordrobotics.yr2013.components;
 import org.pittsfordrobotics.yr2013.ControlScheme;
 import edu.wpi.first.wpilibj.*;
 import org.pittsfordrobotics.yr2013.*;
+import org.pittsfordrobotics.yr2013.robbieComponents.*;
 
 /**
  *
  * @author liam
  */
-public class Shooter extends Thread {
+public class Shooter extends Thread implements Loggable{
 
 	SpeedController frontMotor, backMotor, angleMotor;
 	Solenoid discPusher;
@@ -58,4 +59,19 @@ public class Shooter extends Thread {
 			Timer.delay(0.005);
 		}
 	}
+    public String logString() {
+	String xmlString = "<shooter>\n";
+	xmlString = xmlString.concat("<angleMotor>" + angleMotor.get() + "</angleMotor>\n");
+	xmlString = xmlString.concat("<fireMotor1>\n"
+		+ "<target>" + (ControlScheme.doShooterSpin()?-1:0) + "</target>\n"
+		+ "<current>" + -frontMotor.get() + "</current>\n"
+		+ "</fireMotor1>\n");
+	xmlString = xmlString.concat("<fireMotor2>\n"
+		+ "<target>" + (ControlScheme.doShooterSpin()?-1:0) + "</target>\n"
+		+ "<current>" + -backMotor.get() + "</current>\n"
+		+ "</fireMotor1>\n");
+	xmlString = xmlString.concat("<launcher>" + discPusher.get() + "</launcher>\n");
+	xmlString = xmlString.concat("</shooter>");
+	return xmlString;
+    }
 }
