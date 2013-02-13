@@ -43,7 +43,7 @@ public class MJPEGWidget extends StaticWidget implements Runnable
 		try {
 			URLConnection urlConn = new URL("http://10.31.81.10/axis-cgi/mjpg/video.cgi?resolution=640x480&req_fps=20&.mjpg").openConnection();
 			// change the timeout to taste, I like 1 second
-			urlConn.setReadTimeout(1000);
+			urlConn.setReadTimeout(50);
 			urlConn.connect();
 			urlStream = urlConn.getInputStream();
 			stringWriter = new StringWriter(128);
