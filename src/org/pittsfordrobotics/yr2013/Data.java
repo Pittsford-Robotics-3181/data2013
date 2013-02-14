@@ -49,13 +49,13 @@ public class Data extends IterativeRobot {
     public void teleopInit(){
         ControlScheme.isAutonomous=false;
 	Logging.init();//comment entire line if you want to log autonomus
+	robotDrive.start();
     }
     /**
      * This function is called periodically during operator control
      */
 	public void teleopPeriodic(){
 	    ai.drive();
-	    robotDrive.drive();
 	    shooter.shoot();
 		Hardware.solenoid1.set(Hardware.auxJoystick.getRawButton(6));
 		Hardware.solenoid3.set(Hardware.auxJoystick.getRawButton(11));

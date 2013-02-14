@@ -48,7 +48,7 @@ public class ControlScheme {
     }
     public static double shotAngle(){
 	if(SmartDashboard.getBoolean("IsFPR")){
-		return SmartDashboard.getNumber("MouseYVelocity")/7.0;
+		return -SmartDashboard.getNumber("MouseYVelocity")/7.0;
 	}
 	double num=0;
 	if(!isAutonomous){
@@ -227,9 +227,8 @@ public class ControlScheme {
 			}
 			return Hardware.driveJoystick.getX();
 		}
+		* */
 		public static double getZ(){
 			return Hardware.driveJoystick.getZ();
 		}
-     * 
-     */
 }

@@ -15,7 +15,7 @@ import org.pittsfordrobotics.yr2013.Loggable;
  *
  * @author Benjamin Pylko <spectare at sourceforge.net>
  */
-public class DriveSystem implements Loggable{
+public class DriveSystem extends Thread implements Loggable{
 	private Jaguar frontRight, frontLeft, backRight, backLeft;
 	public DriveSystem(Jaguar frontRight, Jaguar frontLeft, Jaguar backRight, Jaguar backLeft){
 
@@ -24,13 +24,20 @@ public class DriveSystem implements Loggable{
 		this.backRight = backRight;
 		this.backLeft = backLeft;
 	}
-	 public void drive(){
-	frontLeft.set((-Hardware.driveJoystick.getZ()+1)/2*(-ControlScheme.driveX() - ControlScheme.driveY() - ControlScheme.driveRotation()));
-        frontRight.set((-Hardware.driveJoystick.getZ()+1)/2*(-ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
-        backLeft.set((-Hardware.driveJoystick.getZ()+1)/2*(ControlScheme.driveX() - ControlScheme.driveY() - ControlScheme.driveRotation()));
-        backRight.set((-Hardware.driveJoystick.getZ()+1)/2*(ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
+	 public void run(){
+		 while(DriverStation.getInstance().isEnabled()){
+	frontLeft.set((-ControlScheme.getZ()+1)/2*(-ControlScheme.driveX() - ControlScheme.driveY() - ControlScheme.driveRotation()));
+        frontRight.set((-ControlScheme.getZ()+1)/2*(-ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
+        backLeft.set((-ControlScheme.getZ()+1)/2*(ControlScheme.driveX() - ControlScheme.driveY() - ControlScheme.driveRotation()));
+        backRight.set((-ControlScheme.getZ()+1)/2*(ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
         //drive.mecanumDrive_Polar(ControlScheme.driveMagnitude(), ControlScheme.driveDirection(), ControlScheme.driveRotation());
-     }
+		Timer.delay(0.005);
+		 }
+		 frontLeft.set(0);
+		 frontRight.set(0);
+		 backLeft.set(0);
+		 backRight.set(0);
+		 }
 	public String logString() {
 	String xmlString="<driveSystem>\n";
         xmlString=xmlString.concat("<frontRight>"+frontRight.get()+"</frontRight>\n");

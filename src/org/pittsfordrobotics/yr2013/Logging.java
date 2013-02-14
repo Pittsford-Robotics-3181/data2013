@@ -23,15 +23,15 @@ public class Logging {
      * @param ControlScheme 
      */
     public static void logItems(Loggable items[],boolean controlScheme,boolean autonomous){
-	logString.concat("<mainThread>\n");
-	if(controlScheme)logString.concat(ControlScheme.logString(autonomous));
+	logString = logString.concat("<mainThread>\n");
+	if(controlScheme)logString = logString.concat(ControlScheme.logString(autonomous));
 	for(int i=0;i<items.length;i++){
-	    logString.concat(items[i].logString());
+	    logString = logString.concat(items[i].logString());
 	}
-	logString.concat("</mainThread>\n");
+	logString = logString.concat("</mainThread>\n");
     }
     public static void export(){
-	logString.concat("</log>");
+	logString = logString.concat("</log>");
 	try{
 	    String logFilePath="/robotLogs/";
 	    logFilePath=logFilePath.concat(Preferences.getInstance().getString("DriverName","anonymousDriver")+"_");
