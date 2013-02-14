@@ -15,13 +15,15 @@ import java.util.logging.*;
  *
  * @author Benjamin Pylko <spectare at sourceforge.net>
  */
-public class AmmoWidget extends Widget{
+public class AmmoWidget extends Widget {
+
 	public static final String NAME = "Ammo Counting Widget";
-	public static final DataType[] TYPES = { DataType.NUMBER };
+	public static final DataType[] TYPES = {DataType.NUMBER};
 	char colorMask = 0b1000000000000000;
 	Font tf2 = null;
 	boolean teamColor;
 	char disks = 0;
+
 	@Override
 	public void setValue(Object value) {
 		teamColor = ((Character)value & colorMask) == colorMask;
@@ -30,9 +32,9 @@ public class AmmoWidget extends Widget{
 
 	@Override
 	public void init() {
-		setPreferredSize(new Dimension(32,96));
+		setPreferredSize(new Dimension(32, 96));
 		try {
-			tf2 = Font.createFont (Font.TRUETYPE_FONT,this.getClass().getResourceAsStream("TF2.ttf")).deriveFont(32f);
+			tf2 = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("TF2.ttf")).deriveFont(32f);
 		}
 		catch(FontFormatException ex) {
 			Logger.getLogger(AmmoWidget.class.getName()).log(Level.SEVERE, null, ex);
@@ -44,16 +46,16 @@ public class AmmoWidget extends Widget{
 
 	@Override
 	public void propertyChanged(Property property) {
-		
 	}
+
 	@Override
-	public void paintComponents(Graphics g){
+	public void paintComponents(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(Color.WHITE);
-		g2.fillRoundRect(0,0,WIDTH,HEIGHT,4,4);
+		g2.fillRoundRect(0, 0, WIDTH, HEIGHT, 4, 4);
 		g2.setColor(Color.RED);
-		g2.fillRoundRect(1,1,WIDTH-2,HEIGHT-2,4,4);
+		g2.fillRoundRect(1, 1, WIDTH - 2, HEIGHT - 2, 4, 4);
 		g2.setFont(tf2);
-		g2.drawString(""+disks,0,0);
+		g2.drawString("" + disks, 0, 0);
 	}
 }
