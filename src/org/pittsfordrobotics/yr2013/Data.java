@@ -10,7 +10,6 @@ package org.pittsfordrobotics.yr2013;
 
 import edu.wpi.first.wpilibj.*;
 import org.pittsfordrobotics.yr2013.components.*;
-import org.pittsfordrobotics.yr2013.robbieComponents.*;
 
 /**
  *  @author LiamMiddlebrook
@@ -19,8 +18,8 @@ public class Data extends IterativeRobot {
 	DriveSystem robotDrive = new DriveSystem(Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
     Shooter shooter = new Shooter(Hardware.shootingMotor,Hardware.shootingMotor2,Hardware.shotAngleMotor,Hardware.shootLaunch);
 	SmartDashboardCommunications dsComm = new SmartDashboardCommunications();
-	 public static AIDriver aiDriver=new AIDriver();
-
+	DSOutput dsOut = new DSOutput();
+	AnalogChannel gyro = new AnalogChannel(1,1);
 	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -32,20 +31,19 @@ public class Data extends IterativeRobot {
 	public void disabledInit(){
 		robotDrive = new DriveSystem(Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
 		shooter = new Shooter(Hardware.shootingMotor,Hardware.shootingMotor2,Hardware.shotAngleMotor,Hardware.shootLaunch);
-		
 	}
+
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-	aiDriver.drive();
+
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopInit() {
-		System.out.println("Starting Threads");
         robotDrive.start();
 		shooter.start();
     }
@@ -54,7 +52,8 @@ public class Data extends IterativeRobot {
 		Hardware.solenoid3.set(Hardware.auxJoystick.getRawButton(11));
 		Hardware.solenoid4.set(Hardware.auxJoystick.getRawButton(10));
 		Hardware.shootLaunch.set(Hardware.auxJoystick.getRawButton(7));
-	aiDriver.drive();
+		dsOut.say(0, "" + gyro.getVoltage());
+	
 }
     
     /**

@@ -6,13 +6,12 @@ package org.pittsfordrobotics.yr2013;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
-import org.pittsfordrobotics.yr2013.robbieComponents.*;
 
 /**
  *
  * @author Benjamin Pylko <spectare at sourceforge.net>
  */
-public class DriveSystem extends Thread implements Loggable{
+public class DriveSystem extends Thread{
 	private Jaguar frontRight, frontLeft, backRight, backLeft;
 	public DriveSystem(Jaguar frontRight, Jaguar frontLeft, Jaguar backRight, Jaguar backLeft){
 
@@ -22,8 +21,8 @@ public class DriveSystem extends Thread implements Loggable{
 		this.backLeft = backLeft;
 	}
 	public void run(){
-		while(DriverStation.getInstance().isEnabled()){
-	frontLeft.set(-(ControlScheme.strafeX()*Math.abs(ControlScheme.strafeX())*ControlScheme.getZ() + ControlScheme.strafeY()*Math.abs(ControlScheme.strafeY())*ControlScheme.getZ() + rotation()));
+		while(DriverStation.getInstance().isEnabled() && !DriverStation.getInstance().isAutonomous()){
+		frontLeft.set(-(ControlScheme.strafeX()*Math.abs(ControlScheme.strafeX())*ControlScheme.getZ() + ControlScheme.strafeY()*Math.abs(ControlScheme.strafeY())*ControlScheme.getZ() + rotation()));
         frontRight.set(-(ControlScheme.strafeX()*Math.abs(ControlScheme.strafeX())*ControlScheme.getZ() - ControlScheme.strafeY()*Math.abs(ControlScheme.strafeY())*ControlScheme.getZ() + rotation()));
         backLeft.set(-(-ControlScheme.strafeX()*Math.abs(ControlScheme.strafeX())*ControlScheme.getZ() + ControlScheme.strafeY()*Math.abs(ControlScheme.strafeY())*ControlScheme.getZ() + rotation()));
         backRight.set(-(-ControlScheme.strafeX()*Math.abs(ControlScheme.strafeX())*ControlScheme.getZ() - ControlScheme.strafeY()*Math.abs(ControlScheme.strafeY())*ControlScheme.getZ() + rotation()));
@@ -36,13 +35,4 @@ public class DriveSystem extends Thread implements Loggable{
 		}
 		return (ControlScheme.driveRotateCW() ? 1 : ControlScheme.driveRotateCCW() ? -1 : 0)*ControlScheme.getZ()*Math.abs(ControlScheme.getZ());
 	}
-	public String logString() {
-	String xmlString="<driveSystem>\n";
-        xmlString=xmlString.concat("<frontRight>"+Hardware.frontRightJaguar.get()+"</frontRight>\n");
-        xmlString=xmlString.concat("<frontLeft>"+Hardware.frontLeftJaguar.get()+"</frontLeft>\n");
-        xmlString=xmlString.concat("<backLeft>"+Hardware.backRightJaguar.get()+"</backLeft>\n");
-        xmlString=xmlString.concat("<backRight>"+Hardware.backLeftJaguar.get()+"</backRight>\n");
-        xmlString=xmlString.concat("</driveSystem>");
-        return xmlString;
-    }
 }
