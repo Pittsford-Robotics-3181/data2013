@@ -12,38 +12,30 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
  */
 
 public class ControlScheme {
-    //indexes of arrays for labeled controls
-    private static final int shootingIndex = 0; //launching a disk
-    private static final int spinningIndex = 1; //spinning shooter wheels
-    private static final int driveLeftSideIndex = 2;//rotate left
-    private static final int driveRightSideIndex = 3;//rotate right
-    private static final int aimUpIndex = 4;//aim shooter up
-    private static final int aimDownIndex = 5;//aim shooter down
-    private static final int beginClimbIndex = 6;//set up for climbing
-    private static final int climbIndex = 7;//pull the robot up
-    private static final int climbExtendIndex = 8;//extend the climbing arm, might be automated
-    
     public static boolean isAutonomous;
     public static final boolean isAutoClimb=false;
     private static final int kShotAngleAdjust=1;
     
     public static boolean doShoot(){
+	if(!doSpin())return false;
 	if(SmartDashboard.getBoolean("IsFPR")){
 	    return ((int)(SmartDashboard.getNumber("MouseButtons")) & 1) == 1;
 	}
 	if(isAutonomous){
-            return Data.ai.functionValues[shootingIndex];
+            return Data.ai.functionValues[AIDriver.shootingIndex];
         }
         return Hardware.auxJoystick.getTrigger();
+
     }
     public static boolean doSpin(){
 	if(SmartDashboard.getBoolean("IsFPR")){
 	    return ((int)(SmartDashboard.getNumber("MouseButtons")) & 2) == 2;
 	}
 	if(isAutonomous){
-            return Data.ai.functionValues[spinningIndex];
+            return Data.ai.functionValues[AIDriver.spinningIndex];
         }
         return Hardware.auxJoystick.getRawButton(5)||Hardware.auxJoystick.getRawButton(4);
+
     }
     public static double shotAngle(){
 	if(SmartDashboard.getBoolean("IsFPR")){
@@ -55,8 +47,8 @@ public class ControlScheme {
 	    num+=Hardware.auxJoystick.getRawButton(3)?kShotAngleAdjust:0;
 	}
 	if(num==0||isAutonomous){
-	    num+=Data.ai.functionValues[aimDownIndex]?-kShotAngleAdjust:0;
-	    num+=Data.ai.functionValues[aimUpIndex]?kShotAngleAdjust:0;
+	    num+=Data.ai.functionValues[AIDriver.aimDownIndex]?-kShotAngleAdjust:0;
+	    num+=Data.ai.functionValues[AIDriver.aimUpIndex]?kShotAngleAdjust:0;
 	}
 	return num;
     }
@@ -65,7 +57,7 @@ public class ControlScheme {
 		return false;//IMPLEMENT ME!
 	}
         if(isAutonomous) {
-             return Data.ai.functionValues[beginClimbIndex];
+             return Data.ai.functionValues[AIDriver.beginClimbIndex];
          }
         return Hardware.driveJoystick.getTrigger();
     }
@@ -84,8 +76,8 @@ public class ControlScheme {
 	    num+=Hardware.auxJoystick.getRawButton(3)?-kShotAngleAdjust:0;
 	}
 	if(isAutoClimb&&Hardware.auxJoystick.getRawButton(3)){
-	    num+=Data.ai.functionValues[climbExtendIndex]?kShotAngleAdjust:0;
-	    num+=Data.ai.functionValues[climbIndex]?-kShotAngleAdjust:0;
+	    num+=Data.ai.functionValues[AIDriver.climbExtendIndex]?kShotAngleAdjust:0;
+	    num+=Data.ai.functionValues[AIDriver.climbIndex]?-kShotAngleAdjust:0;
 	}
 	return num;
     }
@@ -93,9 +85,7 @@ public class ControlScheme {
 	if(SmartDashboard.getBoolean("IsFPR")){
 	    return (((int)SmartDashboard.getNumber("Keyboard")) & 4) == 4 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 8) == 8 ? -0.5 : 0;
 	}
-	if(isAutonomous||doSpin()) {
-            return Data.ai.driveX;
-        }
+	if(isAutonomous)return Data.ai.driveX;
 	int num=0;
 	if(Hardware.driveJoystick.getRawButton(4)) {
             num+= -1;
@@ -104,17 +94,15 @@ public class ControlScheme {
             num+= 1;
         }
 	if(num!=0) {
-            return num;
+            return driveZ()*num;
         }
-        return Utils.checkClearance(Hardware.driveJoystick.getX(), .05);
+        return driveZ()*Utils.checkClearance(Hardware.driveJoystick.getX(), .05);
     }
     public static double driveY(){
 	if(SmartDashboard.getBoolean("IsFPR")){
 	    return (((int)SmartDashboard.getNumber("Keyboard")) & 1) == 1 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 2) == 2 ? -0.5 : 0;
 	}
-	if(isAutonomous||doSpin()) {
-            return Data.ai.driveY;
-        }
+	if(isAutonomous)return Data.ai.driveY;
 	int num=0;
 	if(Hardware.driveJoystick.getRawButton(3)) {
             num+= -1;
@@ -123,22 +111,22 @@ public class ControlScheme {
             num+= 1;
         }
 	if(num!=0) {
-            return num;
+            return driveZ()*num;
         }
-        return Utils.checkClearance(Hardware.driveJoystick.getY(), .05);
+        return driveZ()*Utils.checkClearance(Hardware.driveJoystick.getY(), .05);
     }
     public static double driveRotation(){
 	if(SmartDashboard.getBoolean("IsFPR")){
-		return SmartDashboard.getNumber("MouseXVelocity")/7.0;
+		return SmartDashboard.getNumber("MouseXVelocity")/14.0;
 	}
         double num=0;
-	if(isAutonomous||doSpin()){
-	    num+=Data.ai.functionValues[driveLeftSideIndex]?-1:0;
-	    num+=Data.ai.functionValues[driveRightSideIndex]?1:0;
+	if(isAutonomous){
+	    num=Data.ai.driveRot;
 	}
         else {
 	    num+=Hardware.driveJoystick.getRawButton(8)?-1:0;
 	    num+=Hardware.driveJoystick.getRawButton(9)?1:0;
+	    num*=driveZ();
 	}
 	return num;
     }
@@ -160,6 +148,9 @@ public class ControlScheme {
                 "</climbValues>\n");
         xmlString=xmlString.concat("</controlSchme>");
         return xmlString;
+    }
+    public static double driveZ(){
+	return (Hardware.driveJoystick.getZ()+1)/2;
     }
     /*
     public static AbsoluteDirection perfectStrafe()

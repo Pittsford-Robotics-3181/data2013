@@ -34,8 +34,8 @@ public class Logging {
 	logString = logString.concat("</log>");
 	try{
 	    String logFilePath="/robotLogs/";
-	    logFilePath=logFilePath.concat(Preferences.getInstance().getString("DriverName","anonymousDriver")+"_");
-	    logFilePath=logFilePath.concat(Preferences.getInstance().getString("AUXName","anonymousAuxDriver")+"_");
+	    logFilePath=logFilePath.concat(Preferences.getInstance().getString("Primary Driver Name","anonymousDriver")+"_");
+	    logFilePath=logFilePath.concat(Preferences.getInstance().getString("Auxiliary Driver Name","anonymousAuxDriver")+"_");
 	    Date d=new Date();//Get the Current Date
 	    d.setTime(d.getTime()-15706*24*60*60*1000);//Reduce to milliseconds since start of 2013
 	    int month=(int) d.getTime()>31*24*60*1000?(d.getTime()>59*24*60*1000?2:1):0;//Extract month

@@ -17,7 +17,7 @@ public class Shooter implements Loggable{
 	SpeedController frontMotor, backMotor, angleMotor;
 	Solenoid discPusher;
 	 private double fireSpeed = -1;
-     private static final double kAdjust = -.25;
+     private static final double kAdjust = -.75;
 	private LaunchThread launcher = new LaunchThread();
 
 	public Shooter(SpeedController frontMotor, SpeedController backMotor, SpeedController angleMotor, Solenoid discPusher) {
@@ -68,7 +68,7 @@ public class Shooter implements Loggable{
 		    if (DriverStation.getInstance().isEnabled()) {
 			if (ControlScheme.doShoot()) {
 			    discPusher.set(true);//Launch Disks if and only if the driver says so
-			    Thread.sleep(50);//keep solenoid on for desired amount of time
+			    Thread.sleep(1000/4);//keep solenoid on for desired amount of time
 			    discPusher.set(false);
 			    Thread.sleep(1000 / 4);//no more shots for .25 seconds
 			} else {
