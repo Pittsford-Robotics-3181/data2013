@@ -3,13 +3,8 @@
  * and open the template in the editor.
  */
 package org.pittsfordrobotics.yr2013;
-import org.pittsfordrobotics.yr2013.*;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.smartdashboard.*;
-import org.pittsfordrobotics.yr2013.ControlScheme;
-import org.pittsfordrobotics.yr2013.Hardware;
-import org.pittsfordrobotics.yr2013.Loggable;
 
 /**
  *

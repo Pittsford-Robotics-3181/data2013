@@ -3,10 +3,10 @@
  * and open the template in the editor.
  */
 package org.pittsfordrobotics.yr2013.components;
-import org.pittsfordrobotics.yr2013.ControlScheme;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
+import org.pittsfordrobotics.yr2013.ControlScheme;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Climber extends Thread {
     SpeedController climbMotor;
     boolean robotTilted;
     boolean gearsSwitched;
-    public Climber(Solenoid tiltRobotSolenoid, Solenoid preClimbSolenoid, Solenoid switchGearSolenoid, SpeedController climbmotor)
+    public Climber(Solenoid tiltRobotSolenoid, Solenoid preClimbSolenoid, Solenoid switchGearSolenoid, SpeedController climbMotor)
     {
         this.climbMotor = climbMotor;
         this.preClimbSolenoid = preClimbSolenoid;

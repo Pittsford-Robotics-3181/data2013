@@ -3,9 +3,7 @@
  * and open the template in the editor.
  */
 package org.pittsfordrobotics.yr2013;
-import com.sun.squawk.microedition.io.FileConnection;
 import edu.wpi.first.wpilibj.Preferences;
-import java.io.DataOutputStream;
 import java.util.Date;
 import javax.microedition.io.Connector;
 /**
@@ -24,7 +22,9 @@ public class Logging {
      */
     public static void logItems(Loggable items[],boolean controlScheme,boolean autonomous){
 	logString = logString.concat("<mainThread>\n");
-	if(controlScheme)logString = logString.concat(ControlScheme.logString(autonomous));
+	if(controlScheme) {
+            logString = logString.concat(ControlScheme.logString(autonomous));
+        }
 	for(int i=0;i<items.length;i++){
 	    logString = logString.concat(items[i].logString());
 	}
@@ -39,7 +39,9 @@ public class Logging {
 	    Date d=new Date();//Get the Current Date
 	    d.setTime(d.getTime()-15706*24*60*60*1000);//Reduce to milliseconds since start of 2013
 	    int month=(int) d.getTime()>31*24*60*1000?(d.getTime()>59*24*60*1000?2:1):0;//Extract month
-	    if(month!=0)d.setTime(d.getTime()-(month==1?31:59)*24*60*60*1000);//Reduce date to milliseconds since start of montth
+	    if(month!=0) {
+                d.setTime(d.getTime()-(month==1?31:59)*24*60*60*1000);
+            }//Reduce date to milliseconds since start of montth
 	    int day=(int) (d.getTime()/(24*60*60*1000));//Extract Day
 	    d.setTime(d.getTime()%(24*60*60*1000));//Reduce date to milliseconds since start of the day
 	    int hour=(int) (d.getTime()/(60*60*1000));//Extract Hour

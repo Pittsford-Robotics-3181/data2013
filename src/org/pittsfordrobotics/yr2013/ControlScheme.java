@@ -4,7 +4,6 @@
  */
 package org.pittsfordrobotics.yr2013;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /**

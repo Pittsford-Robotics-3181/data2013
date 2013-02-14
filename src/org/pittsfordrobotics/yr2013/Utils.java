@@ -27,15 +27,35 @@ public class Utils{
         return Math.abs(inputValue)>clearance?inputValue:0;
     }
     public static double checkAngle(double inputAngle,double clearance,boolean include45){
-        if(Math.abs(inputAngle)<clearance)return 0;
-        if(Math.abs(inputAngle-45)<clearance&&include45)return 45;
-        if(Math.abs(inputAngle-90)<clearance)return 90;
-        if(Math.abs(inputAngle-135)<clearance&&include45)return 135;
-        if(Math.abs(inputAngle-180)<clearance)return 180;
-        if(Math.abs(inputAngle-225)<clearance&&include45)return 225;
-        if(Math.abs(inputAngle-270)<clearance)return 270;
-        if(Math.abs(inputAngle-315)<clearance&&include45)return 315;
-        if(Math.abs(inputAngle-360)<clearance)return 0;
+        if(Math.abs(inputAngle)<clearance) {
+            return 0;
+        }
+        if(Math.abs(inputAngle-45)<clearance&&include45) {
+            return 45;
+        }
+        if(Math.abs(inputAngle-90)<clearance) {
+            return 90;
+        }
+        if(Math.abs(inputAngle-135)<clearance&&include45) {
+            return 135;
+        }
+        if(Math.abs(inputAngle-180)<clearance) {
+            return 180;
+        }
+
+        
+        if(Math.abs(inputAngle-225)<clearance&&include45) {
+            return 225;
+        }
+        if(Math.abs(inputAngle-270)<clearance) {
+            return 270;
+        }
+        if(Math.abs(inputAngle-315)<clearance&&include45) {
+            return 315;
+        }
+        if(Math.abs(inputAngle-360)<clearance) {
+            return 0;
+        }
         return inputAngle;
     }
 }
@@ -94,10 +114,14 @@ class RampThread extends Thread{
          */
         try {
             while(((isUp && currentSpeed < targetSpeed) || (!isUp && currentSpeed > targetSpeed))&&!shouldStop){
-                if(Math.abs(targetSpeed)<Math.abs(currentSpeed))currentSpeed=targetSpeed;//We don't need to Ramp towards zero
+                if(Math.abs(targetSpeed)<Math.abs(currentSpeed)) {
+                    currentSpeed=targetSpeed;
+                }//We don't need to Ramp towards zero
                 else{
                     currentSpeed+=isUp?stepSize:-stepSize;
-                    if((isUp && currentSpeed < targetSpeed) || (!isUp && currentSpeed > targetSpeed))currentSpeed=targetSpeed;
+                    if((isUp && currentSpeed < targetSpeed) || (!isUp && currentSpeed > targetSpeed)) {
+                        currentSpeed=targetSpeed;
+                    }
                 }
                 speed.set(currentSpeed);
                 Thread.sleep(1000/ticksPerSecond);//Delay for some time
