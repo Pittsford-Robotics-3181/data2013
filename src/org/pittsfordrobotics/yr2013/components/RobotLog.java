@@ -9,6 +9,7 @@ import java.io.*;
 import javax.microedition.io.Connector;
 
 /**
+ * @deprecated  Use Logging instead
  * @TODO make this more xmlish
  * @author Benjamin Pylko <spectare at sourceforge.net>
  */
