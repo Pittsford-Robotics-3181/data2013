@@ -25,6 +25,7 @@ public class Data extends IterativeRobot {
 	}
 
 	public void disabledInit() {
+		Hardware.robotDrive = new DriveSystem(Hardware.frontRightJaguar, Hardware.frontLeftJaguar, Hardware.backRightJaguar, Hardware.backLeftJaguar);
 		Logging.export();
 	}
 
