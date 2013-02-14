@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
+import org.pittsfordrobotics.yr2013.components.Shooter;
+import org.pittsfordrobotics.yr2013.components.SmartDashboardCommunications;
 
 /**
  * @author Robbie Markwick
@@ -54,4 +56,11 @@ public class Hardware {
 //    public static Climber climber=new Climber(ClimbMotor1,ClimbMotor2,pistonUp,upSwitch,downSwitch);
    
 //    public static AIDriver aiDriver=new AIDriver();
+        
+        /// COMPONENTS
+        public static DriveSystem robotDrive = new DriveSystem(Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
+	public static Shooter shooter = new Shooter(Hardware.shootingMotor,Hardware.shootingMotor2,Hardware.shotAngleMotor,Hardware.shootLaunch);
+	public static SmartDashboardCommunications dsComm = new SmartDashboardCommunications();
+	public static DSOutput dsOut = new DSOutput();
+	
 }
