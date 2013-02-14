@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.pittsfordrobotics.yr2013.components;
+package org.pittsfordrobotics.yr2013;
 import org.pittsfordrobotics.yr2013.*;
 
 import edu.wpi.first.wpilibj.*;

@@ -28,23 +28,23 @@ public class ControlScheme {
     public static final boolean isAutoClimb=false;
     private static final int kShotAngleAdjust=1;
     
-    public static Joystick joy1 = Hardware.driveJoystick;//driveSystem stick
-    public static Joystick joy2 = Hardware.auxJoystick;//Shooting+Climbing Stick
-    
-
     public static boolean doShoot(){
 	if(SmartDashboard.getBoolean("IsFPR")){
 	    return ((int)(SmartDashboard.getNumber("MouseButtons")) & 1) == 1;
 	}
-	if(isAutonomous)return Data.ai.functionValues[shootingIndex];
-        return joy2.getTrigger();
+	if(isAutonomous){
+            return Data.ai.functionValues[shootingIndex];
+        }
+        return Hardware.auxJoystick.getTrigger();
     }
     public static boolean doSpin(){
 	if(SmartDashboard.getBoolean("IsFPR")){
 	    return ((int)(SmartDashboard.getNumber("MouseButtons")) & 2) == 2;
 	}
-	if(isAutonomous)return Data.ai.functionValues[spinningIndex];
-        return joy2.getRawButton(5)||joy2.getRawButton(4);
+	if(isAutonomous){
+            return Data.ai.functionValues[spinningIndex];
+        }
+        return Hardware.auxJoystick.getRawButton(5)||Hardware.auxJoystick.getRawButton(4);
     }
     public static double shotAngle(){
 	if(SmartDashboard.getBoolean("IsFPR")){
@@ -52,8 +52,8 @@ public class ControlScheme {
 	}
 	double num=0;
 	if(!isAutonomous){
-	    num+=joy2.getRawButton(2)?-kShotAngleAdjust:0;
-	    num+=joy2.getRawButton(3)?kShotAngleAdjust:0;
+	    num+=Hardware.auxJoystick.getRawButton(2)?-kShotAngleAdjust:0;
+	    num+=Hardware.auxJoystick.getRawButton(3)?kShotAngleAdjust:0;
 	}
 	if(num==0||isAutonomous){
 	    num+=Data.ai.functionValues[aimDownIndex]?-kShotAngleAdjust:0;
@@ -65,8 +65,10 @@ public class ControlScheme {
 	if(SmartDashboard.getBoolean("IsFPR")){
 		return false;//IMPLEMENT ME!
 	}
-        if(isAutonomous)return Data.ai.functionValues[beginClimbIndex];
-        return joy1.getTrigger();
+        if(isAutonomous) {
+             return Data.ai.functionValues[beginClimbIndex];
+         }
+        return Hardware.driveJoystick.getTrigger();
     }
     public static double climbDir(){
 	if(SmartDashboard.getBoolean("IsFPR")){
@@ -79,10 +81,10 @@ public class ControlScheme {
 	return num;*/
 	double num=0;
 	if(!isAutoClimb){
-	    num+=joy2.getRawButton(5)?kShotAngleAdjust:0;
-	    num+=joy2.getRawButton(3)?-kShotAngleAdjust:0;
+	    num+=Hardware.auxJoystick.getRawButton(5)?kShotAngleAdjust:0;
+	    num+=Hardware.auxJoystick.getRawButton(3)?-kShotAngleAdjust:0;
 	}
-	if(isAutoClimb&&joy2.getRawButton(3)){
+	if(isAutoClimb&&Hardware.auxJoystick.getRawButton(3)){
 	    num+=Data.ai.functionValues[climbExtendIndex]?kShotAngleAdjust:0;
 	    num+=Data.ai.functionValues[climbIndex]?-kShotAngleAdjust:0;
 	}
@@ -92,23 +94,39 @@ public class ControlScheme {
 	if(SmartDashboard.getBoolean("IsFPR")){
 	    return (((int)SmartDashboard.getNumber("Keyboard")) & 4) == 4 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 8) == 8 ? -0.5 : 0;
 	}
-	if(isAutonomous||doSpin())return Data.ai.driveX;
+	if(isAutonomous||doSpin()) {
+            return Data.ai.driveX;
+        }
 	int num=0;
-	if(joy1.getRawButton(4))num+= -1;
-	if(joy1.getRawButton(5))num+= 1;
-	if(num!=0)return num;
-        return Utils.checkClearance(joy1.getX(), .05);
+	if(Hardware.driveJoystick.getRawButton(4)) {
+            num+= -1;
+        }
+	if(Hardware.driveJoystick.getRawButton(5)) {
+            num+= 1;
+        }
+	if(num!=0) {
+            return num;
+        }
+        return Utils.checkClearance(Hardware.driveJoystick.getX(), .05);
     }
     public static double driveY(){
 	if(SmartDashboard.getBoolean("IsFPR")){
 	    return (((int)SmartDashboard.getNumber("Keyboard")) & 1) == 1 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 2) == 2 ? -0.5 : 0;
 	}
-	if(isAutonomous||doSpin())return Data.ai.driveY;
+	if(isAutonomous||doSpin()) {
+            return Data.ai.driveY;
+        }
 	int num=0;
-	if(joy1.getRawButton(3))num+= -1;
-	if(joy1.getRawButton(2))num+= 1;
-	if(num!=0)return num;
-        return Utils.checkClearance(joy1.getY(), .05);
+	if(Hardware.driveJoystick.getRawButton(3)) {
+            num+= -1;
+        }
+	if(Hardware.driveJoystick.getRawButton(2)) {
+            num+= 1;
+        }
+	if(num!=0) {
+            return num;
+        }
+        return Utils.checkClearance(Hardware.driveJoystick.getY(), .05);
     }
     public static double driveRotation(){
 	if(SmartDashboard.getBoolean("IsFPR")){
@@ -120,8 +138,8 @@ public class ControlScheme {
 	    num+=Data.ai.functionValues[driveRightSideIndex]?1:0;
 	}
         else {
-	    num+=joy1.getRawButton(8)?-1:0;
-	    num+=joy1.getRawButton(9)?1:0;
+	    num+=Hardware.driveJoystick.getRawButton(8)?-1:0;
+	    num+=Hardware.driveJoystick.getRawButton(9)?1:0;
 	}
 	return num;
     }
