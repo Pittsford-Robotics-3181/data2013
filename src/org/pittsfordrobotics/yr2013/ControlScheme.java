@@ -54,7 +54,7 @@ public class ControlScheme {
     }
      public static boolean shouldStartClimb(){
 	if(SmartDashboard.getBoolean("IsFPR")){
-		return false;//IMPLEMENT ME!
+		return false;//@TODO IMPLEMENT ME!
 	}
         if(isAutonomous) {
              return Data.ai.functionValues[AIDriver.beginClimbIndex];
@@ -63,7 +63,7 @@ public class ControlScheme {
     }
     public static double climbDir(){
 	if(SmartDashboard.getBoolean("IsFPR")){
-		return 0;//IMPLEMENT ME!
+		return 0;//@TODO IMPLEMENT ME!
 	}
         /*double num=0;
 	num+=valueForButtonOnJoystick(joystickMap[climbIndex],buttonMap[climbIndex])?-1:0;
@@ -239,4 +239,16 @@ public class ControlScheme {
 		public static double getZ(){
 			return Hardware.driveJoystick.getZ();
 		}
+
+	public static boolean tiltRobot() {
+		return false; //@TODO implement
+	}
+
+	public static boolean switchGears() {
+		return false; //@TODO implement
+	}
+
+	public static boolean doClimb() {
+		return false; //@TODO implement
+	}
 }
