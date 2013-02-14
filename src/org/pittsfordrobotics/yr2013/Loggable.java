@@ -9,5 +9,6 @@ package org.pittsfordrobotics.yr2013;
  * @author robbiemarkwick
  */
 public interface Loggable {
-    public String logString();
+
+	public String logString();
 }
