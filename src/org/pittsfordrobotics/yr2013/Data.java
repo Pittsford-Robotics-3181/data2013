@@ -7,12 +7,13 @@
 package org.pittsfordrobotics.yr2013;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.communication.Semaphore;
 
 /**
  * @author LiamMiddlebrook
  */
 public class Data extends IterativeRobot {
-
+	
 	AnalogChannel gyro = new AnalogChannel(1, 1);
 	public static AIDriver ai = new AIDriver();
 
@@ -25,7 +26,7 @@ public class Data extends IterativeRobot {
 	}
 
 	public void disabledInit() {
-		Hardware.robotDrive = new DriveSystem(Hardware.frontRightJaguar, Hardware.frontLeftJaguar, Hardware.backRightJaguar, Hardware.backLeftJaguar);
+		Hardware.driveSystemInit();
 		Logging.export();
 	}
 
@@ -43,7 +44,7 @@ public class Data extends IterativeRobot {
 	public void teleopInit() {
 		ControlScheme.isAutonomous = false;
 		Logging.init();//comment entire line if you want to log autonomus
-		Hardware.robotDrive.start();
+		Hardware.driveSystemStart();// can you explain the above comment? I don't get it
 	}
 
 	/**

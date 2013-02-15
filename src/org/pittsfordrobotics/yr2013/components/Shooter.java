@@ -15,7 +15,7 @@ import org.pittsfordrobotics.yr2013.*;
 public class Shooter implements Loggable {
 
 	SpeedController frontMotor, backMotor, angleMotor;
-	Solenoid discPusher;
+	public Solenoid discPusher;
 	private double fireSpeed = -1;
 	private static final double kAdjust = -.75;
 	private LaunchThread launcher = new LaunchThread();

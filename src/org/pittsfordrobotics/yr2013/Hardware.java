@@ -53,4 +53,12 @@ public class Hardware {
 	public static Shooter shooter = new Shooter(Hardware.shootingMotor, Hardware.shootingMotor2, Hardware.shotAngleMotor, Hardware.shootLaunch);
 	public static SmartDashboardCommunications dsComm = new SmartDashboardCommunications();
 	public static DSOutput dsOut = new DSOutput();
+	public static void driveSystemInit(){
+		robotDrive = new DriveSystem(Hardware.frontRightJaguar, Hardware.frontLeftJaguar, Hardware.backRightJaguar, Hardware.backLeftJaguar);
+	}
+	public static void driveSystemStart(){
+		try{
+		robotDrive.start();
+		} catch(Exception npe){System.err.println("Drive system not properly initialized");}
+	}
 }
