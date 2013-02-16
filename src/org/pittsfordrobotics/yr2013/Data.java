@@ -33,33 +33,40 @@ public class Data extends IterativeRobot {
 	public void autonomousInit() {
 		ControlScheme.isAutonomous = true;
 		Logging.init();
+		Hardware.driveSystemStart();
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
+	    	ai.drive();
+		Loggable items[] = {Hardware.robotDrive, Hardware.shooter};
+		Logging.logItems(items, true, true);
 	}
 
 	public void teleopInit() {
 		ControlScheme.isAutonomous = false;
-		Logging.init();//comment entire line if you want to log autonomus
-		Hardware.driveSystemStart();// can you explain the above comment? I don't get it
+		Logging.init();//begins logging. If this is commented, Autonomous will also be logged
+		if(!Hardware.robotDrive.isAlive()) Hardware.driveSystemStart();
+		if(!Hardware.shooter.isAlive()) Hardware.shooterStart();
 	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		ai.drive();
-		Hardware.shooter.shoot();
+		ai.drive();//Aid the driver
+		/*
 		Hardware.solenoid1.set(Hardware.auxJoystick.getRawButton(6));
 		Hardware.solenoid3.set(Hardware.auxJoystick.getRawButton(11));
 		Hardware.solenoid4.set(Hardware.auxJoystick.getRawButton(10));
+		 */
 		//Hardware.shootLaunch.set(Hardware.auxJoystick.getRawButton(7)); Shooter takes care of this
 		Hardware.dsOut.say(0, "" + gyro.getVoltage());
+		//Logging
 		Loggable items[] = {Hardware.robotDrive, Hardware.shooter};
-		Logging.logItems(items, true, true);
+		Logging.logItems(items, true, false);
 	}
 
 	/**

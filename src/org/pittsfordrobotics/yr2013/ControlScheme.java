@@ -269,7 +269,13 @@ public class ControlScheme {
 	}
 
 	public static boolean tiltRobot() {
-		return false; //@TODO implement
+		if(isAutonomous) {
+			return Data.ai.functionValues[AIDriver.beginClimbIndex];
+		}
+		if(SmartDashboard.getBoolean("IsFPR")) {
+			return false;//@TODO IMPLEMENT ME!
+		}
+		return Hardware.auxJoystick.getRawButton(-1);//@TODO Pick A button
 	}
 
 	public static boolean switchGears() {

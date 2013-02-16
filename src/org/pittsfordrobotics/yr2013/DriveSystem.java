@@ -24,10 +24,10 @@ public class DriveSystem extends Thread implements Loggable {
 
 	public void run() {
 		while(DriverStation.getInstance().isEnabled()) {
-			frontLeft.set(-(-ControlScheme.driveX() - ControlScheme.driveY() - ControlScheme.driveRotation()));
-			frontRight.set(-(-ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
-			backLeft.set(-(ControlScheme.driveX() - ControlScheme.driveY() - ControlScheme.driveRotation()));
-			backRight.set(-(ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
+			frontLeft.set(-(ControlScheme.driveX() + ControlScheme.driveY() + ControlScheme.driveRotation()));
+			frontRight.set((-ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
+			backLeft.set(-(-ControlScheme.driveX() + ControlScheme.driveY() + ControlScheme.driveRotation()));
+			backRight.set((ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
 			//drive.mecanumDrive_Polar(ControlScheme.driveMagnitude(), ControlScheme.driveDirection(), ControlScheme.driveRotation());
 			Timer.delay(0.005);
 		}
