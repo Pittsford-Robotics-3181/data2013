@@ -109,7 +109,7 @@ public class ControlScheme {
 		if(num != 0) {
 			return driveZ() * num;
 		}
-		return driveZ() * Utils.checkClearance(Hardware.driveJoystick.getX(), .05);
+		return driveZ() * Utils.checkClearance(Hardware.driveJoystick.getX()*Hardware.driveJoystick.getX(), .05);
 	}
 
 	public static double driveY() {
@@ -129,7 +129,7 @@ public class ControlScheme {
 		if(num != 0) {
 			return driveZ() * num;
 		}
-		return driveZ() * Utils.checkClearance(Hardware.driveJoystick.getY(), .05);
+		return driveZ() * Utils.checkClearance(Hardware.driveJoystick.getY()*Math.abs(Hardware.driveJoystick.getY()), .05);
 	}
 
 	public static double driveRotation() {
