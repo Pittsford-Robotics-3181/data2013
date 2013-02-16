@@ -10,11 +10,10 @@ package org.pittsfordrobotics.yr2013;
  */
 public class AIDriver {
 
-	public boolean[] functionValues = new boolean[7];
+	public boolean[] functionValues = new boolean[4];
 	public double driveX;
 	public double driveY;
 	public double driveRot;
-	private boolean movingArmUp = true;
 
 	/*
 	 * /indexes of arrays for labeled controls
@@ -23,9 +22,6 @@ public class AIDriver {
 	public static final int spinningIndex = 1; //spinning shooter wheels
 	public static final int aimUpIndex = 2;//aim shooter up
 	public static final int aimDownIndex = 3;//aim shooter down
-	public static final int beginClimbIndex = 4;//set up for climbing
-	public static final int climbIndex = 5;//pull the robot up
-	public static final int climbExtendIndex = 6;//extend the climbing arm, might be automated
 
 	/**
 	 * LIAM: this is the method you can implement for automatic aiming

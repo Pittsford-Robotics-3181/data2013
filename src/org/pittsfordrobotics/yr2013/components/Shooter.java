@@ -25,6 +25,7 @@ public class Shooter extends Thread implements Loggable {
 	this.backMotor = backMotor;
 	this.angleMotor = angleMotor;
 	this.discPusher = discPusher;
+	launcher = new LaunchThread();
     }
 
     public void run() {

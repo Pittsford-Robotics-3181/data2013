@@ -34,6 +34,7 @@ public class Data extends IterativeRobot {
 		ControlScheme.isAutonomous = true;
 		Logging.init();
 		Hardware.driveSystemStart();
+		Hardware.shooterStart();
 	}
 
 	/**
@@ -50,6 +51,7 @@ public class Data extends IterativeRobot {
 		Logging.init();//begins logging. If this is commented, Autonomous will also be logged
 		if(!Hardware.robotDrive.isAlive()) Hardware.driveSystemStart();
 		if(!Hardware.shooter.isAlive()) Hardware.shooterStart();
+		Hardware.climberStart();
 	}
 
 	/**
@@ -65,7 +67,7 @@ public class Data extends IterativeRobot {
 		//Hardware.shootLaunch.set(Hardware.auxJoystick.getRawButton(7)); Shooter takes care of this
 		Hardware.dsOut.say(0, "" + gyro.getVoltage());
 		//Logging
-		Loggable items[] = {Hardware.robotDrive, Hardware.shooter};
+		Loggable items[] = {Hardware.robotDrive, Hardware.shooter,Hardware.climber};
 		Logging.logItems(items, true, false);
 	}
 

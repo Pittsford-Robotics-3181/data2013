@@ -15,34 +15,33 @@ public class ControlScheme {
 	public static boolean isAutonomous;
 	public static final boolean isAutoClimb = false;
 	private static final int kShotAngleAdjust = 1;
-
 	public static boolean doShoot() {
 		if(!doSpin()) {
 			return false;
 		}
-		if(SmartDashboard.getBoolean("IsFPR")) {
-			return ((int)(SmartDashboard.getNumber("MouseButtons")) & 1) == 1;
-		}
 		if(isAutonomous) {
 			return Data.ai.functionValues[AIDriver.shootingIndex];
+		}
+		if(SmartDashboard.getBoolean("IsFPR")) {
+			return ((int)(SmartDashboard.getNumber("MouseButtons")) & 1) == 1;
 		}
 		return Hardware.auxJoystick.getTrigger();
 
 	}
 
 	public static boolean doSpin() {
-		if(SmartDashboard.getBoolean("IsFPR")) {
-			return ((int)(SmartDashboard.getNumber("MouseButtons")) & 2) == 2;
-		}
 		if(isAutonomous) {
 			return Data.ai.functionValues[AIDriver.spinningIndex];
+		}
+		if(SmartDashboard.getBoolean("IsFPR")) {
+			return ((int)(SmartDashboard.getNumber("MouseButtons")) & 2) == 2;
 		}
 		return Hardware.auxJoystick.getRawButton(5) || Hardware.auxJoystick.getRawButton(4);
 
 	}
 
 	public static double shotAngle() {
-		if(SmartDashboard.getBoolean("IsFPR")) {
+		if(SmartDashboard.getBoolean("IsFPR")&&!isAutonomous) {
 			return -SmartDashboard.getNumber("MouseYVelocity") / 7.0;
 		}
 		double num = 0;
@@ -93,7 +92,7 @@ public class ControlScheme {
 	}
 */
 	public static double driveX() {
-		if(SmartDashboard.getBoolean("IsFPR")) {
+		if(SmartDashboard.getBoolean("IsFPR")&&!isAutonomous) {
 			return (((int)SmartDashboard.getNumber("Keyboard")) & 4) == 4 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 8) == 8 ? -0.5 : 0;
 		}
 		if(isAutonomous) {
@@ -106,14 +105,14 @@ public class ControlScheme {
 		if(Hardware.driveJoystick.getRawButton(5)) {
 			num += 1;
 		}
-		if(num != 0) {
+		if(isAbsolute()) {
 			return driveZ() * num;
 		}
-		return driveZ() * Utils.checkClearance(Hardware.driveJoystick.getX()*Hardware.driveJoystick.getX(), .05);
+		return driveZ() * Hardware.driveJoystick.getX()*Math.abs(Hardware.driveJoystick.getX());
 	}
 
 	public static double driveY() {
-		if(SmartDashboard.getBoolean("IsFPR")) {
+		if(SmartDashboard.getBoolean("IsFPR")&&!isAutonomous) {
 			return (((int)SmartDashboard.getNumber("Keyboard")) & 1) == 1 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 2) == 2 ? -0.5 : 0;
 		}
 		if(isAutonomous) {
@@ -126,14 +125,17 @@ public class ControlScheme {
 		if(Hardware.driveJoystick.getRawButton(2)) {
 			num += 1;
 		}
-		if(num != 0) {
+		if(isAbsolute()) {
 			return driveZ() * num;
 		}
-		return driveZ() * Utils.checkClearance(Hardware.driveJoystick.getY()*Math.abs(Hardware.driveJoystick.getY()), .05);
+		return driveZ() * Hardware.driveJoystick.getY()*Math.abs(Hardware.driveJoystick.getY());
 	}
-
+	private static boolean isAbsolute(){
+	    return Hardware.driveJoystick.getRawButton(2)||Hardware.driveJoystick.getRawButton(3)
+		    ||Hardware.driveJoystick.getRawButton(4)||Hardware.driveJoystick.getRawButton(5);
+	}
 	public static double driveRotation() {
-		if(SmartDashboard.getBoolean("IsFPR")) {
+		if(SmartDashboard.getBoolean("IsFPR")&&!isAutonomous) {
 			return SmartDashboard.getNumber("MouseXVelocity") / 14.0;
 		}
 		double num = 0;
@@ -265,24 +267,34 @@ public class ControlScheme {
 	 */
 
 	public static double getZ() {
-		return Hardware.driveJoystick.getZ();
+		return Hardware.driveJoystick.getZ()* (Hardware.driveJoystick.getTrigger()?.5:1);
 	}
 
 	public static boolean tiltRobot() {
 		if(isAutonomous) {
-			return Data.ai.functionValues[AIDriver.beginClimbIndex];
+			return false;
 		}
 		if(SmartDashboard.getBoolean("IsFPR")) {
 			return false;//@TODO IMPLEMENT ME!
 		}
 		return Hardware.auxJoystick.getRawButton(-1);//@TODO Pick A button
 	}
-
+	/**
+	 * We don't need to switch gears anymore, CIM Motor is fast enough
+	 * @deprecated 
+	 * @return 
+	 */
 	public static boolean switchGears() {
 		return false; //@TODO implement
 	}
 
 	public static boolean doClimb() {
-		return false; //@TODO implement
+		if(isAutonomous) {
+			return false;
+		}
+		if(SmartDashboard.getBoolean("IsFPR")) {
+			return false;//@TODO IMPLEMENT ME!
+		}
+		return Hardware.auxJoystick.getRawButton(-1);//@TODO Pick A button
 	}
 }
