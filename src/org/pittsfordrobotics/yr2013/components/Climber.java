@@ -34,7 +34,7 @@ public class Climber extends Thread implements Loggable{
 	}
 
 	public void run() {
-		preClimbSolenoid.set(ControlScheme.tiltRobot());
+		//preClimbSolenoid.set(ControlScheme.tiltRobot());
 		tiltRobotSolenoid.set(ControlScheme.tiltRobot());
 		robotTilted = ControlScheme.tiltRobot()||robotTilted;
 		/*if(robotTilted && ControlScheme.switchGears()) {

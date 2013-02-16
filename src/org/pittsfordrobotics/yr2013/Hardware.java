@@ -27,12 +27,12 @@ public class Hardware {
 	//public  static DriveSystem driveSystem=new DriveSystem(driveMotor2,DriveMotor1); //uncomment this for tank drive
 	public static final Victor shootingMotor = new Victor(2, 5);
 	public static final Victor shootingMotor2 = new Victor(2, 7);
-	public static final Jaguar shotAngleMotor = new Jaguar(2, 6);
-	public static final Victor climbMotor=new Victor(2,-1);//@TODO assign port
+	public static final Victor shotAngleMotor = new Victor(2, 6);
+	public static final Victor climbMotor=new Victor(2,8);
 	//climbing pneumatics
 	//public static final Compressor shootCompressor=new Compressor(8,17);
-	public static final Solenoid tiltSolenoid = new Solenoid(1, 1);//@TODO reassing Pin
-	public static final Solenoid preClimbSolenoid = new Solenoid(1, 3);//Not sutre what this is @TODO reassing Pin
+	public static final Solenoid tiltSolenoid = new Solenoid(1, 3);
+	public static final Solenoid preClimbSolenoid = new Solenoid(1, 1);
 	public static final Solenoid shootLaunch = new Solenoid(1, 2);
 	//Climbing Switches
 	public static final DigitalInput upSwitch=new DigitalInput(0,0);//Detects if Arm is at full extent @TODO assign channel
