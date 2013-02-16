@@ -56,7 +56,7 @@ public class ControlScheme {
 		}
 		return num;
 	}
-
+/*
 	public static boolean shouldStartClimb() {
 		if(SmartDashboard.getBoolean("IsFPR")) {
 			return false;//@TODO IMPLEMENT ME!
@@ -79,7 +79,7 @@ public class ControlScheme {
 		 * else
 		 * num+=valueForButtonOnJoystick(joystickMap[climbExtendIndex],buttonMap[climbExtendIndex])?1:0;
 		 * return num;
-		 */
+		 *
 		double num = 0;
 		if(!isAutoClimb) {
 			num += Hardware.auxJoystick.getRawButton(5) ? kShotAngleAdjust : 0;
@@ -91,7 +91,7 @@ public class ControlScheme {
 		}
 		return num;
 	}
-
+*/
 	public static double driveX() {
 		if(SmartDashboard.getBoolean("IsFPR")) {
 			return (((int)SmartDashboard.getNumber("Keyboard")) & 4) == 4 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 8) == 8 ? -0.5 : 0;
@@ -147,8 +147,8 @@ public class ControlScheme {
 		}
 		return num;
 	}
-
 	public static String logString(boolean Autonomous) {
+	    boolean isClimbing=false&&!Autonomous;
 		String xmlString = Autonomous ? "<controlScheme mode=\"autonomous\">\n" : "<controlScheme mode=\"teleop\">\n";
 		xmlString = xmlString.concat("<driveValues>\n"
 									 + "<X>" + ControlScheme.driveX() + "</X>\n"
@@ -160,9 +160,9 @@ public class ControlScheme {
 									 + "<shouldSpin>" + (ControlScheme.doSpin() ? "true" : "false") + "</shouldSpin>\n"
 									 + "<shouldFire>" + (ControlScheme.doShoot() ? "true" : "false") + "</shouldFire>\n"
 									 + "</shotValues>\n");
-		xmlString = xmlString.concat("<climbValues>\n"
-									 + "<shouldBegin>" + (ControlScheme.shouldStartClimb() ? "true" : "false") + "</shouldBegin>\n"
-									 + "<climb>" + ControlScheme.climbDir() + "</climb>\n"
+		xmlString = xmlString.concat((!isClimbing)?"":"<climbValues>\n"
+									 + "<shouldBegin>" + (ControlScheme.tiltRobot() ? "true" : "false") + "</shouldBegin>\n"
+									 + "<climb>" +(ControlScheme.doClimb() ? "true" : "false") + "</climb>\n"
 									 + "</climbValues>\n");
 		xmlString = xmlString.concat("</controlSchme>");
 		return xmlString;
