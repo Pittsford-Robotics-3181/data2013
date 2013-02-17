@@ -71,26 +71,26 @@ public class ControlScheme {
         public static double angleUp()
         {
 			if(SmartDashboard.getBoolean("IsFPR")){
-			return Math.max(0,SmartDashboard.getNumber("MouseYVelocity")/14.0);
+			return Math.max(0,SmartDashboard.getNumber("MouseYVelocity")/7.0);
 		}
             return Hardware.auxJoystick.getRawButton(3) ? 1 : 0;
         }
         public static double angleDown()
         {
 			if(SmartDashboard.getBoolean("IsFPR")){
-			return Math.min(0,SmartDashboard.getNumber("MouseYVelocity")/14.0);
+			return Math.min(0,SmartDashboard.getNumber("MouseYVelocity")/7.0);
 		}
             return Hardware.auxJoystick.getRawButton(2) ? 1 : 0;
         }
 		public static double strafeY(){
 			if(SmartDashboard.getBoolean("IsFPR")){
-				return (((int)SmartDashboard.getNumber("Keyboard")) & 1) == 1 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 2) == 2 ? -0.5 : 0;
+				return (((int)SmartDashboard.getNumber("Keyboard")) & 1) == 1 ? 1 : ((int)(SmartDashboard.getNumber("Keyboard")) & 2) == 2 ? -1 : 0;
 			}
 			return Hardware.driveJoystick.getY();
 		}
 		public static double strafeX(){
 			if(SmartDashboard.getBoolean("IsFPR")){
-				return (((int)SmartDashboard.getNumber("Keyboard")) & 4) == 4 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 8) == 8 ? -0.5 : 0;
+				return (((int)SmartDashboard.getNumber("Keyboard")) & 4) == 4 ? 1 : ((int)(SmartDashboard.getNumber("Keyboard")) & 8) == 8 ? -1 : 0;
 			}
 			return Hardware.driveJoystick.getX();
 		}
