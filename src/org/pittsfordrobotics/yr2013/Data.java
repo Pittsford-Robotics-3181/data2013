@@ -23,6 +23,7 @@ public class Data extends IterativeRobot {
 	 */
 	public void robotInit() {
 		Hardware.dsComm.start();
+		Hardware.arnold.set(1);
 	}
 
 	public void disabledInit() {
@@ -58,8 +59,10 @@ public class Data extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		ai.drive();//Aid the driver
+		ai.drive();
+		Hardware.arnold.set(1);
 		/*
+		Hardware.shooter.shoot();
 		Hardware.solenoid1.set(Hardware.auxJoystick.getRawButton(6));
 		Hardware.solenoid3.set(Hardware.auxJoystick.getRawButton(11));
 		Hardware.solenoid4.set(Hardware.auxJoystick.getRawButton(10));

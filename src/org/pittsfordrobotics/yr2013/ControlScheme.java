@@ -93,7 +93,7 @@ public class ControlScheme {
 */
 	public static double driveX() {
 		if(SmartDashboard.getBoolean("IsFPR")&&!isAutonomous) {
-			return (((int)SmartDashboard.getNumber("Keyboard")) & 4) == 4 ? 0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 8) == 8 ? -0.5 : 0;
+			return (((int)SmartDashboard.getNumber("Keyboard")) & 4) == 4 ? -0.5 : ((int)(SmartDashboard.getNumber("Keyboard")) & 8) == 8 ? 0.5 : 0;
 		}
 		if(isAutonomous) {
 			return Data.ai.driveX;
@@ -108,7 +108,7 @@ public class ControlScheme {
 		if(isAbsolute()) {
 			return driveZ() * num;
 		}
-		return driveZ() * Hardware.driveJoystick.getX()*Math.abs(Hardware.driveJoystick.getX());
+		return Hardware.driveJoystick.getX()*Math.abs(Hardware.driveJoystick.getX())*driveZ();
 	}
 
 	public static double driveY() {
@@ -128,7 +128,7 @@ public class ControlScheme {
 		if(isAbsolute()) {
 			return driveZ() * num;
 		}
-		return driveZ() * Hardware.driveJoystick.getY()*Math.abs(Hardware.driveJoystick.getY());
+		return Hardware.driveJoystick.getX()*Math.abs(Hardware.driveJoystick.getX())*driveZ();
 	}
 	private static boolean isAbsolute(){
 	    return Hardware.driveJoystick.getRawButton(2)||Hardware.driveJoystick.getRawButton(3)

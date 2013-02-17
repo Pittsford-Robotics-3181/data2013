@@ -23,12 +23,17 @@ public class DriveSystem extends Thread implements Loggable {
 	}
 
 	public void run() {
+		RobotDrive r;
 		while(DriverStation.getInstance().isEnabled()) {
 			frontLeft.set(-(ControlScheme.driveX() + ControlScheme.driveY() + ControlScheme.driveRotation()));
-			frontRight.set((-ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
-			backLeft.set(-(-ControlScheme.driveX() + ControlScheme.driveY() + ControlScheme.driveRotation()));
-			backRight.set((ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
-			//drive.mecanumDrive_Polar(ControlScheme.driveMagnitude(), ControlScheme.driveDirection(), ControlScheme.driveRotation());
+        frontRight.set(-ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation());
+        backLeft.set(-(-ControlScheme.driveX() + ControlScheme.driveY() + ControlScheme.driveRotation()));
+        backRight.set(ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation());
+		/*	frontLeft.set(-(-ControlScheme.driveX() - ControlScheme.driveY() - ControlScheme.driveRotation()));
+			frontRight.set(-(-ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
+			backLeft.set(-(ControlScheme.driveX() - ControlScheme.driveY() - ControlScheme.driveRotation()));
+			backRight.set(-(ControlScheme.driveX() + ControlScheme.driveY() - ControlScheme.driveRotation()));
+			*///drive.mecanumDrive_Polar(ControlScheme.driveMagnitude(), ControlScheme.driveDirection(), ControlScheme.driveRotation());
 			Timer.delay(0.005);
 		}
 		frontLeft.set(0);

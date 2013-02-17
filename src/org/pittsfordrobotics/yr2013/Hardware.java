@@ -4,11 +4,7 @@
  */
 package org.pittsfordrobotics.yr2013;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.*;
 import org.pittsfordrobotics.yr2013.components.*;
 
 /**
@@ -37,6 +33,8 @@ public class Hardware {
 	//Climbing Switches
 	public static final DigitalInput upSwitch=new DigitalInput(0,0);//Detects if Arm is at full extent @TODO assign channel
 	public static final DigitalInput downSwitch=new DigitalInput(0,0);//Detects if Arm needs to extend again @TODO assign channel
+	
+	public static final Victor arnold = new Victor(2,10);
 //    public static final Shooter shooter=new Shooter(shootingMotor,shootingMotor2,shotAngleMotor,shootLaunch);
 	//climbing motors
 	//public static final Victor ClimbMotor1=new Victor(9);
