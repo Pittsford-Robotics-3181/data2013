@@ -15,26 +15,20 @@ import org.pittsfordrobotics.yr2013.*;
 public class Shooter extends Thread {
 
 	SpeedController frontMotor, backMotor, angleMotor;
-	Solenoid discPusher;
 	double maxSpeed = 0.75;
-
+        ShooterRapidFire rapidFire;
 	public Shooter(SpeedController frontMotor, SpeedController backMotor, SpeedController angleMotor, Solenoid discPusher) {
 		this.frontMotor = frontMotor;
 		this.backMotor = backMotor;
 		this.angleMotor = angleMotor;
-		this.discPusher = discPusher;
+                this.rapidFire = new ShooterRapidFire(discPusher);
+                this.rapidFire.start();
 	}
 
 	public void run() {
 		while(DriverStation.getInstance().isEnabled()) {
 			double speed = -frontMotor.get();
-
 			double speed2 = -backMotor.get();
-			if(ControlScheme.doShoot()) {
-				discPusher.set(true);
-				Timer.delay(0.01);
-				discPusher.set(false);
-			}
 			if(ControlScheme.doShooterSpin()) {
 				if(speed < maxSpeed) {
 					speed += 0.01;
@@ -58,4 +52,23 @@ public class Shooter extends Thread {
 			Timer.delay(0.005);
 		}
 	}
+}
+class ShooterRapidFire extends Thread
+{
+    Solenoid discPusher;
+    public ShooterRapidFire(Solenoid discPusher)
+    {
+        this.discPusher = discPusher;
+    }
+    public void run()
+    {
+        for(;;){
+            if(ControlScheme.doShoot()) {
+		discPusher.set(true);
+		Timer.delay(0.075);
+		discPusher.set(false);
+                Timer.delay(0.025);
+            }
+        }
+    }
 }
