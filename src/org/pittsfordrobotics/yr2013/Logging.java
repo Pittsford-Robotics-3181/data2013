@@ -27,12 +27,12 @@ public class Logging {
 	 * @param ControlScheme
 	 */
 	public static void logItems(Loggable items[], boolean controlScheme, boolean autonomous) {
-		logString = logString.concat("<mainThread>\n");
-		if(controlScheme) {
-			logString = logString.concat(ControlScheme.logString(autonomous));
+		logString = logString.concat("<mainThread>\n");//Add a piece to the log
+		if(controlScheme) {//Add ControlScheme
+			logString = logString.concat(ControlScheme.logString());
 		}
 		for(int i = 0; i < items.length; i++) {
-			logString = logString.concat(items[i].logString());
+			logString = logString.concat(items[i].logString());//Add each item
 		}
 		logString = logString.concat("</mainThread>\n");
 	}
@@ -40,6 +40,7 @@ public class Logging {
 	public static void export() {
 		logString = logString.concat("</log>");
 		try {
+			//Construct File Path
 			String logFilePath = "/robotLogs/";
 			logFilePath = logFilePath.concat(Preferences.getInstance().getString("Primary Driver Name", "anonymousDriver") + "_");
 			logFilePath = logFilePath.concat(Preferences.getInstance().getString("Auxiliary Driver Name", "anonymousAuxDriver") + "_");
