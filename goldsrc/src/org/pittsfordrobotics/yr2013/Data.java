@@ -17,6 +17,7 @@ import org.pittsfordrobotics.yr2013.components.*;
 public class Data extends IterativeRobot {
 	DriveSystem robotDrive = new DriveSystem(Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
     Shooter shooter = new Shooter(Hardware.shootingMotor,Hardware.shootingMotor2,Hardware.shotAngleMotor,Hardware.shootLaunch);
+	Climber climber = new Climber();
 	SmartDashboardCommunications dsComm = new SmartDashboardCommunications();
 	/**
      * This function is run when the robot is first started up and should be
@@ -27,6 +28,7 @@ public class Data extends IterativeRobot {
     }
 	
 	public void disabledInit(){
+		climber = new Climber();
 		robotDrive = new DriveSystem(Hardware.frontRightJaguar,Hardware.frontLeftJaguar,Hardware.backRightJaguar,Hardware.backLeftJaguar);
 		shooter = new Shooter(Hardware.shootingMotor,Hardware.shootingMotor2,Hardware.shotAngleMotor,Hardware.shootLaunch);
 	}
@@ -42,15 +44,16 @@ public class Data extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopInit() {
-		System.out.println("Starting Threads");
+		System.out.println("teleop");
         robotDrive.start();
 		shooter.start();
-    }
+		climber.start();
+		Hardware.arnold.set(1);    }
 	public void teleopPeriodic(){
-		Hardware.solenoid1.set(Hardware.auxJoystick.getRawButton(6));
-		Hardware.solenoid3.set(Hardware.auxJoystick.getRawButton(11));
-		Hardware.solenoid4.set(Hardware.auxJoystick.getRawButton(10));
-		Hardware.shootLaunch.set(Hardware.auxJoystick.getRawButton(7));
+		//Hardware.solenoid1.set(Hardware.auxJoystick.getRawButton(6));
+		//Hardware.solenoid3.set(Hardware.auxJoystick.getRawButton(11));
+		//Hardware.solenoid4.set(Hardware.auxJoystick.getRawButton(10));
+		//Hardware.shootLaunch.set(Hardware.auxJoystick.getRawButton(7));
 	
 }
     

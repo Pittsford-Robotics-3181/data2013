@@ -17,16 +17,28 @@ public class Shooter extends Thread {
 	SpeedController frontMotor, backMotor, angleMotor;
 	double maxSpeed = 0.75;
         ShooterRapidFire rapidFire;
+		double targetAngle = 0;
 	public Shooter(SpeedController frontMotor, SpeedController backMotor, SpeedController angleMotor, Solenoid discPusher) {
 		this.frontMotor = frontMotor;
 		this.backMotor = backMotor;
 		this.angleMotor = angleMotor;
                 this.rapidFire = new ShooterRapidFire(discPusher);
-                this.rapidFire.start();
 	}
-
+	public void setTargetAngle(double radians){
+		targetAngle = radians;
+	}
 	public void run() {
+                this.rapidFire.start();
 		while(DriverStation.getInstance().isEnabled()) {
+			if(ControlScheme.getIsAbsolutAngle()){
+					if(Hardware.angleSensor.getAngle() < targetAngle){
+						Hardware.shotAngleMotor.set(-1);
+					} else if(Hardware.angleSensor.getAngle() > targetAngle){
+						Hardware.shotAngleMotor.set(1);
+					} else{
+						Hardware.shotAngleMotor.set(0);
+					}
+			}
 			double speed = -frontMotor.get();
 			double speed2 = -backMotor.get();
 			if(ControlScheme.doShooterSpin()) {
@@ -64,11 +76,12 @@ class ShooterRapidFire extends Thread
     {
         while(DriverStation.getInstance().isEnabled()) {
             if(ControlScheme.doShoot()) {
-		discPusher.set(true);
-		Timer.delay(0.075);
-		discPusher.set(false);
-                Timer.delay(0.025);
+				discPusher.set(true);
+				Timer.delay(0.1);
+				discPusher.set(false);
+                Timer.delay(0.4);
             }
+			Timer.delay(0.005);
         }
     }
 }

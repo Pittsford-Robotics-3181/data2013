@@ -86,15 +86,18 @@ public class ControlScheme {
 			if(SmartDashboard.getBoolean("IsFPR")){
 				return (((int)SmartDashboard.getNumber("Keyboard")) & 1) == 1 ? 1 : ((int)(SmartDashboard.getNumber("Keyboard")) & 2) == 2 ? -1 : 0;
 			}
-			return Hardware.driveJoystick.getY();
+			return -Hardware.driveJoystick.getY();
 		}
 		public static double strafeX(){
 			if(SmartDashboard.getBoolean("IsFPR")){
 				return (((int)SmartDashboard.getNumber("Keyboard")) & 4) == 4 ? 1 : ((int)(SmartDashboard.getNumber("Keyboard")) & 8) == 8 ? -1 : 0;
 			}
-			return Hardware.driveJoystick.getX();
+			return -Hardware.driveJoystick.getX();
 		}
 		public static double getZ(){
-			return Hardware.driveJoystick.getZ();
+			return (1-Hardware.driveJoystick.getZ())/2.0;
+		}
+		public static boolean getIsAbsolutAngle(){
+			return false; //@TODO implement actually
 		}
 }
