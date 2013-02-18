@@ -8,28 +8,50 @@ import edu.wpi.first.wpilibj.*;
 import org.pittsfordrobotics.yr2013.*;
 
 /**
- *
+ * Handles shooting in a thread.
+ * <p/>
  * @author Benjamin Pylko <spectare at sourceforge.net>
  */
-public class Climber extends Thread{
+public class Climber extends Thread {
+
+	/**
+	 * The solenoid to tilt.
+	 */
 	ToggleTiltSolenoid toggler;
-	public void run(){
+
+	/**
+	 * Main loop for handling hooks.
+	 */
+	public void run() {
 		toggler = new ToggleTiltSolenoid();
 		toggler.start();
-		while(DriverStation.getInstance().isEnabled()){
-			Hardware.climbingMotor.set(/*Math.max(Hardware.climberLimit.get() ? 0 : -1 , */Hardware.auxJoystick.getRawButton(6) ? -1 : Hardware.auxJoystick.getRawButton(7) ? 1 : 0)/*)*/;
-			
-				Hardware.solenoid1.set(Hardware.auxJoystick.getRawButton(10));
-				Timer.delay(0.1);
-				Hardware.solenoid4.set(Hardware.auxJoystick.getRawButton(10));
+		while(DriverStation.getInstance().isEnabled()) {
+			Hardware.climbingMotor.set(/*
+					 * Math.max(Hardware.climberLimit.get() ? 0 : -1 ,
+					 */Hardware.auxJoystick.getRawButton(6) ? -1 : Hardware.auxJoystick.getRawButton(7) ? 1 : 0)/*
+					 * )
+					 */;
+
+			Hardware.hookSolenoid1.set(Hardware.auxJoystick.getRawButton(10));
+			Timer.delay(0.1);
+			Hardware.hookSolenoid2.set(Hardware.auxJoystick.getRawButton(10));
 			Timer.delay(0.005);
 		}
 	}
-	private class ToggleTiltSolenoid extends Thread{
+
+	/**
+	 * Handles tilting.
+	 */
+	private class ToggleTiltSolenoid extends Thread {
+
 		private boolean isToggling = false;
-		public void run(){
-			while(DriverStation.getInstance().isEnabled()){
-				if(Hardware.auxJoystick.getRawButton(11)){
+
+		/**
+		 * The main loop for tilting.
+		 */
+		public void run() {
+			while(DriverStation.getInstance().isEnabled()) {
+				if(Hardware.auxJoystick.getRawButton(11)) {
 					isToggling = !isToggling;
 					Hardware.tiltSolenoid.set(isToggling);
 					Timer.delay(0.1);
