@@ -59,7 +59,7 @@ public class ControlScheme {
 			if(SmartDashboard.getBoolean("IsFPR")){
 				return ((int)(SmartDashboard.getNumber("MouseButtons")) & 1) == 1;
 			}
-            return Hardware.auxJoystick.getTrigger();
+            return Hardware.auxJoystick.getTrigger() && doShooterSpin();
         }
         public static boolean doShooterSpin()
         {
