@@ -8,14 +8,17 @@ package org.pittsfordrobotics.yr2013.components.ai;
  *
  * @author Benjamin Pylko <spectare at sourceforge.net>
  */
-public class Action implements Performable{
+public class Action implements Performable {
+
 	private Performable perf;
 	private long millisBefore, millisAfter;
-	public Action(long millisBeforeAction, Performable toPerform, long millisAfterAction){
-		perf=toPerform;
-		millisBefore=millisBeforeAction;
-		millisAfter=millisAfterAction;
+
+	public Action(long millisBeforeAction, Performable toPerform, long millisAfterAction) {
+		perf = toPerform;
+		millisBefore = millisBeforeAction;
+		millisAfter = millisAfterAction;
 	}
+
 	public void performAction() {
 		try {
 			Thread.sleep(millisBefore);
@@ -31,5 +34,4 @@ public class Action implements Performable{
 			ex.printStackTrace();
 		}
 	}
-	
 }

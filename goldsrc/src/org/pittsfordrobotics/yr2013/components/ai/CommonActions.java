@@ -12,25 +12,24 @@ import org.pittsfordrobotics.yr2013.components.Shooter;
  *
  * @author Benjamin Pylko <spectare at sourceforge.net>
  */
-public class CommonActions{
-	public static final Action shoot = merge(new Action(0,new Performable(){
+public class CommonActions {
 
+	public static final Action shoot = merge(new Action(0, new Performable() {
 		public void performAction() {
 			//Hardware.shooter.discPusher.set(true);
 		}
-	},50), new Action(0,new Performable() {
-
+	}, 50), new Action(0, new Performable() {
 		public void performAction() {
 			//Hardware.shooter.discPusher.set(false);
 		}
-	},0));
-	public static Action merge(final Action a1, final Action a2){
-		return new Action(0,new Performable(){
+	}, 0));
 
+	public static Action merge(final Action a1, final Action a2) {
+		return new Action(0, new Performable() {
 			public void performAction() {
 				a1.performAction();
 				a2.performAction();
 			}
-		},0);
+		}, 0);
 	}
 }

@@ -12,53 +12,65 @@ import javax.microedition.io.Connector;
  * @TODO make this more xmlish
  * @author Benjamin Pylko <spectare at sourceforge.net>
  */
-public class RobotLog extends PrintStream{
-	public RobotLog() throws IOException{
+public class RobotLog extends PrintStream {
+
+	public RobotLog() throws IOException {
 		super(((FileConnection)Connector.open("robot.log")).openOutputStream());
 	}
-	public RobotLog(String logFileName) throws IOException{
+
+	public RobotLog(String logFileName) throws IOException {
 		super(((FileConnection)Connector.open(logFileName)).openOutputStream());
 	}
-	
-	private void timeStamp(){
-		super.print(System.currentTimeMillis()/3600000+":"+System.currentTimeMillis()/60000+":"+System.currentTimeMillis()/1000.0 + " --> ");
+
+	private void timeStamp() {
+		super.print(System.currentTimeMillis() / 3600000 + ":" + System.currentTimeMillis() / 60000 + ":" + System.currentTimeMillis() / 1000.0 + " --> ");
 	}
-	public void print(boolean b){
+
+	public void print(boolean b) {
 		timeStamp();
 		super.print(b);
 	}
-	public void print(int i){
+
+	public void print(int i) {
 		timeStamp();
 		super.print(i);
 	}
-	public void print(long l){
+
+	public void print(long l) {
 		timeStamp();
 		super.print(l);
 	}
-	public void print(float f){
+
+	public void print(float f) {
 		timeStamp();
 		super.print(f);
 	}
-	public void print(double d){
+
+	public void print(double d) {
 		timeStamp();
 		super.print(d);
 	}
-	public void print(char[] s){
+
+	public void print(char[] s) {
 		timeStamp();
 		super.print(s);
 	}
-	public void print(String s){
+
+	public void print(String s) {
 		timeStamp();
 		super.print(s);
 	}
-	public void print(Object o){
+
+	public void print(Object o) {
 		timeStamp();
 		super.print(o);
 	}
-	public void printComment(String s){
+
+	public void printComment(String s) {
 		super.print("<!--" + s + "-->");
 	}
-	public void printCommentLine(String s){
+
+	public void printCommentLine(String s) {
 		super.print("<!--");
 		println();
 		super.print(s);
