@@ -14,6 +14,8 @@ import java.awt.*;
 import java.awt.image.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.*;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.logging.*;
 
 import javax.imageio.*;
@@ -26,12 +28,14 @@ import javax.imageio.*;
  * Free for reuse, just please give me a credit if it is for a redistributed
  * package
  */
-public class MJPEGWidget extends StaticWidget {
+public class MJPEGWidget extends StaticWidget implements Runnable{
 
 	BufferedImage image = null;
 
 	@Override
 	public void init() {
+		ScheduledThreadPoolExecutor stpe = new ScheduledThreadPoolExecutor(3);
+		stpe.scheduleAtFixedRate(this, 0, 50, TimeUnit.MILLISECONDS);
 		setPreferredSize(new Dimension(640, 360));
 	}
 
@@ -43,20 +47,22 @@ public class MJPEGWidget extends StaticWidget {
 	@Override
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
+		try{
+		g2.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+		} catch(NullPointerException npe){System.err.println("image not acquired");}
+		//repaint();
+	}
+
+	@Override
+	public void run() {
+		
 		try {
-			image = ImageIO.read(new URL("http://10.31.81.10/axis-cgi/jpg/image.cgi?resolution=640x360&.jpg"));
-			System.out.println(image);
+			image = ImageIO.read(new URL("http://10.31.81.10/axis-cgi/jpg/image.cgi?resolution=1024x568"));
+			//System.out.println(image);
 		}
 		catch(IOException ex) {
 			Logger.getLogger(MJPEGWidget.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		try {
-			Thread.sleep(50);
-		}
-		catch(InterruptedException ex) {
-			Logger.getLogger(MJPEGWidget.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		g2.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 		repaint();
 	}
 }
