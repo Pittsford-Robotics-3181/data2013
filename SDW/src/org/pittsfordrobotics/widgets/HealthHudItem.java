@@ -54,6 +54,13 @@ public class HealthHudItem extends Widget {
 		g2.setColor(new Color(100, (int)(100 * voltageMultiplier), (int)(100 * voltageMultiplier)));
 		setFont(tf2);
 		g2.drawString("" + Math.round(voltage * 10.0) / 10.0, getWidth() * 5f / 18f, getHeight() * 11 / 18);
+		try {
+			Thread.sleep(10);
+		}
+		catch(InterruptedException ex) {
+			Logger.getLogger(HealthHudItem.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		repaint();
 	}
 
 	@Override

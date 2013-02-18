@@ -24,7 +24,7 @@ public class SoundWidget extends StaticWidget {
 		new Thread() {
 			public void run() {
 				try {
-					playSound(System.getProperty(System.getProperty("user.home") + "/tf/music/tf_main_theme.wav"));
+					playSound(System.getProperty("C:/users/Team3181_user/tf/music/tf_main_theme.wav"));
 				}
 				catch(UnsupportedAudioFileException | IOException | InterruptedException ex) {
 					Logger.getLogger(SoundWidget.class.getName()).log(Level.SEVERE, null, ex);

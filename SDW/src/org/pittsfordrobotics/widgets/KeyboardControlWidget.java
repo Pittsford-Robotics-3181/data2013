@@ -76,6 +76,8 @@ public class KeyboardControlWidget extends StaticWidget {
 
 		@Override
 		public void nativeKeyTyped(NativeKeyEvent nke) {
+			nativeKeyPressed(nke);
+			nativeKeyReleased(nke);
 		}
 	};
 
