@@ -1,16 +1,10 @@
-/*
+/*s
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package org.pittsfordrobotics.yr2013;
 
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.*;
 import org.pittsfordrobotics.yr2013.components.AngleSensor;
 
 /**
@@ -60,7 +54,7 @@ public class Hardware {
 	/**
 	 * Arnold. Need I say more?
 	 */
-	public static final Victor arnold = new Victor(1, 10);
+	public static final Relay arnold = new Relay(1,7,Relay.Direction.kForward);
 	/**
 	 * Motor for climbing.
 	 */
