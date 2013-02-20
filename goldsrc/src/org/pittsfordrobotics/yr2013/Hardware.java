@@ -66,7 +66,7 @@ public class Hardware {
 	/**
 	 * The angle sensor on the shooter.
 	 */
-	public static final AngleSensor angleSensor = new AngleSensor(1, 2);
+	public static final AngleSensor angleSensor = new AngleSensor(1);
 	/**
 	 * The main and first hook solenoid.
 	 */
