@@ -84,7 +84,7 @@ public class Shooter extends Thread {
 					speed2 -= 0.01;
 				}
 			}
-			Hardware.shotAngleMotor.set(ControlScheme.angleDown() - ControlScheme.angleUp());
+			Hardware.shotAngleMotor.set((ControlScheme.angleDown() - ControlScheme.angleUp())*(1-Hardware.auxJoystick.getZ())/2);
 			frontMotor.set(-speed);
 			backMotor.set(-speed2);
 			Timer.delay(0.005);

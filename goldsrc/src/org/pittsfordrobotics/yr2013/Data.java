@@ -7,7 +7,9 @@
 package org.pittsfordrobotics.yr2013;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Relay.Direction;
 import org.pittsfordrobotics.yr2013.components.*;
+import org.pittsfordrobotics.yr2013.components.ai.*;
 
 /**
  * Main class for the robot that handles all of the threads.
@@ -37,11 +39,20 @@ public class Data extends IterativeRobot {
 		robotDrive = new DriveSystem(Hardware.frontRightJaguar, Hardware.frontLeftJaguar, Hardware.backRightJaguar, Hardware.backLeftJaguar);
 		shooter = new Shooter(Hardware.shootingMotor, Hardware.shootingMotor2, Hardware.shotAngleMotor, Hardware.shootLaunch);
 	}
+	public void autonomousInit(){
+		AIDirector ai = new AIDirector();
+		ai.queueAction(CommonActions.spinUp);
+		ai.queueAction(CommonActions.shoot);
+		ai.queueAction(CommonActions.shoot);
+		ai.queueAction(CommonActions.shoot);
+		ai.queueAction(CommonActions.spinDown);
+	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
+		
 	}
 
 	/**
@@ -51,6 +62,7 @@ public class Data extends IterativeRobot {
 		robotDrive.start();
 		shooter.start();
 		climber.start();
-		Hardware.arnold.set(1);
+		Hardware.arnold.setDirection(Relay.Direction.kForward);
+		Hardware.arnold.set(Relay.Value.kOn);
 	}
 }

@@ -81,7 +81,7 @@ public class ControlScheme {
 		if(SmartDashboard.getBoolean("IsFPR")) {
 			return (((int)SmartDashboard.getNumber("Keyboard")) & 1) == 1 ? 1 : ((int)(SmartDashboard.getNumber("Keyboard")) & 2) == 2 ? -1 : 0;
 		}
-		return -Hardware.driveJoystick.getY();
+		return -(Hardware.driveJoystick.getY() + (Hardware.driveJoystick.getRawButton(3) ? 1 : 0) + (Hardware.driveJoystick.getRawButton(2) ? -1 : 0));
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class ControlScheme {
 		if(SmartDashboard.getBoolean("IsFPR")) {
 			return (((int)SmartDashboard.getNumber("Keyboard")) & 4) == 4 ? 1 : ((int)(SmartDashboard.getNumber("Keyboard")) & 8) == 8 ? -1 : 0;
 		}
-		return -Hardware.driveJoystick.getX();
+		return -(Hardware.driveJoystick.getX() + (Hardware.driveJoystick.getRawButton(4) ? -1 : 0) + (Hardware.driveJoystick.getRawButton(5) ? 1 : 0));
 	}
 
 	/**

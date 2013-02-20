@@ -50,6 +50,7 @@ public class Climber extends Thread {
 		 * The main loop for tilting.
 		 */
 		public void run() {
+			Hardware.tiltSolenoid.set(false);
 			while(DriverStation.getInstance().isEnabled()) {
 				if(Hardware.auxJoystick.getRawButton(11)) {
 					isToggling = !isToggling;
