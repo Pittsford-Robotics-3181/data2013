@@ -22,6 +22,7 @@ public class Data extends IterativeRobot {
 	Shooter shooter = new Shooter(Hardware.shootingMotor, Hardware.shootingMotor2, Hardware.shotAngleMotor, Hardware.shootLaunch);
 	Climber climber = new Climber();
 	SmartDashboardCommunications dsComm = new SmartDashboardCommunications();
+	AIDirector ai = new AIDirector();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -40,7 +41,6 @@ public class Data extends IterativeRobot {
 		shooter = new Shooter(Hardware.shootingMotor, Hardware.shootingMotor2, Hardware.shotAngleMotor, Hardware.shootLaunch);
 	}
 	public void autonomousInit(){
-		AIDirector ai = new AIDirector();
 		ai.queueAction(CommonActions.spinUp);
 		ai.queueAction(CommonActions.shoot);
 		ai.queueAction(CommonActions.shoot);
@@ -59,6 +59,7 @@ public class Data extends IterativeRobot {
 	 * Starts all the threads and turns Arnold on.
 	 */
 	public void teleopInit() {
+		ai.stop();//we don't need to do this, it's just so we don't take up so much cpu time.
 		robotDrive.start();
 		shooter.start();
 		climber.start();

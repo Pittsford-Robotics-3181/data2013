@@ -4,7 +4,10 @@
  */
 package org.pittsfordrobotics.yr2013.components.ai;
 
-import edu.wpi.first.wpilibj.Timer;
+//import edu.wpi.first.wpilibj.Timer;
+
+import java.util.Timer;
+
 
 /**
  *
@@ -12,28 +15,16 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class AIDirector extends Thread {
 
-	private Performable[] actionQueue = new Performable[10];
+	private ActionQueue actionQueue = new ActionQueue(128);
 	private boolean running = true;
-
-	private Performable[] arraySizeChange(Performable[] src, int changeBy) {
-		Performable[] newArray = new Performable[src.length + changeBy];
-		System.arraycopy(src, 0, newArray, 0, Math.min(src.length, newArray.length));
-		return newArray;
+	public AIDirector(){
+		start();
 	}
-
 	public void queueAction(Performable action) {
 		if(action == null) {
 			throw new NullPointerException();
 		}
-		if(actionQueue[actionQueue.length - 1] != null) {
-			actionQueue = arraySizeChange(actionQueue, 10);
-		}
-		for(int i = actionQueue.length - 1; i >= 0; i++) {
-			if(actionQueue[i] != null) {
-				actionQueue[i + 1] = action;
-				i = -1;
-			}
-		}
+		actionQueue.insert(action);
 	}
 
 	public void stop() {
@@ -42,11 +33,48 @@ public class AIDirector extends Thread {
 
 	public void run() {
 		while(running) {
-			if(actionQueue[0] != null) {
-				actionQueue[0].performAction();
-				System.arraycopy(actionQueue, 1, actionQueue, 0, actionQueue.length - 1);
+			try{
+			actionQueue.remove().performAction();
+			} catch(NullPointerException npe){}
+			try {
+				Thread.sleep(5);
 			}
-			Timer.delay(0.005);
+			catch(InterruptedException ex) {}
 		}
-	}
+	
 }
+class ActionQueue{
+    protected Performable[] array;
+    protected int start,end;
+    protected boolean full;
+
+    public ActionQueue(int maxsize){
+        array = new Performable[maxsize];
+        start = end = 0;
+        full = false;
+    }
+
+    public boolean isEmpty(){
+        return ((start == end) && !full);
+    }
+
+    public void insert(Performable o){
+        if(!full) {
+			array[start = (++start % array.length)] = o;
+		}
+        if(start == end) {
+			full = true;
+		}
+    }
+
+    public Performable remove(){
+        if(full) {
+			full = false;
+		}
+        else if(isEmpty()) {
+			return null;
+		}
+        return array[end = (++end % array.length)];
+    }
+}
+	}
