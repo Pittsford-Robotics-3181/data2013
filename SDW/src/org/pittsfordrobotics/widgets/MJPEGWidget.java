@@ -63,6 +63,8 @@ public class MJPEGWidget extends StaticWidget implements Runnable{
 		catch(IOException ex) {
 			Logger.getLogger(MJPEGWidget.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		invalidate();
 		repaint();
+		validate();
 	}
 }
