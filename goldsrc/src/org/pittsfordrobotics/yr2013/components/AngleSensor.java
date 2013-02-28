@@ -18,7 +18,9 @@ public class AngleSensor {
 	 * The two AnalogChannels for the x and y acceleration.
 	 */
 	AnalogChannel x, y;
-	double a,b,h;
+	double coefficient = 35.496;
+	double exponent = -1.129;
+	//R^2 = 0.9981
 
 	/**
 	 * Constructs the sensor with the given AnalogChannels.
@@ -28,9 +30,6 @@ public class AngleSensor {
 	 */
 	public AngleSensor(int voltsInChan) {
 		x = new AnalogChannel(voltsInChan);
-		a = 4347.1851889408;
-		b = -0.9313153512;
-		h = 72.398;
 	}
 
 	/**
@@ -39,11 +38,7 @@ public class AngleSensor {
 	 * @return the angle.
 	 */
 	public double getAngle() {
-		return MathUtils.asin(MathUtils.pow(map(x.getVoltage(),0,1023,0,5)/a,1/b)/h);
-	}
-	
-	double map(double x, double in_min, double in_max, double out_min, double out_max){
-		return (x - in_min) * (out_max - out_min) /(in_max - in_min) + out_min;
+		return getAngleInStupidDegrees() * Math.PI / 180.0;
 	}
 
 	/**
@@ -52,6 +47,9 @@ public class AngleSensor {
 	 * @return degrees, which are stupid.
 	 */
 	public double getAngleInStupidDegrees() {
-		return getAngle() * 180.0 / Math.PI;
+		return coefficient*MathUtils.pow(x.getVoltage(),exponent);
+	}
+	public double getVoltage(){
+		return x.getVoltage();
 	}
 }

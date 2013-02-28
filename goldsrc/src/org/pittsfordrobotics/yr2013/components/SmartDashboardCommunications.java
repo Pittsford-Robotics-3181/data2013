@@ -31,6 +31,7 @@ public class SmartDashboardCommunications extends Thread {
 			SmartDashboard.putNumber("Battery", DriverStation.getInstance().getBatteryVoltage());
 			SmartDashboard.putNumber("Timer", (DriverStation.getInstance().getAlliance() == Alliance.kRed ? 32768 : 0) | (int)DriverStation.getInstance().getMatchTime());
 			SmartDashboard.putNumber("Angle", Hardware.angleSensor.getAngleInStupidDegrees());
+			SmartDashboard.putNumber("AngleSensorVoltage", Hardware.angleSensor.getVoltage());
 			Timer.delay(0.05);
 		}
 	}
