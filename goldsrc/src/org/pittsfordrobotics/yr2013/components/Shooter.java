@@ -112,9 +112,9 @@ class ShooterRapidFire extends Thread {
 		while(DriverStation.getInstance().isEnabled()) {
 			if(ControlScheme.doShoot()) {
 				discPusher.set(true);
-				Timer.delay(0.1);
+				Timer.delay(0.5);
 				discPusher.set(false);
-				Timer.delay(0.4);
+				Timer.delay(1);
 			}
 			Timer.delay(0.005);
 		}

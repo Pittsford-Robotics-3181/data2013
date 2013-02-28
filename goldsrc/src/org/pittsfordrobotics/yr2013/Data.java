@@ -8,6 +8,7 @@ package org.pittsfordrobotics.yr2013;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.Relay.Direction;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import org.pittsfordrobotics.yr2013.components.*;
 import org.pittsfordrobotics.yr2013.components.ai.*;
 
@@ -23,6 +24,7 @@ public class Data extends IterativeRobot {
 	Climber climber = new Climber();
 	SmartDashboardCommunications dsComm = new SmartDashboardCommunications();
 	AIDirector ai = new AIDirector();
+	int searchMode = 0;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -30,6 +32,7 @@ public class Data extends IterativeRobot {
 	 */
 	public void robotInit() {
 		dsComm.start();
+		Hardware.arnold.start();
 	}
 
 	/**
@@ -59,11 +62,15 @@ public class Data extends IterativeRobot {
 	 * Starts all the threads and turns Arnold on.
 	 */
 	public void teleopInit() {
-		ai.stop();//we don't need to do this, it's just so we don't take up so much cpu time.
 		robotDrive.start();
 		shooter.start();
 		climber.start();
-		Hardware.arnold.setDirection(Relay.Direction.kForward);
-		Hardware.arnold.set(Relay.Value.kOn);
+		//Hardware.arnold.setDirection(Relay.Direction.kForward);
+		//Hardware.arnold.set(Relay.Value.kOn);
+	}
+	
+	public void teleopPeriodic(){
+		searchMode = Hardware.driveJoystick.getRawButton(3) ? 3 : (Hardware.driveJoystick.getRawButton(2) ? 2 : (Hardware.driveJoystick.getRawButton(4) || Hardware.driveJoystick.getRawButton(5) ? 0 : searchMode));
+		SmartDashboard.putNumber("SEARCHMODE", searchMode);
 	}
 }

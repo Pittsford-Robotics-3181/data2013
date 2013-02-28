@@ -18,11 +18,11 @@ public class CommonActions {
 		public void performAction() {
 			Hardware.shootLaunch.set(true);
 		}
-	}, 100), new Action(0, new Performable() {
+	}, 500), new Action(0, new Performable() {
 		public void performAction() {
 			Hardware.shootLaunch.set(false);
 		}
-	}, 400));
+	}, 1000));
 	
 	public static final Action spinUp = new Action(0, new Performable(){
 		public void performAction() {

@@ -54,7 +54,8 @@ public class Hardware {
 	/**
 	 * Arnold. Need I say more?
 	 */
-	public static final Relay arnold = new Relay(1,7,Relay.Direction.kForward);
+	//public static final Relay arnold = new Relay(1,7,Relay.Direction.kForward);
+	public static final Compressor arnold = new Compressor(1,1,1,7);
 	/**
 	 * Motor for climbing.
 	 */
@@ -62,11 +63,11 @@ public class Hardware {
 	/**
 	 * The limit switch for the climber.
 	 */
-	public static final DigitalInput climberLimit = new DigitalInput(1, 1);
+	//public static final DigitalInput climberLimit = new DigitalInput(1, 1);
 	/**
 	 * The angle sensor on the shooter.
 	 */
-	public static final AngleSensor angleSensor = new AngleSensor(1);
+	public static final AngleSensor angleSensor = new AngleSensor(3);
 	/**
 	 * The main and first hook solenoid.
 	 */
