@@ -44,7 +44,10 @@ public class Data extends IterativeRobot {
 		shooter = new Shooter(Hardware.shootingMotor, Hardware.shootingMotor2, Hardware.shotAngleMotor, Hardware.shootLaunch);
 	}
 	public void autonomousInit(){
+                long initialTime = System.currentTimeMillis();
+                ai.queueAction(CommonActions.moveToKinectAngle);
 		ai.queueAction(CommonActions.spinUp);
+                while(System.currentTimeMillis()-initialTime < 8000 && isAutonomous()){}
 		ai.queueAction(CommonActions.shoot);
 		ai.queueAction(CommonActions.shoot);
 		ai.queueAction(CommonActions.shoot);
@@ -70,6 +73,7 @@ public class Data extends IterativeRobot {
 	}
 	
 	public void teleopPeriodic(){
+                Hardware.hookSolenoid2.set(Hardware.auxJoystick.getRawButton(10));
 		searchMode = Hardware.driveJoystick.getRawButton(3) ? 3 : (Hardware.driveJoystick.getRawButton(2) ? 2 : (Hardware.driveJoystick.getRawButton(4) || Hardware.driveJoystick.getRawButton(5) ? 0 : searchMode));
 		SmartDashboard.putNumber("SEARCHMODE", searchMode);
 	}

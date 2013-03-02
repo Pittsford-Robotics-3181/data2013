@@ -5,7 +5,7 @@
 package org.pittsfordrobotics.yr2013;
 
 import edu.wpi.first.wpilibj.*;
-import org.pittsfordrobotics.yr2013.components.AngleSensor;
+import org.pittsfordrobotics.yr2013.components.*;
 
 /**
  * Contains instances of hardware.
@@ -14,7 +14,7 @@ import org.pittsfordrobotics.yr2013.components.AngleSensor;
  * @author Liam Middlebrook
  */
 public class Hardware {
-
+        public static final DSOutput DSOut = new DSOutput();
 	/**
 	 * The Joystick for driving.
 	 */
