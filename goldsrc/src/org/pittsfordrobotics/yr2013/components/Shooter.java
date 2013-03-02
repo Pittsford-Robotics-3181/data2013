@@ -51,6 +51,8 @@ public class Shooter extends Thread {
 	 * The main loop for controlling the shooter angle. Starts the rapid fire
 	 * thread.
 	 */
+        double safeSpeed = 0;
+        double safeSpeed2 = 0;
 	public void run() {
 		this.rapidFire.start();
 		while(DriverStation.getInstance().isEnabled()) {
@@ -83,10 +85,13 @@ public class Shooter extends Thread {
 				if(speed2 > 0.0) {
 					speed2 -= 0.01;
 				}
-			}
+	
+                        }
 			Hardware.shotAngleMotor.set((ControlScheme.angleDown() - ControlScheme.angleUp())*(1-Hardware.auxJoystick.getZ())/2);
-			frontMotor.set(-speed);
-			backMotor.set(-speed2);
+			safeSpeed = Hardware.auxJoystick.getRawButton(8) ? 0.25 : (Hardware.auxJoystick.getRawButton(9) ? 0.5 : -speed);
+                        safeSpeed2 = Hardware.auxJoystick.getRawButton(8) ? 0.25 : (Hardware.auxJoystick.getRawButton(9) ? 0.5 : -speed2);
+                        frontMotor.set(safeSpeed);
+			backMotor.set(safeSpeed2);
 			Timer.delay(0.005);
 		}
 	}

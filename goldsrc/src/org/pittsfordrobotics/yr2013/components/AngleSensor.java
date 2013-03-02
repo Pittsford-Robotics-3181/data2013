@@ -18,8 +18,8 @@ public class AngleSensor {
 	 * The two AnalogChannels for the x and y acceleration.
 	 */
 	AnalogChannel x, y;
-	double coefficient = 35.496;
-	double exponent = -1.129;
+	double coefficient = 35.522;
+	double exponent = -0.868;
 	//R^2 = 0.9981
 
 	/**
